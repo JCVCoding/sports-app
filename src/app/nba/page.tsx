@@ -1,5 +1,10 @@
+import ScoreCard from "@/components/scoreboard/scoreboard";
+
 export default function NBA() {
-    return(
-        <div>NBA Page</div>
-    )
+  return (
+    <>
+      <ScoreCard />
+      <div>NBA Page</div>
+    </>
+  );
 }

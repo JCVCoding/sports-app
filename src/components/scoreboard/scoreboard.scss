@@ -1,0 +1,46 @@
+.score-card {
+  width: 20vw;
+  &-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+    width: 100%;
+    height: 84px;
+    background-color: #fff;
+    text-decoration: none;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.625rem;
+
+    .title {
+      color: rgba($color: #000000, $alpha: 0.8);
+    }
+    .state {
+      color: #777;
+    }
+  }
+  &-team_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .team {
+      color: #000;
+      flex: 1;
+      margin-left: 0.5rem;
+    }
+    .score {
+      color: #777;
+    }
+    .team,
+    .score {
+      font-size: 0.75rem;
+    }
+  }
+}
