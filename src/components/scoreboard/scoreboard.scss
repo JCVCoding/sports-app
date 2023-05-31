@@ -1,5 +1,53 @@
+.scoreboard {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  background-color: #f1f1f1;
+  height: auto;
+  min-height: 145px;
+  .arrowContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #fff;
+    width: 20px;
+    height: 100%;
+    position: absolute;
+    border: 2px solid #f1f1f1;
+    box-shadow: 5px 5px 18px #6b6969;
+    z-index: 1;
+    &.left {
+      left: 0;
+    }
+    &.right {
+      right: 0;
+    }
+    .arrow {
+      position: absolute;
+      display: inline-block;
+    }
+  }
+  &-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 3rem;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, transition;
+    &-item {
+      width: 13rem;
+    }
+  }
+}
+
 .score-card {
-  width: 20vw;
+  padding: 0.25rem;
   &-container {
     display: flex;
     flex-direction: column;
