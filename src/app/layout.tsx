@@ -1,5 +1,4 @@
 import './globals.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import { Inter } from 'next/font/google';
 
 import HeaderNav from '@/components/headerNav';

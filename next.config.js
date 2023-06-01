@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.bleacherreport.net',
+        hostname: '*.bleacherreport.*',
       },
     ],
   },

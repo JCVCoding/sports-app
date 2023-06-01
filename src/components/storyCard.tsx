@@ -1,8 +1,5 @@
-"use client";
-import Link from "next/link";
-
-import Card from "react-bootstrap/Card";
-
+'use client';
+import Link from 'next/link';
 interface StoryCardProps {
   header: string;
   title: string;
@@ -12,18 +9,18 @@ interface StoryCardProps {
 
 const StoryCard = (props: StoryCardProps) => {
   return (
-    <Card text="dark">
-      <Card.Header>{props.header}</Card.Header>
-      <Card.Body>
-        <Link href="#">
-          <Card.Title>{props.title}</Card.Title>
+    <div>
+      <div>{props.header}</div>
+      <div>
+        <Link href='#'>
+          <div>{props.title}</div>
         </Link>
-        <Link href="#">
-          <Card.Text>{props.text}</Card.Text>
+        <Link href='#'>
+          <div>{props.text}</div>
         </Link>
-        <Card.Text>by {props.author}</Card.Text>
-      </Card.Body>
-    </Card>
+        <div>by {props.author}</div>
+      </div>
+    </div>
   );
 };
 
