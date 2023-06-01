@@ -4,26 +4,36 @@ import React, { useState, Children, useRef, useEffect } from 'react';
 const ScoreBoard = ({ children }: any) => {
   const [index, setIndex] = useState(0);
   let [numOfScoreboardItems, setNum] = useState<number | undefined>(0);
+  let [slideValue, setValue] = useState<number | undefined>(0);
   const scoreboardList = useRef<null | HTMLUListElement>(null);
-  let slideValue: number | undefined = 0;
 
   useEffect(() => {
     setNum(scoreboardList.current?.children.length);
   }, []);
 
   const slideLeft = (): void => {
-    console.log(numOfScoreboardItems);
-    if (slideValue !== 0) {
-      slideValue = scoreboardList.current?.scrollWidth;
-    }
+    console.log(slideValue);
+    let scoreCardWidth = scoreboardList.current?.children[0].scrollWidth;
+    // if (slideValue! >= 0) {
+    setValue(slideValue! + scoreCardWidth! * 2);
+    // }
   };
   const slideRight = (): void => {
-    // numOfScoreboardItems = scoreboardList.current?.children.length;
+    console.log(slideValue);
+    console.log(scoreboardList.current?.scrollWidth!);
+    let scoreCardWidth = scoreboardList.current?.children[0].scrollWidth;
+    // if (slideValue! <= scoreboardList.current?.scrollWidth!) {
+    setValue(slideValue! - scoreCardWidth! * 2);
+    // }
   };
 
   return (
     <div className='scoreboard'>
-      <button className='arrowContainer left' onClick={slideLeft}>
+      <button
+        className='arrowContainer left'
+        onClick={slideLeft}
+        // disabled={true}
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='24'
