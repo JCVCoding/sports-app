@@ -35,6 +35,7 @@ export const LoginForm = () => {
           <input
             id='userName'
             type='text'
+            aria-invalid={errors.username ? 'true' : 'false'}
             className={`${inputClasses} ${
               errors.username ? errorClasses : validClasses
             }`}
@@ -50,7 +51,8 @@ export const LoginForm = () => {
           </div>
           <input
             id='password'
-            type='text'
+            type='password'
+            aria-invalid={errors.password ? 'true' : 'false'}
             className={`${inputClasses} ${
               errors.password ? errorClasses : validClasses
             }`}

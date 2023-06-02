@@ -42,6 +42,7 @@ export const SignUpForm = () => {
             className={`${inputClasses} ${
               errors.firstName ? errorClasses : validClasses
             }`}
+            aria-invalid={errors.firstName ? 'true' : 'false'}
             {...register('firstName', { required: 'First Name is required' })}
           />
           <p className='text-red-500'>{errors.firstName?.message}</p>
@@ -58,6 +59,7 @@ export const SignUpForm = () => {
             className={`${inputClasses} ${
               errors.lastName ? errorClasses : validClasses
             }`}
+            aria-invalid={errors.lastName ? 'true' : 'false'}
             {...register('lastName', { required: 'Last Name is required' })}
           />
           <p className='text-red-500'>{errors.lastName?.message}</p>
@@ -71,6 +73,7 @@ export const SignUpForm = () => {
           <input
             id='userName'
             type='text'
+            aria-invalid={errors.username ? 'true' : 'false'}
             className={`${inputClasses} ${
               errors.username ? errorClasses : validClasses
             }`}
@@ -87,6 +90,7 @@ export const SignUpForm = () => {
           <input
             id='email'
             type='email'
+            aria-invalid={errors.email ? 'true' : 'false'}
             className={`${inputClasses} ${
               errors.email ? errorClasses : validClasses
             }`}
@@ -106,6 +110,7 @@ export const SignUpForm = () => {
           <input
             id='password'
             type='password'
+            aria-invalid={errors.password ? 'true' : 'false'}
             className={`${inputClasses} ${
               errors.password ? errorClasses : validClasses
             }`}
@@ -125,6 +130,7 @@ export const SignUpForm = () => {
           <input
             id='confirmPassword'
             type='confirmPassword'
+            aria-invalid={errors.confirmPassword ? 'true' : 'false'}
             className={`${inputClasses} ${
               errors.confirmPassword ? errorClasses : validClasses
             }`}
