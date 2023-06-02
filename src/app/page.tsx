@@ -1,4 +1,3 @@
-'use client';
 import StoryCard from '@/components/storyCard';
 import Image from 'next/image';
 import Link from 'next/link';
