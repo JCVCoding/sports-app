@@ -1,6 +1,11 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import { inputClasses, errorClasses, buttonClasses } from './inputClasses';
+import {
+  inputClasses,
+  errorClasses,
+  validClasses,
+  buttonClasses,
+} from './inputClasses';
 
 interface LoginFormInputs {
   username: string;
@@ -30,7 +35,9 @@ export const LoginForm = () => {
           <input
             id='userName'
             type='text'
-            className={`${inputClasses} ${errors.username ? errorClasses : ''}`}
+            className={`${inputClasses} ${
+              errors.username ? errorClasses : validClasses
+            }`}
             {...register('username', { required: 'Username is required' })}
           />
           <p className='text-red-500'>{errors.username?.message}</p>
@@ -44,7 +51,9 @@ export const LoginForm = () => {
           <input
             id='password'
             type='text'
-            className={`${inputClasses} ${errors.password ? errorClasses : ''}`}
+            className={`${inputClasses} ${
+              errors.password ? errorClasses : validClasses
+            }`}
             {...register('password', { required: 'Password is required' })}
           />
           <p className='text-red-500'>{errors.password?.message}</p>
