@@ -38,7 +38,7 @@ export default function RootLayout({
           <ScoreCard />
           <ScoreCard />
         </ScoreBoard>
-        {children}
+        <section className='container mx-auto px-4 mt-5'>{children}</section>
       </body>
     </html>
   );
