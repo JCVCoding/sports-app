@@ -1,17 +1,10 @@
-'use client';
-import { BaseSyntheticEvent, useState } from 'react';
+import { SignUpForm } from '@/components/form_components/signUpForm';
 
 export default function SignUp() {
-  const [validated, setValidated] = useState(false);
-
-  const handleSubmit = (event: BaseSyntheticEvent) => {
-    const form: HTMLFormElement = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
-  };
-
-  return <></>;
+  return (
+    <>
+      <h2 className='text-5xl'>Sign Up</h2>
+      <SignUpForm />
+    </>
+  );
 }
