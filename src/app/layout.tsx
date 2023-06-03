@@ -1,7 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 
-import HeaderNav from '@/components/headerNav';
+import HeaderNav from '@/components/navBar_components/headerNav';
 import ScoreBoard from '@/components/scoreboard/scoreboard';
 import ScoreCard from '@/components/scoreboard/scorecard';
 
@@ -38,9 +38,9 @@ export default function RootLayout({
           <ScoreCard />
           <ScoreCard />
         </ScoreBoard>
-        <section className='container mx-auto mt-5 px-16 flex flex-col items-center'>
+        <div className='container mx-auto mt-5 px-16 flex flex-col items-center'>
           {children}
-        </section>
+        </div>
       </body>
     </html>
   );
