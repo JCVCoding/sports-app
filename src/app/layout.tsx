@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <header>
+        <header className='container mx-auto p-4'>
           <HeaderNav />
         </header>
         <ScoreBoard>
@@ -38,7 +38,9 @@ export default function RootLayout({
           <ScoreCard />
           <ScoreCard />
         </ScoreBoard>
-        <section className='container mx-auto px-4 mt-5'>{children}</section>
+        <section className='container mx-auto mt-5 px-16 flex flex-col items-center'>
+          {children}
+        </section>
       </body>
     </html>
   );
