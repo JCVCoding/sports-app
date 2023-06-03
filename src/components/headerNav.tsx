@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
 import NavDropdown from './navDropdown';
 
 export default function HeaderNav() {
@@ -26,14 +25,15 @@ export default function HeaderNav() {
         </Link>
       </div>
       <div className='flex md:gap-6 gap-3 items-center'>
-        <NavDropdown dropdownOptions={['hi', 'hello']}>
-          <UserCircleIcon className='h-12 w-12' />
-        </NavDropdown>
+        <NavDropdown />
         <Link href='/sign-up' className='md:text-xl text-base font-medium'>
           Sign Up
         </Link>
         <Link href='/login' className='md:text-xl text-base font-medium'>
           Login
+        </Link>
+        <Link href='/login' className='md:text-xl text-base font-medium'>
+          Logout
         </Link>
       </div>
     </div>
