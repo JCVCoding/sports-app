@@ -38,7 +38,7 @@ export default function RootLayout({
           <ScoreCard />
           <ScoreCard />
         </ScoreBoard>
-        <div className='container mx-auto mt-5 px-16 flex flex-col items-center'>
+        <div className='container mx-auto mt-5 px-16 flex flex-col'>
           {children}
         </div>
       </body>
