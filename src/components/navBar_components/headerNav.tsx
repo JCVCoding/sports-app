@@ -6,7 +6,7 @@ import Link from 'next/link';
 import NavDropdown from './navDropdown';
 
 export default function HeaderNav() {
-  let [vpSize, setVpSize] = useState(window.innerWidth);
+  let [vpSize, setVpSize] = useState(0);
   const getVpSize = () => {
     setVpSize(window.innerWidth);
   };
@@ -21,7 +21,6 @@ export default function HeaderNav() {
   return (
     <div className='flex justify-between items-center'>
       <div className='flex md:gap-6 gap-3'>
-        {vpSize}
         <Link href='/' className='md:text-xl text-base font-medium'>
           Home
         </Link>
