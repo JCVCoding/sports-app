@@ -16,8 +16,8 @@ const NavDropdown = () => {
   const closeDropdown = ({ target }: MouseEvent) => {
     if (listRef.current) {
       if (
-        !listRef.current?.contains(target) &&
-        !buttonRef.current?.contains(target)
+        !listRef.current?.contains(target as Node) &&
+        !buttonRef.current?.contains(target as Node)
       ) {
         setDropdownOpen(false);
       }
