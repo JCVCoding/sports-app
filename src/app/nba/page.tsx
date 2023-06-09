@@ -1,7 +1,25 @@
 import Image from 'next/image';
 import ContentCard from '@/components/layout_components/contentCard';
+import type { InferGetStaticPropsType, GetStaticProps } from 'next';
 
-export default function NBA() {
+type Repo = {
+  item: string;
+};
+
+export const getStaticProps: GetStaticProps<{
+  repo: Repo;
+}> = async () => {
+  const res = await fetch(
+    'https://us-east-2.aws.data.mongodb-api.com/app/data-ksuni/endpoint/data/v1'
+  );
+  const repo = await res.json();
+  return { props: { repo } };
+};
+
+export default function NBA({
+  repo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log(repo);
   return (
     <section>
       <div className='flex flex-col items-center gap-y-3 mt-4'>
@@ -15,6 +33,8 @@ export default function NBA() {
       </div>
       <ol>
         <li className='my-8 mx-auto'>
+          <ContentCard />
+          <ContentCard />
           <ContentCard />
         </li>
       </ol>

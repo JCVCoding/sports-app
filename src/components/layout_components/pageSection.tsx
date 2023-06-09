@@ -21,10 +21,10 @@ const PageSection = ({ header }: PageSectionType) => {
           ></Image>
           <div className='flex flex-col p-4'>
             <Link href='#'>
-              <h3>NBA Insiders Dish on Mav's Future</h3>
+              <h3>NBA Insiders Dish on Mavs Future</h3>
             </Link>
             <Link href='#'>
-              <p>Will Mav's shell out to keep Kyrie?</p>
+              <p>Will Mavs shell out to keep Kyrie?</p>
             </Link>
           </div>
         </div>

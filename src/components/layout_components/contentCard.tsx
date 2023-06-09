@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const ContentCard = () => {
   return (
-    <div>
+    <div className='mb-8'>
       <div>
         <Link href={'/nba'}>
           <h3 className='text-2xl font-medium pb-3'>Title</h3>
