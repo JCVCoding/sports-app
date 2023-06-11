@@ -1,3 +1,3 @@
-export default function NFLLayout({ children }: { children: React.ReactNode }) {
+export default function NHLLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

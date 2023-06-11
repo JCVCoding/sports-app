@@ -1,19 +1,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ContentCard = () => {
+type CardType = {
+  title: string;
+  description: string;
+  image_url: string;
+  source: string;
+};
+
+const ContentCard = ({ title, description, image_url, source }: CardType) => {
   return (
     <div className='mb-8'>
       <div>
         <Link href={'/nba'}>
-          <h3 className='text-2xl font-medium pb-3'>Title</h3>
+          <h3 className='text-2xl font-medium pb-3'>{title}</h3>
         </Link>
-        <p className='text-xl mb-4'>Story Description</p>
+        <p className='text-xl mb-4'>{description}</p>
       </div>
       <div>
-        <Link href={'/nba'}>Image Placeholder</Link>
+        <Link href={'/nba'}>
+          <Image src={image_url} alt='' width={900} height={900} />
+        </Link>
       </div>
-      <div className='text-sm text-gray-400 pt-3'>via Source</div>
+      <div className='text-sm text-gray-400 pt-3'>via {source}</div>
     </div>
   );
 };

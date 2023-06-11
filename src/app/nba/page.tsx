@@ -1,7 +1,21 @@
 import Image from 'next/image';
 import ContentCard from '@/components/layout_components/contentCard';
 
-export default function NBA() {
+import clientPromise from '@/lib/mongodb';
+
+async function getData() {
+  try {
+    const client = await clientPromise;
+    const db = client.db('ArticleData');
+    const data = await db.collection('NBA_Articles').find({}).toArray();
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export default async function NBA() {
+  const data = await getData();
   return (
     <section>
       <div className='flex flex-col items-center gap-y-3 mt-4'>
@@ -15,9 +29,9 @@ export default function NBA() {
       </div>
       <ol>
         <li className='my-8 mx-auto'>
-          <ContentCard />
-          <ContentCard />
-          <ContentCard />
+          {data?.map((nba) => (
+            <ContentCard key={nba._id.toString()} {...nba} />
+          ))}
         </li>
       </ol>
     </section>
