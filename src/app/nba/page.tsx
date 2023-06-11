@@ -29,8 +29,14 @@ export default async function NBA() {
       </div>
       <ol>
         <li className='my-8 mx-auto'>
-          {data?.map((nba) => (
-            <ContentCard key={nba._id.toString()} {...nba} />
+          {data?.map(({ _id, description, image_url, source, title }) => (
+            <ContentCard
+              key={_id.toString()}
+              description={description}
+              image_url={image_url}
+              source={source}
+              title={title}
+            />
           ))}
         </li>
       </ol>

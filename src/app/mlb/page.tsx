@@ -30,8 +30,14 @@ export default async function MLB() {
       </div>
       <ol>
         <li className='my-8 mx-auto'>
-          {data?.map((MLB) => (
-            <ContentCard key={MLB._id.toString()} {...MLB} />
+          {data?.map(({ _id, description, image_url, source, title }) => (
+            <ContentCard
+              key={_id.toString()}
+              description={description}
+              image_url={image_url}
+              source={source}
+              title={title}
+            />
           ))}
         </li>
       </ol>
