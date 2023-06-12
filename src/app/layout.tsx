@@ -1,6 +1,8 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 
+import { NextAuthProvider } from './providers';
+
 import HeaderNav from '@/components/navBar_components/headerNav';
 import ScoreBoard from '@/components/scoreboard/scoreboard';
 import ScoreCard from '@/components/scoreboard/scorecard';
@@ -20,27 +22,19 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <header className='container mx-auto p-4'>
-          <HeaderNav />
-        </header>
-        <ScoreBoard>
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-          <ScoreCard />
-        </ScoreBoard>
-        <div className='container mx-auto mt-5 px-16 flex flex-col'>
-          {children}
-        </div>
+        <NextAuthProvider>
+          <header className='container mx-auto p-4'>
+            <HeaderNav />
+          </header>
+          <ScoreBoard>
+            <ScoreCard />
+            <ScoreCard />
+            <ScoreCard />
+          </ScoreBoard>
+          <div className='container mx-auto mt-5 px-16 flex flex-col'>
+            {children}
+          </div>
+        </NextAuthProvider>
       </body>
     </html>
   );
