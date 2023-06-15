@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 import Link from 'next/link';
 import NavDropdown from './navDropdown';
@@ -17,6 +18,8 @@ export default function HeaderNav() {
       window.removeEventListener('resize', getVpSize);
     };
   }, []);
+
+  const { data } = useSession();
 
   return (
     <div className='flex justify-between items-center'>
@@ -43,15 +46,23 @@ export default function HeaderNav() {
       <div className='flex md:gap-6 gap-3 items-center'>
         {vpSize > 768 ? (
           <>
-            <Link href='/sign-up' className='md:text-xl text-base font-medium'>
-              Sign Up
-            </Link>
-            <Link href='/login' className='md:text-xl text-base font-medium'>
-              Login
-            </Link>
-            <Link href='/login' className='md:text-xl text-base font-medium'>
-              Logout
-            </Link>
+            {data?.user ? (
+              <Link
+                href='/'
+                className='md:text-xl text-base font-medium'
+                onClick={() => signOut()}
+              >
+                Sign Out
+              </Link>
+            ) : (
+              <Link
+                href='/'
+                className='md:text-xl text-base font-medium'
+                onClick={() => signIn()}
+              >
+                Sign In
+              </Link>
+            )}
           </>
         ) : (
           <NavDropdown />

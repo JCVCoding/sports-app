@@ -1,12 +1,16 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const NavDropdown = () => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const listRef = useRef<HTMLUListElement | null>(null);
   let [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+
+  const { data } = useSession();
 
   const toggleDropdown = () => {
     dropdownOpen = !dropdownOpen;
@@ -25,9 +29,8 @@ const NavDropdown = () => {
   };
 
   const dropdownOptions: { id: number; option: string; pageLink: string }[] = [
-    { id: 0, option: 'sign up', pageLink: 'sign-up' },
-    { id: 1, option: 'login', pageLink: 'login' },
-    { id: 2, option: 'logout', pageLink: 'logout' },
+    { id: 0, option: 'sign in', pageLink: '/' },
+    { id: 1, option: 'sign out', pageLink: '/' },
   ];
 
   useEffect(() => {
@@ -46,7 +49,17 @@ const NavDropdown = () => {
         ref={buttonRef}
         onClick={toggleDropdown}
       >
-        <UserCircleIcon className='h-12 w-12' />
+        {data?.user ? (
+          <Image
+            alt='user image'
+            src={data.user.image!}
+            height={48}
+            width={48}
+            className='rounded-full'
+          />
+        ) : (
+          <UserCircleIcon className='h-12 w-12' />
+        )}
       </button>
       {dropdownOpen ? (
         <ul
@@ -57,20 +70,43 @@ const NavDropdown = () => {
           role='listbox'
           ref={listRef}
         >
-          {dropdownOptions.map(({ id, option, pageLink }) => (
+          {data?.user ? (
             <li
-              key={id}
               className='py-1 px-2 flex items-center cursor-pointer capitalize'
               id='nav-dropdown-list_item'
               role='option'
               tabIndex={-1}
               aria-selected='true'
             >
-              <Link href={pageLink} onClick={() => setDropdownOpen(false)}>
-                {option}
+              <Link
+                href={'/'}
+                onClick={() => {
+                  setDropdownOpen(false);
+                  signOut();
+                }}
+              >
+                Sign Out
               </Link>
             </li>
-          ))}
+          ) : (
+            <li
+              className='py-1 px-2 flex items-center cursor-pointer capitalize'
+              id='nav-dropdown-list_item'
+              role='option'
+              tabIndex={-1}
+              aria-selected='true'
+            >
+              <Link
+                href={'/'}
+                onClick={() => {
+                  setDropdownOpen(false);
+                  signIn();
+                }}
+              >
+                Sign In
+              </Link>
+            </li>
+          )}
         </ul>
       ) : null}
     </div>
