@@ -1,17 +1,22 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
 type PageSectionType = {
   header: string;
+  stories: any;
 };
 
-const PageSection = ({ header }: PageSectionType) => {
+const PageSection = (props: PageSectionType) => {
   return (
     <section className='my-5'>
       <h2 className='text-5xl font-bold uppercase text-center mb-4'>
-        {header}
+        {props.header}
       </h2>
       <div className='flex flex-col items-center gap-y-5'>
+        {props.stories?.map((item) => (
+          <div key={item.id}>{item.title}</div>
+        ))}
         <div className='flex flex-grow flex-col md:flex-row items-center w-full'>
           <Image
             src='https://media.bleacherreport.com/image/upload/c_crop,h_1.00,w_0.94,x_0.00,y_0.00/v1684698042/xqrtq76paiki9z2uksdu.jpg'

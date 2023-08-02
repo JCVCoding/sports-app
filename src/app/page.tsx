@@ -1,7 +1,11 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
 import StoryCard, {
   StoryCardProps,
 } from '@/components/layout_components/storyCard';
 import PageSection from '@/components/layout_components/pageSection';
+import { getAPIData } from '@/lib/getArticleData';
 
 let topStories: StoryCardProps[] = [
   {
@@ -20,7 +24,18 @@ let topStories: StoryCardProps[] = [
   },
 ];
 
-export default function Home() {
+let nbaTopStories = async () => {
+  try {
+    const nbaStories = (await getAPIData('NBA_Articles')).slice(0, 2);
+    return nbaStories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default async function Home() {
+  let nbaStories = await nbaTopStories();
+
   return (
     <>
       <section>
@@ -31,10 +46,10 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <PageSection header='nba' />
-      <PageSection header='nfl' />
-      <PageSection header='mlb' />
-      <PageSection header='nhl' />
+      <PageSection header='nba' stories={nbaStories}></PageSection>
+      <PageSection header='nfl'></PageSection>
+      <PageSection header='mlb'></PageSection>
+      <PageSection header='nhl'></PageSection>
     </>
   );
 }
