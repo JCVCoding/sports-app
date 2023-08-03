@@ -1,6 +1,11 @@
 import clientPromise from './mongodb';
 
-type collectionName = 'NBA_Teams' | 'NFL_Teams' | 'NHL_Teams' | 'MLB_Teams';
+export type dbName = 'NBA_Data';
+export type collectionName =
+  | 'NBA_Teams'
+  | 'NFL_Teams'
+  | 'NHL_Teams'
+  | 'MLB_Teams';
 
 export interface teamData {
   team_id: number;
@@ -11,11 +16,12 @@ export interface teamData {
 }
 
 export const getTeamDataByName = async (
+  dbName: dbName,
   collectionName: collectionName,
   teamName: string
 ) => {
   const client = await clientPromise;
-  const db = client.db('TeamsData');
+  const db = client.db(dbName);
   try {
     const data = await db
       .collection<teamData>(collectionName)
