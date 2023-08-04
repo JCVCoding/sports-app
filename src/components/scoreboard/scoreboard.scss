@@ -79,7 +79,7 @@
       align-items: center;
     }
     .team {
-      color: #000;
+      // color: #000;
       flex: 1;
       margin-left: 0.5rem;
     }
@@ -89,6 +89,13 @@
     .team,
     .score {
       font-size: 0.75rem;
+    }
+    &.winner {
+      .team,
+      .score {
+        color: #000;
+        font-weight: 700;
+      }
     }
   }
 }

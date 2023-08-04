@@ -1,6 +1,6 @@
 import clientPromise from './mongodb';
 
-export type dbName = 'NBA_Data';
+export type dbName = 'NBA_Data' | 'MLB_Data';
 export type collectionName =
   | 'NBA_Teams'
   | 'NFL_Teams'

@@ -16,6 +16,33 @@ type scoreCardData = {
 };
 
 const ScoreCard = (props: scoreCardData) => {
+  let homeWon: boolean | null = null;
+  let gameFinished: boolean;
+
+  if (props.state === 'Final') {
+    gameFinished = true;
+  } else {
+    gameFinished = false;
+  }
+  console.log(gameFinished);
+  if (props.state !== 'Final') {
+    homeWon = null;
+  } else if (props.score_home > props.score_away) {
+    homeWon = true;
+  } else {
+    homeWon = false;
+  }
+
+  const gameState = () => {
+    if (gameFinished && props.score_home > props.score_away) {
+      return 'home won';
+    } else if (gameFinished && props.score_home < props.score_away) {
+      return 'visitor won';
+    } else {
+      return '';
+    }
+  };
+
   return (
     <div className='score-card'>
       <a href='#' className='score-card-container'>
@@ -23,7 +50,12 @@ const ScoreCard = (props: scoreCardData) => {
           <div className='title'>{props.title}</div>
           <div className='state'>{props.state}</div>
         </div>
-        <div className='score-card-team_container'>
+        <div
+          className={
+            'score-card-team_container' +
+            (gameState() === 'home won' ? ' winner' : '')
+          }
+        >
           <Image
             className='logo'
             src={props.logo_url_home}
@@ -34,7 +66,12 @@ const ScoreCard = (props: scoreCardData) => {
           <div className='team'>{props.abbr_home}</div>
           <div className='score'>{props.score_home}</div>
         </div>
-        <div className='score-card-team_container'>
+        <div
+          className={
+            'score-card-team_container' +
+            (gameState() === 'visitor won' ? ' winner' : '')
+          }
+        >
           <Image
             className='logo'
             src={props.logo_url_away}

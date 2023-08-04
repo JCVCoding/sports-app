@@ -21,7 +21,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  let data = await getGameData('NBA_Data', 'NBA_Teams', 'Miami Heat');
+  let data = await getGameData('MLB_Data');
   return (
     <html lang='en'>
       <body className={inter.className}>
@@ -34,12 +34,10 @@ export default async function RootLayout({
               <ScoreCard
                 team_name_home={item.HomeTeamInfo.team_name}
                 abbr_home={item.HomeTeamInfo.team_abbreviation}
-                title={
-                  Number(item.Date) > Date.now() ? 'Title Placeholder' : ''
-                }
+                title={item.Date.toString().substring(0, 10)}
                 logo_url_home={item.HomeTeamInfo.logo_url}
                 score_home={item.PTS_Home}
-                state='Final'
+                state={item.Start ? item.Start : 'Final'}
                 abbr_away={item.AwayTeamInfo.team_abbreviation}
                 logo_url_away={item.AwayTeamInfo.logo_url}
                 score_away={item.PTS_Away}
