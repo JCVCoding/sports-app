@@ -37,7 +37,7 @@ export default async function Home() {
   let nbaStories = await nbaTopStories();
 
   return (
-    <>
+    <div className='container mx-auto mt-5 px-16 flex flex-col'>
       <section>
         <h2 className='text-5xl font-bold text-center mb-4'>Top News</h2>
         <div className='grid grid-cols-1 sm:grid-cols-2 auto-rows-auto gap-3'>
@@ -50,6 +50,6 @@ export default async function Home() {
       <PageSection header='nfl'></PageSection>
       <PageSection header='mlb'></PageSection>
       <PageSection header='nhl'></PageSection>
-    </>
+    </div>
   );
 }

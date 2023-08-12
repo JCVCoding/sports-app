@@ -24,7 +24,6 @@ const ScoreCard = (props: scoreCardData) => {
   } else {
     gameFinished = false;
   }
-  console.log(gameFinished);
   if (props.state !== 'Final') {
     homeWon = null;
   } else if (props.score_home > props.score_away) {
@@ -44,46 +43,48 @@ const ScoreCard = (props: scoreCardData) => {
   };
 
   return (
-    <div className='score-card'>
-      <a href='#' className='score-card-container'>
-        <div className='score-card-header'>
-          <div className='title'>{props.title}</div>
-          <div className='state'>{props.state}</div>
-        </div>
-        <div
-          className={
-            'score-card-team_container' +
-            (gameState() === 'home won' ? ' winner' : '')
-          }
-        >
-          <Image
-            className='logo'
-            src={props.logo_url_home}
-            alt={props.team_name_home + ' logo'}
-            width={25}
-            height={25}
-          />
-          <div className='team'>{props.abbr_home}</div>
-          <div className='score'>{props.score_home}</div>
-        </div>
-        <div
-          className={
-            'score-card-team_container' +
-            (gameState() === 'visitor won' ? ' winner' : '')
-          }
-        >
-          <Image
-            className='logo'
-            src={props.logo_url_away}
-            alt={props.team_name_away + ' logo'}
-            width={25}
-            height={25}
-          />
-          <div className='team'>{props.abbr_away}</div>
-          <div className='score'>{props.score_away}</div>
-        </div>
-      </a>
-    </div>
+    <li className='scoreboard-list-item'>
+      <div className='score-card'>
+        <a href='#' className='score-card-container'>
+          <div className='score-card-header'>
+            <div className='title'>{props.title}</div>
+            <div className='state'>{props.state}</div>
+          </div>
+          <div
+            className={
+              'score-card-team_container' +
+              (gameState() === 'home won' ? ' winner' : '')
+            }
+          >
+            <Image
+              className='logo'
+              src={props.logo_url_home}
+              alt={props.team_name_home + ' logo'}
+              width={25}
+              height={25}
+            />
+            <div className='team'>{props.abbr_home}</div>
+            <div className='score'>{props.score_home}</div>
+          </div>
+          <div
+            className={
+              'score-card-team_container' +
+              (gameState() === 'visitor won' ? ' winner' : '')
+            }
+          >
+            <Image
+              className='logo'
+              src={props.logo_url_away}
+              alt={props.team_name_away + ' logo'}
+              width={25}
+              height={25}
+            />
+            <div className='team'>{props.abbr_away}</div>
+            <div className='score'>{props.score_away}</div>
+          </div>
+        </a>
+      </div>
+    </li>
   );
 };
 

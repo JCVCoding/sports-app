@@ -1,15 +1,21 @@
 'use client';
-import React, { useState, Children, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const ScoreBoard = ({ children }: any) => {
+import ScoreCard from './scorecard';
+
+import { gameData } from '@/lib/getGameData';
+
+const ScoreBoard = ({ gameData }: any) => {
   const [index, setIndex] = useState(0);
   let [numOfScoreboardItems, setNum] = useState<number | undefined>(0);
   let [slideValue, setValue] = useState<number | undefined>(0);
   const scoreboardList = useRef<null | HTMLUListElement>(null);
+  let [data, setData] = useState<gameData[]>(gameData);
 
   useEffect(() => {
     setNum(scoreboardList.current?.children.length);
-  }, []);
+    setData(gameData);
+  }, [gameData]);
 
   const slideLeft = (): void => {
     console.log(slideValue);
@@ -57,10 +63,20 @@ const ScoreBoard = ({ children }: any) => {
           transform: `translate3d(${slideValue}px, 0px, 0px)`,
         }}
       >
-        {Children.map(children, (child, index) => (
-          <li className='scoreboard-list-item' data-index={index}>
-            {child}
-          </li>
+        {data!.map((item) => (
+          <ScoreCard
+            team_name_home={item.HomeTeamInfo.team_name}
+            abbr_home={item.HomeTeamInfo.team_abbreviation}
+            title={item.Date.toString().substring(0, 10)}
+            logo_url_home={item.HomeTeamInfo.logo_url}
+            score_home={item.PTS_Home}
+            state={item.Start ? item.Start : 'Final'}
+            abbr_away={item.AwayTeamInfo.team_abbreviation}
+            logo_url_away={item.AwayTeamInfo.logo_url}
+            score_away={item.PTS_Away}
+            team_name_away={item.Visitor}
+            key={item._id.toString()}
+          />
         ))}
       </ul>
       <button className='arrowContainer right' onClick={slideRight}>
