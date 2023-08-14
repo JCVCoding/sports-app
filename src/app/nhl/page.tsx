@@ -44,6 +44,8 @@ export default async function NHL() {
                 image_url={imageArray[index]}
                 source={source}
                 title={title}
+                article_id={uuid}
+                league='nhl'
               />
             )
           )}
@@ -57,6 +59,8 @@ export default async function NHL() {
                 image_url={image_url}
                 source={source}
                 title={title}
+                article_id={uuid}
+                league='nhl'
               />
             )
           )}

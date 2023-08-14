@@ -43,6 +43,8 @@ export default async function MLB() {
                 image_url={imageArray[index]}
                 source={source}
                 title={title}
+                article_id={uuid}
+                league='mlb'
               />
             )
           )}
@@ -50,13 +52,17 @@ export default async function MLB() {
         <li className='my-8 mx-auto'>
           {apiData?.map(
             ({ uuid, description, image_url, source, title }: ArticleData) => (
-              <ContentCard
-                key={uuid}
-                description={description}
-                image_url={image_url}
-                source={source}
-                title={title}
-              />
+              <>
+                <ContentCard
+                  key={uuid}
+                  description={description}
+                  image_url={image_url}
+                  source={source}
+                  title={title}
+                  league='mlb'
+                  article_id={uuid}
+                />
+              </>
             )
           )}
         </li>

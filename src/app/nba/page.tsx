@@ -40,6 +40,8 @@ export default async function NBA() {
               image_url={miamiHeat}
               source={source}
               title={title}
+              article_id={uuid}
+              league='nba'
             />
           ))}
         </li>
@@ -52,6 +54,8 @@ export default async function NBA() {
                 image_url={image_url}
                 source={source}
                 title={title}
+                article_id={uuid}
+                league='nba'
               />
             )
           )}

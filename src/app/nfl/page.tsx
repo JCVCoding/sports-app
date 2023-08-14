@@ -40,6 +40,8 @@ export default async function NFL() {
               image_url={miamiDolphins}
               source={source}
               title={title}
+              article_id={uuid}
+              league='nfl'
             />
           ))}
         </li>
@@ -52,6 +54,8 @@ export default async function NFL() {
                 image_url={image_url}
                 source={source}
                 title={title}
+                article_id={uuid}
+                league='nfl'
               />
             )
           )}
