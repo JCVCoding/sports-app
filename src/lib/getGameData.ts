@@ -93,6 +93,7 @@ export const getGameData = async (dbName: dbName) => {
           { $sort: { Date: 1 } },
           { $unwind: '$HomeTeamInfo' },
           { $unwind: '$AwayTeamInfo' },
+          { $limit: 10 },
         ])
         .toArray();
       return data;
