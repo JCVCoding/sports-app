@@ -31,32 +31,32 @@ export const createTodaysDate = (): string => {
   return todayQuery;
 };
 
-export const createURLQuery = (
-  date: string,
-  search: string,
-  topStories: boolean
-): string => {
-  if (!process.env.NEWS_API_KEY) {
-    throw new Error('Invalid/Missing environment variable: "NEWS_API_KEY"');
-  }
+// export const createURLQuery = (
+//   date: string,
+//   search: string,
+//   topStories: boolean
+// ): string => {
+//   if (!process.env.NEWS_API_KEY) {
+//     throw new Error('Invalid/Missing environment variable: "NEWS_API_KEY"');
+//   }
 
-  const url = topStories
-    ? 'https://api.thenewsapi.com/v1/news/top?'
-    : 'https://api.thenewsapi.com/v1/news/all?';
-  const params: QueryParams = {
-    api_token: process.env.NEWS_API_KEY,
-    categories: 'sports',
-    locale: 'us',
-    language: 'en',
-    search: search,
-    search_fields: 'title,description,keywords,main_text',
-    published_on: date,
-    domains: 'bleacherreport.com',
-  };
-  const query = Object.keys(params)
-    .map((param) => {
-      return escape(param) + '=' + escape(params[param]);
-    })
-    .join('&');
-  return url + query;
-};
+//   const url = topStories
+//     ? 'https://api.thenewsapi.com/v1/news/top?'
+//     : 'https://api.thenewsapi.com/v1/news/all?';
+//   const params: QueryParams = {
+//     api_token: process.env.NEWS_API_KEY,
+//     categories: 'sports',
+//     locale: 'us',
+//     language: 'en',
+//     search: search,
+//     search_fields: 'title,description,keywords,main_text',
+//     published_on: date,
+//     domains: 'bleacherreport.com',
+//   };
+//   const query = Object.keys(params)
+//     .map((param) => {
+//       return escape(param) + '=' + escape(params[param]);
+//     })
+//     .join('&');
+//   return url + query;
+// };

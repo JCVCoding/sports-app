@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/types/app/mlb/article/page.tsx", ".next/types/app/mlb/layout.tsx", ".next/types/app/mlb/page.tsx"],
   "exclude": ["node_modules"]
 }

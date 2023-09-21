@@ -1,4 +1,4 @@
-import { createTodaysDate } from './getAPIArticleData';
+import { ArticleData, createTodaysDate } from './getAPIArticleData';
 import clientPromise from './mongodb';
 
 type collectionName =
@@ -30,4 +30,17 @@ export const getAIGeneratedData = async (collectionName: collectionName) => {
     .limit(5)
     .toArray();
   return backupData;
+};
+
+export const getArticleById = async (
+  id: string,
+  collectionName: collectionName
+) => {
+  const client = await clientPromise;
+  const db = client.db('ArticleData');
+  const articleData = await db
+    .collection<ArticleData>(collectionName)
+    .find({ uuid: id })
+    .toArray();
+  return articleData;
 };
