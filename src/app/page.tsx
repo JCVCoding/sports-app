@@ -11,13 +11,16 @@ let topStories: StoryCardProps[] = [
     id: 0,
     text: "Miami's role players continue to show up when it matters most",
     title: "Miami Heat Proving They're Built Perfectly Around Jimmy Butler",
+    uuid: '879debdb-7cc3-480f-82fd-c9bbvghj76',
   },
   {
-    author: 'Mike Chiari',
+    author: 'Paul Kasabian',
     header: 'NBA',
     id: 1,
-    text: "Knicks' Julius Randle Has Surgery on Ankle Injury; Reportedly to Be Ready for Season",
-    title: 'Julius Randle Had Surgery',
+    text: 'Cooking up blockbuster deal where everyone wins (including Dame)',
+    title:
+      "Haynes: Blazers 'Refusing' to Have Damian Lillard Trade Talks with Heat Amid Rumors",
+    uuid: '879debdb-dashdak-4234-doipo0345',
   },
 ];
 
