@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { uuid: string } }) {
       <div className='relative mb-3' style={{ height: '800px' }}>
         <Image src={data.image_url} alt='' fill />
       </div>
-      {data.description}
+      <div className='mb-6'>{data.description}</div>
     </>
   );
 }
