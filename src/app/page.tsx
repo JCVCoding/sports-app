@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import Link from 'next/link';
-
 import StoryCard, {
   StoryCardProps,
 } from '@/components/layout_components/storyCard';
@@ -24,17 +21,20 @@ let topStories: StoryCardProps[] = [
   },
 ];
 
-let nbaTopStories = async () => {
+let getTopStories = async () => {
   try {
     const nbaStories = (await getAPIData('NBA_Articles')).slice(0, 2);
-    return nbaStories;
+    const nflStories = (await getAPIData('NFL_Articles')).slice(0, 2);
+    const nhlStories = (await getAPIData('NHL_Articles')).slice(0, 2);
+    const mlbStories = (await getAPIData('MLB_Articles')).slice(0, 2);
+    return { nbaStories, nflStories, nhlStories, mlbStories };
   } catch (error) {
     console.log(error);
   }
 };
 
 export default async function Home() {
-  let nbaStories = await nbaTopStories();
+  let leagueStories = await getTopStories();
 
   return (
     <div className='container mx-auto mt-5 px-16 flex flex-col'>
@@ -46,10 +46,22 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <PageSection header='nba' stories={nbaStories}></PageSection>
-      <PageSection header='nfl'></PageSection>
-      <PageSection header='mlb'></PageSection>
-      <PageSection header='nhl'></PageSection>
+      <PageSection
+        header='nba'
+        stories={leagueStories?.nbaStories}
+      ></PageSection>
+      <PageSection
+        header='nfl'
+        stories={leagueStories?.nflStories}
+      ></PageSection>
+      <PageSection
+        header='mlb'
+        stories={leagueStories?.mlbStories}
+      ></PageSection>
+      <PageSection
+        header='nhl'
+        stories={leagueStories?.nhlStories}
+      ></PageSection>
     </div>
   );
 }

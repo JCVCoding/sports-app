@@ -12,7 +12,7 @@ export const getAPIData = async (collectionName: collectionName) => {
   const client = await clientPromise;
   const db = client.db('ArticleData');
   const backupData = await db
-    .collection(collectionName)
+    .collection<ArticleData>(collectionName)
     .find({ published_at: { $lt: createTodaysDate() } })
     .sort({ 'published_at': -1 })
     .limit(5)
