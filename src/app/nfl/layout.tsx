@@ -12,7 +12,7 @@ export default async function NFLLayout({
   return (
     <>
       <ScoreBoard gameData={gameData} />
-      <div className='container mx-auto mt-5 px-16 flex flex-col'>
+      <div className='container mx-auto mt-5 px-16 pb-8 flex flex-col'>
         {children}
       </div>
     </>
