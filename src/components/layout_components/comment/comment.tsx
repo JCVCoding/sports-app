@@ -20,17 +20,20 @@ const Comment = ({
 }: commentProps) => {
   voteCount = 2;
   return (
-    <div className='flex'>
-      <div>{avatar}</div>
-      <div className='px-2'>
-        <div>
-          {author}
-          <span className='ml-1 text-xs text-gray-400'>{timestamp}</span>
+    <>
+      <div className='flex w-full'>
+        <div>{avatar}</div>
+        <div className='px-2'>
+          <div>
+            {author}
+            <span className='ml-1 text-xs text-gray-400'>{timestamp}</span>
+          </div>
+          <div className='my-1'>{text}</div>
+          <CommentActions voteCount={voteCount} />
         </div>
-        <div className='my-1'>{text}</div>
-        <CommentActions voteCount={voteCount} />
       </div>
-    </div>
+      <CommentReplies />
+    </>
   );
 };
 
