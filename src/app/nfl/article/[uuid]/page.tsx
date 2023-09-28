@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { getArticleById } from '@/lib/getArticleData';
 import Comment from '@/components/layout_components/comment/comment';
+import CommentReplies from '@/components/layout_components/comment/commentReplies';
 
 export default async function Page({ params }: { params: { uuid: string } }) {
   const [data] = await getArticleById(params.uuid, 'NFL_Articles');
@@ -21,6 +22,7 @@ export default async function Page({ params }: { params: { uuid: string } }) {
           text='this is a comment'
           timestamp='Today at 1:59pm'
         />
+        <CommentReplies />
       </div>
     </>
   );

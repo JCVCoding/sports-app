@@ -1,51 +1,56 @@
 'use client';
 
-import { Menu } from '@headlessui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { Button, Collapse } from '@material-tailwind/react';
 import Comment from './comment';
+import { useState } from 'react';
 
 const CommentReplies = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggleOpen = () => setOpen(!open);
+
   return (
-    <Menu as='div'>
-      <Menu.Button className='inline-flex w-28 justify-center items-center gap-x-1.5 rounded-2xl bg-white px-3 py-2 ml-6 text-sm font-semibold text-blue-600 hover:ring-1 hover:ring-inset hover:bg-blue-50'>
-        {({ open }) => (
-          <>
-            {!open ? (
-              <ChevronDownIcon
-                className='h-4 w-4 text-blue-600'
-                aria-hidden='true'
-              />
-            ) : (
-              <ChevronUpIcon
-                className='h-4 w-4 text-blue-600'
-                aria-hidden='true'
-              />
-            )}
-            <span>7 replies</span>
-          </>
+    <div className='ml-8'>
+      <Button
+        className='rounded-full flex gap-x-3 normal-case text-sm'
+        color='blue'
+        ripple={false}
+        size='sm'
+        variant='text'
+        onClick={toggleOpen}
+      >
+        {open ? (
+          <ChevronDownIcon className='h-4 w-4' aria-hidden='true' />
+        ) : (
+          <ChevronUpIcon className='h-4 w-4' aria-hidden='true' />
         )}
-      </Menu.Button>
-      <Menu.Items className='ml-10 pointer-events-none'>
-        <Menu.Item>
-          <Comment
-            author='Josh'
-            avatar='Josh'
-            voteCount={2}
-            text='this is a comment'
-            timestamp='Today at 1:59pm'
-          />
-        </Menu.Item>
-        <Menu.Item>
-          <Comment
-            author='Josh'
-            avatar='Josh'
-            voteCount={2}
-            text='this is a comment'
-            timestamp='Today at 1:59pm'
-          />
-        </Menu.Item>
-      </Menu.Items>
-    </Menu>
+        <span>3 replies</span>
+      </Button>
+      <Collapse open={open}>
+        <Comment
+          author='Josh'
+          avatar='Josh'
+          text='This is a test comment'
+          timestamp='Today at 8:30pm'
+          voteCount={3}
+        />
+        <Comment
+          author='Josh'
+          avatar='Josh'
+          text='This is a test comment'
+          timestamp='Today at 8:30pm'
+          voteCount={3}
+        />
+        <Comment
+          author='Josh'
+          avatar='Josh'
+          text='This is a test comment'
+          timestamp='Today at 8:30pm'
+          voteCount={3}
+        />
+      </Collapse>
+    </div>
   );
 };
 

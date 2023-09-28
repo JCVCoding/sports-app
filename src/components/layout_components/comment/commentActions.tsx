@@ -5,7 +5,7 @@ import {
   HandThumbDownIcon,
 } from '@heroicons/react/24/outline';
 import CommentReplyDialog from './CommentReplyDialog';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 interface CommentActionsProps {
   voteCount: number;
 }

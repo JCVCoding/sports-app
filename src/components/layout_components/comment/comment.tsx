@@ -1,6 +1,7 @@
-import CommentActions from './commentActions';
-import CommentReplies from './commentReplies';
+'use client';
 
+import CommentActions from './commentActions';
+import { Avatar } from '@material-tailwind/react';
 export interface commentProps {
   author: string;
   avatar: string;
@@ -18,11 +19,10 @@ const Comment = ({
   timestamp,
   voteCount,
 }: commentProps) => {
-  voteCount = 2;
   return (
     <>
       <div className='flex w-full'>
-        <div>{avatar}</div>
+        <Avatar src='/next.svg' size='xs' />
         <div className='px-2'>
           <div>
             {author}
@@ -32,7 +32,6 @@ const Comment = ({
           <CommentActions voteCount={voteCount} />
         </div>
       </div>
-      <CommentReplies />
     </>
   );
 };
