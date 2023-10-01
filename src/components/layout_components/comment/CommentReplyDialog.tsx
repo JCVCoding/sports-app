@@ -1,6 +1,15 @@
 import { Avatar, Button, Input } from '@material-tailwind/react';
+import { useRef } from 'react';
 
-const CommentReplyDialog = ({ closeDialog }: { closeDialog: () => void }) => {
+const CommentReplyDialog = ({
+  closeDialog,
+  focusInput,
+}: {
+  author: string;
+  closeDialog: () => void;
+  focusInput: boolean;
+}) => {
+  let inputReference = useRef<HTMLInputElement>(null);
   return (
     <div className='flex'>
       <Avatar src='/next.svg' size='xs' className='relative top-4' />
@@ -9,20 +18,28 @@ const CommentReplyDialog = ({ closeDialog }: { closeDialog: () => void }) => {
           crossOrigin={undefined}
           variant='static'
           placeholder='Add a reply...'
+          ref={inputReference}
+          inputRef={(ref) => {
+            if (focusInput) {
+              ref?.focus();
+            }
+          }}
         />
         <div className='flex items-center justify-end gap-x-2 pt-2'>
           <Button
-            variant='text'
-            size='sm'
             className='rounded-full normal-case text-sm'
             onClick={() => closeDialog()}
+            size='sm'
+            variant='text'
           >
             Cancel
           </Button>
           <Button
-            variant='filled'
-            size='sm'
             className='rounded-full normal-case text-sm'
+            ripple={false}
+            size='sm'
+            type='submit'
+            variant='filled'
           >
             Reply
           </Button>

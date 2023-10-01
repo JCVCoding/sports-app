@@ -29,7 +29,7 @@ const Comment = ({
             <span className='ml-1 text-xs text-gray-400'>{timestamp}</span>
           </div>
           <div className='my-1'>{text}</div>
-          <CommentActions voteCount={voteCount} />
+          <CommentActions voteCount={voteCount} author={author} />
         </div>
       </div>
     </>
