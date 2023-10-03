@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@material-tailwind/react';
 import CommentReplyDialog from './commentReplyDialog';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 interface CommentActionsProps {
   author: string;
   voteCount: number;
@@ -14,6 +14,7 @@ interface CommentActionsProps {
 
 const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
+  let inputReference = useRef<HTMLInputElement>(null);
 
   const openCommentReply = () => {
     setOpen(true);
@@ -21,6 +22,10 @@ const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
 
   const closeCommentReply = () => {
     setOpen(false);
+  };
+
+  const focusReplyDialogInput = () => {
+    inputReference.current?.focus();
   };
 
   return (
@@ -35,7 +40,10 @@ const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
         </Button>
         <Button
           className='rounded-full font-bold normal-case'
-          onClick={openCommentReply}
+          onClick={() => {
+            openCommentReply();
+            focusReplyDialogInput();
+          }}
           size='sm'
           variant='text'
         >
@@ -45,8 +53,7 @@ const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
       {open ? (
         <CommentReplyDialog
           closeDialog={closeCommentReply}
-          focusInput={open}
-          author={author}
+          ref={inputReference}
         />
       ) : null}
     </div>
