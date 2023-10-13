@@ -5,11 +5,12 @@ import { useState } from 'react';
 
 const CommentBox = () => {
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
   const openOnFocus = () => {
     setOpen(true);
   };
   const close = () => {
+    setInputValue('');
     setOpen(false);
   };
   return (
@@ -22,6 +23,7 @@ const CommentBox = () => {
           placeholder='Add a comment...'
           onClick={openOnFocus}
           onChange={(e) => setInputValue(e.target.value)}
+          value={inputValue}
         />
         {open ? (
           <div className='flex items-center justify-end gap-x-2 pt-2'>
