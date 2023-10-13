@@ -12,7 +12,7 @@ export default async function MLBLayout({
   return (
     <>
       <ScoreBoard gameData={gameData} />
-      <div className='container mx-auto mt-5 px-16 flex flex-col'>
+      <div className='container mx-auto mt-5 sm:px-16 px-8 flex flex-col'>
         {children}
       </div>
     </>
