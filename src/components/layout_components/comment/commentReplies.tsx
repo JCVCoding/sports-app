@@ -11,7 +11,7 @@ const CommentReplies = () => {
   const toggleOpen = () => setOpen(!open);
 
   return (
-    <div className='ml-8'>
+    <div className='ml-6 sm:ml-8'>
       <Button
         className='rounded-full flex gap-x-3 normal-case text-sm'
         color='blue'

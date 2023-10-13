@@ -21,9 +21,9 @@ const Comment = ({
 }: commentProps) => {
   return (
     <>
-      <div className='flex w-full'>
+      <div className='flex flex-wrap'>
         <Avatar src='/next.svg' size='xs' />
-        <div className='px-2'>
+        <div className='px-2 flex-1'>
           <div>
             {author}
             <span className='ml-1 text-xs text-gray-400'>{timestamp}</span>
