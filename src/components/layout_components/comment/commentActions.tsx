@@ -25,7 +25,9 @@ const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
   };
 
   const focusReplyDialogInput = () => {
-    inputReference.current?.focus();
+    setTimeout(() => {
+      inputReference.current?.focus();
+    }, 0);
   };
 
   return (
