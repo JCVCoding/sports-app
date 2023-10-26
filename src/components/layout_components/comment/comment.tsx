@@ -5,7 +5,7 @@ import { Avatar } from '@material-tailwind/react';
 export interface commentProps {
   author: string;
   avatar: string;
-  comments?: string[];
+  replies?: commentProps[];
   text: string;
   timestamp: string;
   voteCount: number;
@@ -14,7 +14,6 @@ export interface commentProps {
 const Comment = ({
   author,
   avatar,
-  comments,
   text,
   timestamp,
   voteCount,
@@ -22,7 +21,7 @@ const Comment = ({
   return (
     <>
       <div className='flex flex-wrap'>
-        <Avatar src='/next.svg' size='xs' />
+        <Avatar src={avatar} size='xs' />
         <div className='px-2 flex-1'>
           <div>
             {author}

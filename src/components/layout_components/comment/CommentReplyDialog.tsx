@@ -1,13 +1,15 @@
 'use client';
-
 import { Avatar, Button, Input } from '@material-tailwind/react';
-import { forwardRef, Ref, useState } from 'react';
+import { forwardRef, Ref, useReducer, useState } from 'react';
+import commentReducer from '@/reducers/commentReducer';
+import { CommentActions } from '../../../reducers/commentReducer';
 
 const CommentReplyDialog = (
   { closeDialog }: { closeDialog: () => void },
   ref: Ref<HTMLInputElement>
 ) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
+  const [state, dispatch] = useReducer(commentReducer, { text: inputValue });
   return (
     <div className='flex flex-wrap'>
       <Avatar src='/next.svg' size='xs' className='relative top-4' />
@@ -36,6 +38,9 @@ const CommentReplyDialog = (
             size='sm'
             type='submit'
             variant='filled'
+            onClick={() =>
+              dispatch({ type: CommentActions.ADD, payload: inputValue })
+            }
           >
             Reply
           </Button>

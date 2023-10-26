@@ -1,17 +1,18 @@
-import Comment from './comment';
+import Comment, { commentProps } from './comment';
 import CommentReplies from './commentReplies';
 
-const CommentThread = () => {
+const CommentThread = ({ commentData }: { commentData: commentProps }) => {
+  let { author, avatar, text, timestamp, voteCount, replies } = commentData;
   return (
     <>
       <Comment
-        author='Josh'
-        avatar='Josh'
-        text='This is a test comment'
-        timestamp='Today at 8:30pm'
-        voteCount={3}
+        author={author}
+        avatar={avatar}
+        text={text}
+        timestamp={timestamp}
+        voteCount={voteCount}
       />
-      <CommentReplies />
+      <CommentReplies replies={replies} />
     </>
   );
 };

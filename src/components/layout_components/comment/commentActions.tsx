@@ -5,6 +5,7 @@ import {
   HandThumbDownIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@material-tailwind/react';
+import focusReplyDialogInput from '@/utils/focusReplyDialogInput';
 import CommentReplyDialog from './commentReplyDialog';
 import { useRef, useState } from 'react';
 interface CommentActionsProps {
@@ -12,7 +13,7 @@ interface CommentActionsProps {
   voteCount: number;
 }
 
-const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
+const CommentActions = ({ voteCount }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
   let inputReference = useRef<HTMLInputElement>(null);
 
@@ -22,12 +23,6 @@ const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
 
   const closeCommentReply = () => {
     setOpen(false);
-  };
-
-  const focusReplyDialogInput = () => {
-    setTimeout(() => {
-      inputReference.current?.focus();
-    }, 0);
   };
 
   return (
@@ -44,7 +39,7 @@ const CommentActions = ({ voteCount, author }: CommentActionsProps) => {
           className='rounded-full font-bold normal-case'
           onClick={() => {
             openCommentReply();
-            focusReplyDialogInput();
+            focusReplyDialogInput(inputReference);
           }}
           size='sm'
           variant='text'
