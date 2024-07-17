@@ -1,5 +1,5 @@
-import ArticlePage from "@/components/articlePage/articlePage";
+import ArticlePages from "@/components/pages/articlePages";
 
 export default async function NFL() {
-  return <ArticlePage collectionName="NFL_Articles" league="NFL" />;
+  return <ArticlePages collectionName="NFL_Articles" league="NFL" />;
 }

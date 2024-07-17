@@ -15,7 +15,7 @@ async function getData(collectionName: collectionName) {
   }
 }
 
-export default async function ArticlePage({
+export default async function ArticlePages({
   collectionName,
   league,
 }: {
