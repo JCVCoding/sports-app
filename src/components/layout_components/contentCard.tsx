@@ -1,5 +1,5 @@
-import Image, { StaticImageData } from 'next/image';
-import Link from 'next/link';
+import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 type CardType = {
   title: string;
@@ -19,19 +19,27 @@ const ContentCard = ({
   league,
 }: CardType) => {
   return (
-    <div className='mb-8'>
+    <div className="mb-8">
       <div>
-        <Link href={`/${league}/article/${encodeURIComponent(article_id)}`}>
-          <h3 className='text-2xl font-medium pb-3'>{title}</h3>
+        <Link
+          href={`/${league.toLocaleLowerCase()}/article/${encodeURIComponent(
+            article_id
+          )}`}
+        >
+          <h3 className="text-2xl font-medium pb-3">{title}</h3>
         </Link>
-        <p className='text-xl mb-4'>{description.substring(0, 100) + '...'}</p>
+        <p className="text-xl mb-4">{description.substring(0, 100) + "..."}</p>
       </div>
       <div>
-        <Link href={`/${league}/article/${encodeURIComponent(article_id)}`}>
-          <Image src={image_url} alt='' width={900} height={900} />
+        <Link
+          href={`/${league.toLocaleLowerCase()}/article/${encodeURIComponent(
+            article_id
+          )}`}
+        >
+          <Image src={image_url} alt="" width={900} height={900} />
         </Link>
       </div>
-      <div className='text-sm text-gray-400 pt-3'>via {source}</div>
+      <div className="text-sm text-gray-400 pt-3">via {source}</div>
     </div>
   );
 };

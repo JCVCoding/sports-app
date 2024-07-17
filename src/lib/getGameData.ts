@@ -1,6 +1,6 @@
-import clientPromise from './mongodb';
-import { teamData } from './getTeamData';
-import { dbName } from './getTeamData';
+import clientPromise from "./mongodb";
+import { teamData } from "./getTeamData";
+import { dbName } from "./getTeamData";
 
 export interface gameData {
   Date: string;
@@ -14,87 +14,72 @@ export interface gameData {
 }
 
 export const getGameData = async (dbName: dbName) => {
-  let today = new Date();
-  let yesterday = new Date(today);
-  let tomorrow = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
   const client = await clientPromise;
   const db = client.db(dbName);
   const mlbData = () => {
     let data = db
-      .collection('2023_Season')
+      .collection("2023_Season")
       .aggregate<gameData>([
         {
           $lookup: {
-            from: 'Teams',
-            localField: 'Home',
-            foreignField: 'team_abbreviation',
-            as: 'HomeTeamInfo',
+            from: "Teams",
+            localField: "Home",
+            foreignField: "team_abbreviation",
+            as: "HomeTeamInfo",
           },
         },
         {
           $lookup: {
-            from: 'Teams',
-            localField: 'Visitor',
-            foreignField: 'team_abbreviation',
-            as: 'AwayTeamInfo',
+            from: "Teams",
+            localField: "Visitor",
+            foreignField: "team_abbreviation",
+            as: "AwayTeamInfo",
           },
         },
-        {
-          $match: {
-            $or: [
-              { 'Date': { $eq: yesterday.toLocaleDateString() } },
-              { 'Date': { $eq: today.toLocaleDateString() } },
-              { 'Date': { $gte: tomorrow.toLocaleDateString() } },
-            ],
-          },
-        },
-        { $unwind: '$HomeTeamInfo' },
-        { $unwind: '$AwayTeamInfo' },
+        { $sort: { Date: 1 } },
+        { $unwind: "$HomeTeamInfo" },
+        { $unwind: "$AwayTeamInfo" },
         { $limit: 10 },
       ])
       .toArray();
     return data;
   };
   try {
-    if (dbName === 'MLB_Data') {
+    if (dbName === "MLB_Data") {
       let data = await mlbData();
-      // console.log(data);
       return data;
     } else {
       let data = await db
-        .collection('2023_Season')
+        .collection("2023_Season")
         .aggregate<gameData>([
           {
             $lookup: {
-              from: 'Teams',
-              localField: 'Home',
-              foreignField: 'team_name',
-              as: 'HomeTeamInfo',
+              from: "Teams",
+              localField: "Home",
+              foreignField: "team_name",
+              as: "HomeTeamInfo",
             },
           },
           {
             $lookup: {
-              from: 'Teams',
-              localField: 'Visitor',
-              foreignField: 'team_name',
-              as: 'AwayTeamInfo',
+              from: "Teams",
+              localField: "Visitor",
+              foreignField: "team_name",
+              as: "AwayTeamInfo",
             },
           },
           {
             $addFields: {
               Date: {
-                $toDate: '$Date',
+                $toDate: "$Date",
               },
             },
           },
           { $sort: { Date: 1 } },
-          { $unwind: '$HomeTeamInfo' },
-          { $unwind: '$AwayTeamInfo' },
-          { $limit: 10 },
+          { $unwind: "$HomeTeamInfo" },
+          { $unwind: "$AwayTeamInfo" },
         ])
+        .limit(20)
         .toArray();
       return data;
     }
