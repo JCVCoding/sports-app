@@ -12,7 +12,8 @@ export type CommentDataType = {
   publishedAt: string;
   updatedAt: string;
   parentId: string;
-  Reply: CommentDataType[];
+  authorEmail: string;
+  reply: CommentDataType[];
 };
 
 type CommentThread = {

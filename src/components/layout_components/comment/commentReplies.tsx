@@ -40,8 +40,15 @@ const CommentReplies = ({
       </Button>
       <Collapse open={open}>
         {replies.map((reply) => {
-          const { author, dislikeCount, likeCount, text, publishedAt, id } =
-            reply;
+          const {
+            author,
+            dislikeCount,
+            likeCount,
+            text,
+            publishedAt,
+            id,
+            authorEmail,
+          } = reply;
           return (
             <Comment
               key={id}
@@ -54,6 +61,7 @@ const CommentReplies = ({
               id={id}
               league={league}
               uuid={uuid}
+              authorEmail={authorEmail}
             />
           );
         })}

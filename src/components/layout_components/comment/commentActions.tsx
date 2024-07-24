@@ -11,6 +11,7 @@ import {
 import { Button } from "@material-tailwind/react";
 import CommentReplyDialog from "./CommentReplyDialog";
 import { useRef, useState } from "react";
+import { useSession } from "next-auth/react";
 interface CommentActionsProps {
   id: string;
   likeCount: number;
@@ -30,6 +31,8 @@ const CommentActions = ({
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   const [currentDislikeCount, setCurrentDislikeCount] = useState(dislikeCount);
   let inputReference = useRef<HTMLInputElement>(null);
+
+  const { data } = useSession();
 
   const openCommentReply = () => {
     setOpen(true);

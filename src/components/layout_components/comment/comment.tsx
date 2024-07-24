@@ -2,6 +2,7 @@
 
 import CommentActions from "./commentActions";
 import { Avatar } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 export interface commentProps {
   author: string;
   avatar: string;
@@ -12,6 +13,7 @@ export interface commentProps {
   id: string;
   league: string;
   uuid: string;
+  authorEmail: string;
 }
 
 const Comment = ({
@@ -24,14 +26,21 @@ const Comment = ({
   dislikeCount,
   league,
   uuid,
+  authorEmail,
 }: commentProps) => {
+  const { data } = useSession();
+
   return (
     <>
       <div className="flex flex-wrap">
         <Avatar src="/next.svg" size="xs" />
         <div className="px-2 flex-1">
           <div>
-            {author}
+            {data?.user?.email === authorEmail ? (
+              <span className="font-bold">{author}</span>
+            ) : (
+              author
+            )}
             <span className="ml-1 text-xs text-gray-400">{timestamp}</span>
           </div>
           <div className="my-1">{text}</div>
