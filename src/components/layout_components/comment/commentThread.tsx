@@ -12,7 +12,16 @@ const CommentThread = ({
   uuid: string;
 }) => {
   return comments?.map((comment) => {
-    const { author, dislikeCount, likeCount, text, authorEmail, id } = comment;
+    const {
+      author,
+      dislikeCount,
+      likeCount,
+      text,
+      authorEmail,
+      id,
+      dislikedUsers,
+      likedUsers,
+    } = comment;
     let { publishedAt, updatedAt } = comment;
     publishedAt = new Date(publishedAt).toTimeString();
     updatedAt = new Date(updatedAt).toTimeString();
@@ -29,6 +38,8 @@ const CommentThread = ({
           league={league}
           uuid={uuid}
           authorEmail={authorEmail}
+          dislikedUsers={dislikedUsers}
+          likedUsers={likedUsers}
         />
         <CommentReplies replies={comment.reply} league={league} uuid={uuid} />
       </div>

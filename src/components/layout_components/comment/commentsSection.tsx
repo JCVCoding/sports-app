@@ -14,6 +14,8 @@ export type CommentDataType = {
   parentId: string;
   authorEmail: string;
   reply: CommentDataType[];
+  dislikedUsers?: string[];
+  likedUsers?: string[];
 };
 
 type CommentThread = {
@@ -45,11 +47,15 @@ const CommentsSection = ({
     };
     fetchData();
   }, [params.uuid, league]);
-
   if (data) {
+    let numOfComments = 0;
+    data.forEach((comment) => {
+      let commentReplies = comment.reply.length;
+      numOfComments += commentReplies;
+    });
     return (
       <>
-        <CommentHeader numOfComments={data.length} />
+        <CommentHeader numOfComments={numOfComments + data.length} />
         <CommentThread comments={data} league={league} uuid={params.uuid} />
       </>
     );

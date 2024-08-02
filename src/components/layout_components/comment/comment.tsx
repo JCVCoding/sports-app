@@ -13,7 +13,9 @@ export interface commentProps {
   id: string;
   league: string;
   uuid: string;
-  authorEmail: string;
+  authorEmail: string | null | undefined;
+  dislikedUsers: string[] | null | undefined;
+  likedUsers: string[] | null | undefined;
 }
 
 const Comment = ({
@@ -27,9 +29,18 @@ const Comment = ({
   league,
   uuid,
   authorEmail,
+  dislikedUsers,
+  likedUsers,
 }: commentProps) => {
   const { data } = useSession();
-
+  let isLiked = false;
+  let isDisliked = false;
+  if (likedUsers?.includes(data?.user?.email!)) {
+    isLiked = true;
+  }
+  if (dislikedUsers?.includes(data?.user?.email!)) {
+    isDisliked = true;
+  }
   return (
     <>
       <div className="flex flex-wrap">
@@ -50,6 +61,9 @@ const Comment = ({
             id={id}
             league={league}
             uuid={uuid}
+            authorEmail={data?.user?.email}
+            isLiked={isLiked}
+            isDisliked={isDisliked}
           />
         </div>
       </div>

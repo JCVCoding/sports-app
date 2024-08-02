@@ -48,6 +48,8 @@ const CommentReplies = ({
             publishedAt,
             id,
             authorEmail,
+            dislikedUsers,
+            likedUsers,
           } = reply;
           return (
             <Comment
@@ -62,6 +64,8 @@ const CommentReplies = ({
               league={league}
               uuid={uuid}
               authorEmail={authorEmail}
+              dislikedUsers={dislikedUsers}
+              likedUsers={likedUsers}
             />
           );
         })}

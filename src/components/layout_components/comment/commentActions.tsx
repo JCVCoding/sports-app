@@ -18,6 +18,9 @@ interface CommentActionsProps {
   dislikeCount: number;
   league: string;
   uuid: string;
+  authorEmail: string | null | undefined;
+  isLiked: boolean;
+  isDisliked: boolean;
 }
 
 const CommentActions = ({
@@ -26,10 +29,15 @@ const CommentActions = ({
   id,
   league,
   uuid,
+  authorEmail,
+  isLiked,
+  isDisliked,
 }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   const [currentDislikeCount, setCurrentDislikeCount] = useState(dislikeCount);
+  const [isLikedValue, setIsLikedValue] = useState(isLiked);
+  const [isDislikedValue, setIsDislikedValue] = useState(isDisliked);
   let inputReference = useRef<HTMLInputElement>(null);
 
   const { data } = useSession();
@@ -47,18 +55,36 @@ const CommentActions = ({
   };
 
   const likeComment = () => {
-    setCurrentLikeCount(currentLikeCount + 1);
+    if (data?.user && isDislikedValue) {
+      setCurrentDislikeCount(currentDislikeCount - 1);
+      setCurrentLikeCount(currentLikeCount + 1);
+      setIsLikedValue(true);
+      setIsDislikedValue(false);
+    }
     fetch(`/api/comment/${league}/${uuid}`, {
       method: "PATCH",
-      body: JSON.stringify({ id: id, action: "like" }),
+      body: JSON.stringify({
+        id: id,
+        action: "like",
+        authorEmail,
+      }),
       headers: { "Content-Type": "application/json" },
     });
   };
   const dislikeComment = () => {
-    setCurrentDislikeCount(currentDislikeCount + 1);
+    if (data?.user && isLikedValue) {
+      setCurrentLikeCount(currentLikeCount - 1);
+      setCurrentDislikeCount(currentDislikeCount + 1);
+      setIsDislikedValue(true);
+      setIsLikedValue(false);
+    }
     fetch(`/api/comment/${league}/${uuid}`, {
       method: "PATCH",
-      body: JSON.stringify({ id: id, action: "dislike" }),
+      body: JSON.stringify({
+        id: id,
+        action: "dislike",
+        authorEmail,
+      }),
       headers: { "Content-Type": "application/json" },
     });
   };
@@ -72,7 +98,11 @@ const CommentActions = ({
           variant="text"
           onClick={likeComment}
         >
-          <HandThumbUpIcon className="h-6 w-6" />
+          {isLikedValue ? (
+            <SolidThumbUp className="h-6 w-6" />
+          ) : (
+            <HandThumbUpIcon className="h-6 w-6" />
+          )}
         </Button>
         <span className="mr-2">{currentLikeCount}</span>
         <Button
@@ -81,20 +111,26 @@ const CommentActions = ({
           variant="text"
           onClick={dislikeComment}
         >
-          <HandThumbDownIcon className="h-6 w-6" />
+          {isDislikedValue ? (
+            <SolidThumbDown className="h-6 w-6" />
+          ) : (
+            <HandThumbDownIcon className="h-6 w-6" />
+          )}
         </Button>
         <span className="mr-2">{currentDislikeCount}</span>
-        <Button
-          className="rounded-full font-bold normal-case"
-          onClick={() => {
-            openCommentReply();
-            focusReplyDialogInput();
-          }}
-          size="sm"
-          variant="text"
-        >
-          Reply
-        </Button>
+        {data?.user?.email !== authorEmail && (
+          <Button
+            className="rounded-full font-bold normal-case"
+            onClick={() => {
+              openCommentReply();
+              focusReplyDialogInput();
+            }}
+            size="sm"
+            variant="text"
+          >
+            Reply
+          </Button>
+        )}
       </div>
       {open ? (
         <CommentReplyDialog

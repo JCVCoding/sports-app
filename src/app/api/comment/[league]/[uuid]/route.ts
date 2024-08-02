@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { headers } from "next/headers";
 
 async function getDB() {
   const client = await clientPromise;
@@ -36,7 +35,7 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { league: string; uuid: string } }
 ) {
-  const { id, action } = await req.json();
+  const { id, action, authorEmail } = await req.json();
   const db = await getDB();
 
   const like = async () => {
@@ -47,7 +46,13 @@ export async function PATCH(
           uuid: params.uuid,
           id: id,
         },
-        { $inc: { likeCount: 1 } }
+        {
+          $inc: {
+            likeCount: 1,
+            dislikeCount: -1,
+          },
+          $addToSet: { likedUsers: authorEmail },
+        }
       );
   };
   const dislike = async () => {
@@ -58,7 +63,39 @@ export async function PATCH(
           uuid: params.uuid,
           id: id,
         },
-        { $inc: { dislikeCount: 1 } }
+        {
+          $inc: {
+            likeCount: -1,
+            dislikeCount: 1,
+          },
+          $addToSet: { dislikedUsers: authorEmail },
+        }
+      );
+  };
+  const pullLikedUser = async () => {
+    await db
+      .collection(`${params.league.toUpperCase()}_Comments`)
+      .findOneAndUpdate(
+        {
+          uuid: params.uuid,
+          id: id,
+        },
+        {
+          $pull: { likedUsers: authorEmail },
+        }
+      );
+  };
+  const pullDislikedUser = async () => {
+    await db
+      .collection(`${params.league.toUpperCase()}_Comments`)
+      .findOneAndUpdate(
+        {
+          uuid: params.uuid,
+          id: id,
+        },
+        {
+          $pull: { dislikedUsers: authorEmail },
+        }
       );
   };
 
@@ -66,9 +103,11 @@ export async function PATCH(
     switch (action) {
       case "like":
         like();
+        pullDislikedUser();
         break;
       case "dislike":
         dislike();
+        pullLikedUser();
         break;
       default:
         break;
