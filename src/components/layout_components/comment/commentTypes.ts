@@ -1,13 +1,13 @@
 export type CommentDataType = {
   id: string;
-  author: string;
+  author: string | null | undefined;
   text: string;
   likeCount: number;
   dislikeCount: number;
   publishedAt: string;
   updatedAt: string | null;
   parentId: string | null;
-  authorEmail: string;
+  authorEmail: string | null | undefined;
   reply: CommentDataType[];
   dislikedUsers?: string[];
   likedUsers?: string[];

@@ -1,12 +1,18 @@
 "use client";
 
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { Avatar, Button, Input } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { addComment } from "./commentSlice";
 
 const CommentBox = () => {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState<string>("");
+
+  const league = useAppSelector((state) => state.commentReducer.league);
+  const uuid = useAppSelector((state) => state.commentReducer.uuid);
+  const dispatch = useAppDispatch();
 
   const { data } = useSession();
 
@@ -18,16 +24,36 @@ const CommentBox = () => {
   };
 
   const onSubmit = () => {
-    fetch(`/api/comment/${context?.league}/${context?.uuid}`, {
+    const author = data?.user?.name;
+    const authorEmail = data?.user?.email;
+    fetch(`/api/comment/${league}/${uuid}`, {
       method: "POST",
       body: JSON.stringify({
         inputValue,
-        author: data?.user?.name,
-        authorEmail: data?.user?.email,
+        author,
+        authorEmail,
         parentId: null,
       }),
       headers: { "Content-Type": "application/json" },
     });
+
+    dispatch(
+      addComment({
+        id: Math.floor(Math.random() * 1000).toString(),
+        parentId: "",
+        text: inputValue,
+        likeCount: 0,
+        dislikeCount: 0,
+        publishedAt: new Date().toTimeString(),
+        updatedAt: null,
+        dislikedUsers: [],
+        likedUsers: [],
+        author,
+        authorEmail,
+        reply: [],
+        uuid: "",
+      })
+    );
   };
 
   return (

@@ -28,19 +28,6 @@ export const getComments = createAsyncThunk(
 
 // Define the initial state using that type
 const initialState: CommentState = { comments: [], league: "", uuid: "" };
-//   id: Math.floor(Math.random() * 1000).toString(),
-//   parentId: "",
-//   text: "",
-//   likeCount: 0,
-//   dislikeCount: 0,
-//   publishedAt: new Date().toTimeString(),
-//   updatedAt: null,
-//   dislikedUsers: [],
-//   likedUsers: [],
-//   author: "",
-//   authorEmail: "",
-//   reply: [],
-//   uuid: "",
 
 export const commentsSlice = createSlice({
   name: "comments",
@@ -48,7 +35,7 @@ export const commentsSlice = createSlice({
   initialState,
   reducers: {
     addComment: (state, action: PayloadAction<CommentDataType>) => {
-      return { ...state, data: action.payload };
+      state.comments.push(action.payload);
     },
     setUUID: (state, action: PayloadAction<string>) => {
       state.uuid = action.payload;
