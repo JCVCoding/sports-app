@@ -4,18 +4,13 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Button, Collapse } from "@material-tailwind/react";
 import Comment from "./comment";
 import { useState } from "react";
-import { CommentDataType } from "./commentsSection";
+import { CommentDataType } from "./commentTypes";
+import { useAppSelector } from "@/lib/hooks";
 
-const CommentReplies = ({
-  replies,
-  league,
-  uuid,
-}: {
-  replies: CommentDataType[];
-  league: string;
-  uuid: string;
-}) => {
+const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
   const [open, setOpen] = useState(false);
+  const league = useAppSelector((state) => state.commentReducer.league);
+  const uuid = useAppSelector((state) => state.commentReducer.uuid);
 
   const toggleOpen = () => setOpen(!open);
 

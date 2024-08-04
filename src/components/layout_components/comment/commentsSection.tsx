@@ -1,26 +1,8 @@
 "use client";
+
 import CommentHeader from "./commentHeader";
 import CommentThread from "./commentThread";
-import { useEffect, useState } from "react";
-
-export type CommentDataType = {
-  id: string;
-  author: string;
-  text: string;
-  likeCount: number;
-  dislikeCount: number;
-  publishedAt: string;
-  updatedAt: string;
-  parentId: string;
-  authorEmail: string;
-  reply: CommentDataType[];
-  dislikedUsers?: string[];
-  likedUsers?: string[];
-};
-
-type CommentThread = {
-  data: CommentDataType[];
-};
+import StoreProvider from "@/app/StoreProvider";
 
 const CommentsSection = ({
   params,
@@ -29,37 +11,12 @@ const CommentsSection = ({
   params: { uuid: string };
   league: string;
 }) => {
-  const [data, setData] = useState<CommentDataType[] | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const commentData = await fetch(
-        `https://wealthy-pug-54.hasura.app/api/rest/comment_thread/?uuid=${params.uuid}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_HASURA_ADMIN_SECRET}`,
-          },
-        }
-      );
-      const data: CommentThread | null = await commentData.json();
-      setData(Object.values(data!)[0]);
-    };
-    fetchData();
-  }, [params.uuid, league]);
-  if (data) {
-    let numOfComments = 0;
-    data.forEach((comment) => {
-      let commentReplies = comment.reply.length;
-      numOfComments += commentReplies;
-    });
-    return (
-      <>
-        <CommentHeader numOfComments={numOfComments + data.length} />
-        <CommentThread comments={data} league={league} uuid={params.uuid} />
-      </>
-    );
-  }
+  return (
+    <StoreProvider>
+      <CommentHeader />
+      <CommentThread league={league} uuid={params.uuid} />
+    </StoreProvider>
+  );
 };
 
 export default CommentsSection;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+import { randomInt, randomUUID } from "crypto";
 
 async function getDB() {
   const client = await clientPromise;
@@ -24,8 +25,26 @@ export async function GET(
   return NextResponse.json(data);
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { league: string; uuid: string } }
+) {
+  const db = await getDB();
   const data = await req.json();
+  db.collection(`${params.league.toUpperCase()}_Comments`).insertOne({
+    uuid: params.uuid,
+    id: Math.floor(Math.random() * 1000),
+    parentId: data.parentId,
+    text: data.inputValue,
+    likeCount: 0,
+    dislikeCount: 0,
+    publishedAt: new Date(),
+    updatedAt: null,
+    dislikedUsers: [],
+    likedUsers: [],
+    author: data.author,
+    authorEmail: data.authorEmail,
+  });
   return NextResponse.json(req.body);
 }
 

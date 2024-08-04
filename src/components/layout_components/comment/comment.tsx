@@ -11,8 +11,8 @@ export interface commentProps {
   likeCount: number;
   dislikeCount: number;
   id: string;
-  league: string;
-  uuid: string;
+  league: string | null | undefined;
+  uuid: string | null | undefined;
   authorEmail: string | null | undefined;
   dislikedUsers: string[] | null | undefined;
   likedUsers: string[] | null | undefined;
