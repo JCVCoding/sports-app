@@ -61,6 +61,7 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
               authorEmail={authorEmail}
               dislikedUsers={dislikedUsers}
               likedUsers={likedUsers}
+              isReply={true}
             />
           );
         })}

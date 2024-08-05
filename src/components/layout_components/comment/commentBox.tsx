@@ -54,6 +54,8 @@ const CommentBox = () => {
         uuid: "",
       })
     );
+
+    setInputValue("");
   };
 
   return (
@@ -66,6 +68,7 @@ const CommentBox = () => {
           placeholder="Add a comment..."
           onClick={openOnFocus}
           onChange={(e) => setInputValue(e.target.value)}
+          value={inputValue}
         />
         {open ? (
           <div className="flex items-center justify-end gap-x-2 pt-2">

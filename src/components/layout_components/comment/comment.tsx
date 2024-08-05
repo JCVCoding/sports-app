@@ -16,6 +16,7 @@ export interface commentProps {
   authorEmail: string | null | undefined;
   dislikedUsers: string[] | null | undefined;
   likedUsers: string[] | null | undefined;
+  isReply: boolean;
 }
 
 const Comment = ({
@@ -31,6 +32,7 @@ const Comment = ({
   authorEmail,
   dislikedUsers,
   likedUsers,
+  isReply,
 }: commentProps) => {
   const { data } = useSession();
   let isLiked = false;
@@ -44,7 +46,7 @@ const Comment = ({
   return (
     <>
       <div className="flex flex-wrap">
-        <Avatar src="/next.svg" size="xs" />
+        <Avatar src="" size="xs" />
         <div className="px-2 flex-1">
           <div>
             {data?.user?.email === authorEmail ? (
@@ -61,9 +63,10 @@ const Comment = ({
             id={id}
             league={league}
             uuid={uuid}
-            authorEmail={data?.user?.email}
+            authorEmail={authorEmail}
             isLiked={isLiked}
             isDisliked={isDisliked}
+            isReply={isReply}
           />
         </div>
       </div>

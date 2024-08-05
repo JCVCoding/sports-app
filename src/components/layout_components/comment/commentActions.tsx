@@ -21,6 +21,7 @@ interface CommentActionsProps {
   authorEmail: string | null | undefined;
   isLiked: boolean;
   isDisliked: boolean;
+  isReply: boolean;
 }
 
 const CommentActions = ({
@@ -32,6 +33,7 @@ const CommentActions = ({
   authorEmail,
   isLiked,
   isDisliked,
+  isReply,
 }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
@@ -118,7 +120,7 @@ const CommentActions = ({
           )}
         </Button>
         <span className="mr-2">{currentDislikeCount}</span>
-        {data?.user?.email !== authorEmail && (
+        {!isReply && (
           <Button
             className="rounded-full font-bold normal-case"
             onClick={() => {

@@ -45,6 +45,7 @@ const CommentThread = ({ league, uuid }: { league: string; uuid: string }) => {
             authorEmail={authorEmail}
             dislikedUsers={dislikedUsers}
             likedUsers={likedUsers}
+            isReply={false}
           />
           {comment.reply.length > 0 && (
             <CommentReplies replies={comment.reply} />
