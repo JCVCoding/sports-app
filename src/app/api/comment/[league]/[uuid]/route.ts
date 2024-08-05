@@ -33,7 +33,7 @@ export async function POST(
   const data = await req.json();
   db.collection(`${params.league.toUpperCase()}_Comments`).insertOne({
     uuid: params.uuid,
-    id: Math.floor(Math.random() * 1000),
+    id: Math.floor(Math.random() * 1000).toString(),
     parentId: data.parentId,
     text: data.inputValue,
     likeCount: 0,
@@ -48,7 +48,20 @@ export async function POST(
   return NextResponse.json(req.body);
 }
 
-export async function DELETE() {}
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { league: string; uuid: string } }
+) {
+  const { id } = await req.json();
+  const db = await getDB();
+
+  db.collection(`${params.league.toUpperCase()}_Comments`).findOneAndDelete({
+    uuid: params.uuid,
+    id: id,
+  });
+
+  return NextResponse.json(req.body);
+}
 
 export async function PATCH(
   req: NextRequest,

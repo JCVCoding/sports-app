@@ -13,7 +13,6 @@ const CommentThread = ({ league, uuid }: { league: string; uuid: string }) => {
   }, [uuid, dispatch]);
 
   const comments = useAppSelector((state) => state.commentReducer.comments);
-  console.log(comments);
 
   if (comments) {
     return comments?.map((comment) => {

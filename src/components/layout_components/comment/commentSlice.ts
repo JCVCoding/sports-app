@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { CommentDataType } from "./commentTypes";
 import { CommentThreadType } from "./commentTypes";
@@ -38,10 +38,19 @@ export const commentsSlice = createSlice({
       state.comments.push(action.payload);
     },
     setUUID: (state, action: PayloadAction<string>) => {
-      state.uuid = action.payload;
+      return { ...state, uuid: action.payload };
     },
     setLeague: (state, action: PayloadAction<string>) => {
-      state.league = action.payload;
+      return { ...state, league: action.payload };
+    },
+    deleteComment: (state, action: PayloadAction<string>) => {
+      const newComments = state.comments.filter(
+        (comment) => comment.id !== action.payload
+      );
+      return {
+        ...state,
+        comments: newComments,
+      };
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     // incrementByAmount: (state, action: PayloadAction<number>) => {
@@ -55,7 +64,8 @@ export const commentsSlice = createSlice({
   },
 });
 
-export const { addComment, setUUID, setLeague } = commentsSlice.actions;
+export const { addComment, setUUID, setLeague, deleteComment } =
+  commentsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.comments.value;

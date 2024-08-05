@@ -3,6 +3,7 @@
 import CommentActions from "./commentActions";
 import { Avatar } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
+import CommentActionMenu from "./commentActionMenu";
 export interface commentProps {
   author: string;
   avatar: string;
@@ -68,6 +69,9 @@ const Comment = ({
             isDisliked={isDisliked}
             isReply={isReply}
           />
+        </div>
+        <div className="px-2 flex-1 flex justify-end items-center">
+          <CommentActionMenu id={id} />
         </div>
       </div>
     </>
