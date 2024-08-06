@@ -1,9 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import commentReducer from "../components/layout_components/comment/commentSlice";
+import commentReducer, {
+  CommentAPI,
+} from "../components/layout_components/comment/commentSlice";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: { commentReducer },
+    reducer: { commentReducer, [CommentAPI.reducerPath]: CommentAPI.reducer },
+    middleware: (gDM) => gDM().concat(CommentAPI.middleware),
   });
 };
 

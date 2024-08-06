@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { deleteComment } from "./commentSlice";
+import { useDeleteCommentMutation } from "./commentSlice";
+import { useAppSelector } from "@/lib/hooks";
 import {
   EllipsisVerticalIcon,
   PencilIcon,
@@ -21,20 +21,8 @@ const CommentActionMenu = ({
   id: string;
   editDispatch: DispatchWithoutAction;
 }) => {
+  const [deleteComment] = useDeleteCommentMutation();
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
-  const dispatch = useAppDispatch();
-
-  const deleteCommentHandler = (id: string) => {
-    dispatch(deleteComment(id));
-
-    fetch(`/api/comment/${league}/${uuid}`, {
-      method: "DELETE",
-      body: JSON.stringify({
-        id,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
-  };
 
   return (
     <Menu placement="bottom-start">
@@ -53,7 +41,7 @@ const CommentActionMenu = ({
         </MenuItem>
         <MenuItem
           className="flex gap-2"
-          onClick={() => deleteCommentHandler(id)}
+          onClick={() => deleteComment({ league, uuid, id })}
         >
           <TrashIcon className="h-4 w-4" />
           Delete

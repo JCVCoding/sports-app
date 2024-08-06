@@ -12,6 +12,7 @@ import { Button } from "@material-tailwind/react";
 import CommentReplyDialog from "./CommentReplyDialog";
 import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useAppDispatch } from "@/lib/hooks";
 interface CommentActionsProps {
   id: string;
   likeCount: number;
@@ -47,6 +48,8 @@ const CommentActions = ({
 
   const { data } = useSession();
 
+  const dispatch = useAppDispatch();
+
   const openCommentReply = () => {
     setOpen(true);
   };
@@ -59,7 +62,7 @@ const CommentActions = ({
     inputReference.current?.focus();
   };
 
-  const likeComment = () => {
+  const likeComment = async () => {
     if (data?.user && !isLikedValue) {
       setCurrentLikeCount(currentLikeCount + 1);
       currentLikeCountRef.current += 1;
@@ -71,7 +74,7 @@ const CommentActions = ({
       setIsLikedValue(true);
       setIsDislikedValue(false);
 
-      fetch(`/api/comment/${league}/${uuid}`, {
+      await fetch(`/api/comment/${league}/${uuid}`, {
         method: "PATCH",
         body: JSON.stringify({
           id: id,
@@ -84,7 +87,7 @@ const CommentActions = ({
       });
     }
   };
-  const dislikeComment = () => {
+  const dislikeComment = async () => {
     if (data?.user && !isDislikedValue) {
       currentLikeCount > 0 && setCurrentLikeCount(currentLikeCount - 1);
       currentLikeCount > 0 ? (currentLikeCountRef.current -= 1) : null;
@@ -95,7 +98,7 @@ const CommentActions = ({
       setIsDislikedValue(true);
       setIsLikedValue(false);
 
-      fetch(`/api/comment/${league}/${uuid}`, {
+      await fetch(`/api/comment/${league}/${uuid}`, {
         method: "PATCH",
         body: JSON.stringify({
           id: id,

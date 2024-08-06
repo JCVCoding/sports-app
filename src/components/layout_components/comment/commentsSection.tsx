@@ -3,9 +3,8 @@
 import CommentHeader from "./commentHeader";
 import CommentThread from "./commentThread";
 
-import { getComments, setLeague, setUUID } from "./commentSlice";
+import { setLeague, setUUID } from "./commentSlice";
 import { useAppDispatch } from "@/lib/hooks";
-import { useEffect } from "react";
 
 const CommentsSection = ({
   uuid,
@@ -17,9 +16,6 @@ const CommentsSection = ({
   const dispatch = useAppDispatch();
   dispatch(setUUID(uuid));
   dispatch(setLeague(league));
-  useEffect(() => {
-    dispatch(getComments(uuid));
-  });
 
   return (
     <>

@@ -1,28 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { randomInt, randomUUID } from "crypto";
 
 async function getDB() {
   const client = await clientPromise;
   const db = client.db("CommentData");
   return db;
-}
-
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { league: string; uuid: string } }
-) {
-  const data = await fetch(
-    `https://wealthy-pug-54.hasura.app/api/rest/comment_thread/?uuid=${params.uuid}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "x-hasura-admin-secret": `${process.env.HASURA_ADMIN_SECRET}`,
-      },
-    }
-  );
-  console.log(params.uuid, process.env.HASURA_ADMIN_SECRET);
-  return NextResponse.json(data);
 }
 
 export async function POST(
@@ -38,14 +20,15 @@ export async function POST(
     text: data.inputValue,
     likeCount: 0,
     dislikeCount: 0,
-    publishedAt: new Date(),
+    publishedAt:
+      new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString(),
     updatedAt: null,
     dislikedUsers: [],
     likedUsers: [],
     author: data.author,
     authorEmail: data.authorEmail,
   });
-  return NextResponse.json(req.body);
+  return NextResponse.json({ data });
 }
 
 export async function DELETE(
@@ -60,7 +43,7 @@ export async function DELETE(
     id: id,
   });
 
-  return NextResponse.json(req.body);
+  return NextResponse.json({ id });
 }
 
 export async function PATCH(
@@ -70,24 +53,22 @@ export async function PATCH(
   const { id, action, authorEmail, text, likeCount, dislikeCount } =
     await req.json();
   const db = await getDB();
+  console.log("hello");
 
-  const like = async () => {
-    console.log(likeCount);
-    await db
-      .collection(`${params.league.toUpperCase()}_Comments`)
-      .findOneAndUpdate(
-        {
-          uuid: params.uuid,
-          id: id,
+  const like = () => {
+    db.collection(`${params.league.toUpperCase()}_Comments`).findOneAndUpdate(
+      {
+        uuid: params.uuid,
+        id: id,
+      },
+      {
+        $set: {
+          likeCount,
+          dislikeCount,
         },
-        {
-          $set: {
-            likeCount,
-            dislikeCount,
-          },
-          $addToSet: { likedUsers: authorEmail },
-        }
-      );
+        $addToSet: { likedUsers: authorEmail },
+      }
+    );
   };
   const dislike = async () => {
     await db

@@ -62,9 +62,9 @@ const Comment = ({
   if (dislikedUsers?.includes(data?.user?.email!)) {
     isDisliked = true;
   }
-  const completeEdit = () => {
+  const completeEdit = async () => {
     dispatch({ type: "DONE" });
-    fetch(`/api/comment/${league}/${uuid}`, {
+    await fetch(`/api/comment/${league}/${uuid}`, {
       method: "PATCH",
       body: JSON.stringify({
         id,
