@@ -42,6 +42,9 @@ const CommentActions = ({
   const [isDislikedValue, setIsDislikedValue] = useState(isDisliked);
   let inputReference = useRef<HTMLInputElement>(null);
 
+  const currentLikeCountRef = useRef(likeCount);
+  const currentDislikeCountRef = useRef(dislikeCount);
+
   const { data } = useSession();
 
   const openCommentReply = () => {
@@ -57,38 +60,53 @@ const CommentActions = ({
   };
 
   const likeComment = () => {
-    if (data?.user && isDislikedValue) {
-      setCurrentDislikeCount(currentDislikeCount - 1);
+    if (data?.user && !isLikedValue) {
       setCurrentLikeCount(currentLikeCount + 1);
+      currentLikeCountRef.current += 1;
+
+      currentDislikeCount > 0 &&
+        setCurrentDislikeCount(currentDislikeCount - 1);
+      currentDislikeCount > 0 ? (currentDislikeCountRef.current -= 1) : null;
+
       setIsLikedValue(true);
       setIsDislikedValue(false);
+
+      fetch(`/api/comment/${league}/${uuid}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          id: id,
+          action: "like",
+          authorEmail,
+          dislikeCount: currentDislikeCountRef.current,
+          likeCount: currentLikeCountRef.current,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
     }
-    fetch(`/api/comment/${league}/${uuid}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        id: id,
-        action: "like",
-        authorEmail,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
   };
   const dislikeComment = () => {
-    if (data?.user && isLikedValue) {
-      setCurrentLikeCount(currentLikeCount - 1);
+    if (data?.user && !isDislikedValue) {
+      currentLikeCount > 0 && setCurrentLikeCount(currentLikeCount - 1);
+      currentLikeCount > 0 ? (currentLikeCountRef.current -= 1) : null;
+
       setCurrentDislikeCount(currentDislikeCount + 1);
+      currentDislikeCountRef.current += 1;
+
       setIsDislikedValue(true);
       setIsLikedValue(false);
+
+      fetch(`/api/comment/${league}/${uuid}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          id: id,
+          action: "dislike",
+          authorEmail,
+          dislikeCount: currentDislikeCountRef.current,
+          likeCount: currentLikeCountRef.current,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
     }
-    fetch(`/api/comment/${league}/${uuid}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        id: id,
-        action: "dislike",
-        authorEmail,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
   };
 
   return (

@@ -67,10 +67,12 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { league: string; uuid: string } }
 ) {
-  const { id, action, authorEmail, text } = await req.json();
+  const { id, action, authorEmail, text, likeCount, dislikeCount } =
+    await req.json();
   const db = await getDB();
 
   const like = async () => {
+    console.log(likeCount);
     await db
       .collection(`${params.league.toUpperCase()}_Comments`)
       .findOneAndUpdate(
@@ -79,9 +81,9 @@ export async function PATCH(
           id: id,
         },
         {
-          $inc: {
-            likeCount: 1,
-            dislikeCount: -1,
+          $set: {
+            likeCount,
+            dislikeCount,
           },
           $addToSet: { likedUsers: authorEmail },
         }
@@ -96,9 +98,9 @@ export async function PATCH(
           id: id,
         },
         {
-          $inc: {
-            likeCount: -1,
-            dislikeCount: 1,
+          $set: {
+            likeCount,
+            dislikeCount,
           },
           $addToSet: { dislikedUsers: authorEmail },
         }

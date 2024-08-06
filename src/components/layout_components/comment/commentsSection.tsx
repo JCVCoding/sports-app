@@ -2,20 +2,30 @@
 
 import CommentHeader from "./commentHeader";
 import CommentThread from "./commentThread";
-import StoreProvider from "@/app/StoreProvider";
+
+import { getComments, setLeague, setUUID } from "./commentSlice";
+import { useAppDispatch } from "@/lib/hooks";
+import { useEffect } from "react";
 
 const CommentsSection = ({
-  params,
+  uuid,
   league,
 }: {
-  params: { uuid: string };
+  uuid: string;
   league: string;
 }) => {
+  const dispatch = useAppDispatch();
+  dispatch(setUUID(uuid));
+  dispatch(setLeague(league));
+  useEffect(() => {
+    dispatch(getComments(uuid));
+  });
+
   return (
-    <StoreProvider>
+    <>
       <CommentHeader />
-      <CommentThread league={league} uuid={params.uuid} />
-    </StoreProvider>
+      <CommentThread />
+    </>
   );
 };
 
