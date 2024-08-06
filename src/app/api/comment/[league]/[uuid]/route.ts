@@ -67,7 +67,7 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { league: string; uuid: string } }
 ) {
-  const { id, action, authorEmail } = await req.json();
+  const { id, action, authorEmail, text } = await req.json();
   const db = await getDB();
 
   const like = async () => {
@@ -130,6 +130,19 @@ export async function PATCH(
         }
       );
   };
+  const editComment = async () => {
+    await db
+      .collection(`${params.league.toUpperCase()}_Comments`)
+      .findOneAndUpdate(
+        {
+          uuid: params.uuid,
+          id: id,
+        },
+        {
+          $set: { text: text },
+        }
+      );
+  };
 
   try {
     switch (action) {
@@ -141,11 +154,13 @@ export async function PATCH(
         dislike();
         pullLikedUser();
         break;
+      case "edit":
+        editComment();
       default:
         break;
     }
   } catch (error) {
     console.error(error);
   }
-  return NextResponse.json({ id });
+  return NextResponse.json({ id, action });
 }

@@ -12,8 +12,15 @@ import {
   MenuItem,
   MenuList,
 } from "@material-tailwind/react";
+import { DispatchWithoutAction } from "react";
 
-const CommentActionMenu = ({ id }: { id: string }) => {
+const CommentActionMenu = ({
+  id,
+  editDispatch,
+}: {
+  id: string;
+  editDispatch: DispatchWithoutAction;
+}) => {
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
   const dispatch = useAppDispatch();
 
@@ -37,7 +44,10 @@ const CommentActionMenu = ({ id }: { id: string }) => {
         </Button>
       </MenuHandler>
       <MenuList>
-        <MenuItem className="flex gap-2">
+        <MenuItem
+          className="flex gap-2"
+          onClick={() => editDispatch({ type: "EDITING" })}
+        >
           <PencilIcon className="h-4 w-4" />
           Edit
         </MenuItem>

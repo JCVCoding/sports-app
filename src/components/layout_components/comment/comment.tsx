@@ -1,9 +1,11 @@
 "use client";
 
 import CommentActions from "./commentActions";
-import { Avatar } from "@material-tailwind/react";
+import { Avatar, Button, Input } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import CommentActionMenu from "./commentActionMenu";
+import { useReducer, useState } from "react";
+
 export interface commentProps {
   author: string;
   avatar: string;
@@ -20,6 +22,20 @@ export interface commentProps {
   isReply: boolean;
 }
 
+export const EditingReducer = (
+  state: { isEditing: boolean },
+  action: { type: "EDITING" | "DONE" }
+) => {
+  switch (action.type) {
+    case "EDITING":
+      return { isEditing: (state.isEditing = true) };
+    case "DONE":
+      return { isEditing: (state.isEditing = false) };
+    default:
+      break;
+  }
+};
+
 const Comment = ({
   author,
   id,
@@ -35,6 +51,8 @@ const Comment = ({
   likedUsers,
   isReply,
 }: commentProps) => {
+  const [commentText, setCommentText] = useState(text);
+  const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
   const { data } = useSession();
   let isLiked = false;
   let isDisliked = false;
@@ -44,6 +62,18 @@ const Comment = ({
   if (dislikedUsers?.includes(data?.user?.email!)) {
     isDisliked = true;
   }
+  const completeEdit = () => {
+    dispatch({ type: "DONE" });
+    fetch(`/api/comment/${league}/${uuid}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        id,
+        text: commentText,
+        action: "edit",
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+  };
   return (
     <>
       <div className="flex flex-wrap">
@@ -57,7 +87,26 @@ const Comment = ({
             )}
             <span className="ml-1 text-xs text-gray-400">{timestamp}</span>
           </div>
-          <div className="my-1">{text}</div>
+          {state.isEditing ? (
+            <div className="relative flex w-full">
+              <Input
+                crossOrigin={undefined}
+                variant="static"
+                onChange={(e) => setCommentText(e.target.value)}
+                value={commentText}
+              />
+              <Button
+                size="sm"
+                variant="outlined"
+                className="!absolute right-1 top-1"
+                onClick={completeEdit}
+              >
+                Done
+              </Button>
+            </div>
+          ) : (
+            <div className="my-1">{commentText}</div>
+          )}
           <CommentActions
             likeCount={likeCount}
             dislikeCount={dislikeCount}
@@ -70,8 +119,8 @@ const Comment = ({
             isReply={isReply}
           />
         </div>
-        <div className="px-2 flex-1 flex justify-end items-center">
-          <CommentActionMenu id={id} />
+        <div className="px-2 flex-2 flex justify-end items-center">
+          <CommentActionMenu id={id} editDispatch={dispatch} />
         </div>
       </div>
     </>
