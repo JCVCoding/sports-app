@@ -12,7 +12,7 @@ import { Button } from "@material-tailwind/react";
 import CommentReplyDialog from "./CommentReplyDialog";
 import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useAppDispatch } from "@/lib/hooks";
+import { useLikeDislikeCommentMutation } from "./commentSlice";
 interface CommentActionsProps {
   id: string;
   likeCount: number;
@@ -46,9 +46,9 @@ const CommentActions = ({
   const currentLikeCountRef = useRef(likeCount);
   const currentDislikeCountRef = useRef(dislikeCount);
 
-  const { data } = useSession();
+  const [likeDislikeComment] = useLikeDislikeCommentMutation();
 
-  const dispatch = useAppDispatch();
+  const { data } = useSession();
 
   const openCommentReply = () => {
     setOpen(true);
@@ -74,16 +74,14 @@ const CommentActions = ({
       setIsLikedValue(true);
       setIsDislikedValue(false);
 
-      await fetch(`/api/comment/${league}/${uuid}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          id: id,
-          action: "like",
-          authorEmail,
-          dislikeCount: currentDislikeCountRef.current,
-          likeCount: currentLikeCountRef.current,
-        }),
-        headers: { "Content-Type": "application/json" },
+      likeDislikeComment({
+        league,
+        uuid,
+        id,
+        action: "like",
+        authorEmail,
+        dislikeCount: currentDislikeCountRef.current,
+        likeCount: currentLikeCountRef.current,
       });
     }
   };
@@ -98,16 +96,14 @@ const CommentActions = ({
       setIsDislikedValue(true);
       setIsLikedValue(false);
 
-      await fetch(`/api/comment/${league}/${uuid}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          id: id,
-          action: "dislike",
-          authorEmail,
-          dislikeCount: currentDislikeCountRef.current,
-          likeCount: currentLikeCountRef.current,
-        }),
-        headers: { "Content-Type": "application/json" },
+      likeDislikeComment({
+        league,
+        uuid,
+        id,
+        action: "dislike",
+        authorEmail,
+        dislikeCount: currentDislikeCountRef.current,
+        likeCount: currentLikeCountRef.current,
       });
     }
   };

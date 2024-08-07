@@ -5,6 +5,7 @@ import { Avatar, Button, Input } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import CommentActionMenu from "./commentActionMenu";
 import { useReducer, useState } from "react";
+import { useEditCommentMutation } from "./commentSlice";
 
 export interface commentProps {
   author: string;
@@ -54,6 +55,8 @@ const Comment = ({
   const [commentText, setCommentText] = useState(text);
   const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
   const { data } = useSession();
+  const [editComment] = useEditCommentMutation();
+
   let isLiked = false;
   let isDisliked = false;
   if (likedUsers?.includes(data?.user?.email!)) {
@@ -64,15 +67,7 @@ const Comment = ({
   }
   const completeEdit = async () => {
     dispatch({ type: "DONE" });
-    await fetch(`/api/comment/${league}/${uuid}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        id,
-        text: commentText,
-        action: "edit",
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
+    editComment({ league, uuid, id, updatedText: commentText, action: "edit" });
   };
   return (
     <>
