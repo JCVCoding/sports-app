@@ -40,11 +40,12 @@ export const CommentAPI = createApi({
       invalidatesTags: [{ type: "Comment" }],
     }),
     deleteComment: build.mutation({
-      query: ({ league, uuid, id }) => ({
+      query: ({ league, uuid, id, action }) => ({
         url: `api/comment/${league}/${uuid}`,
         method: "DELETE",
         body: JSON.stringify({
           id,
+          action,
         }),
         headers: { "Content-Type": "application/json" },
       }),
@@ -113,6 +114,19 @@ export const CommentAPI = createApi({
       }),
       invalidatesTags: [{ type: "Comment" }],
     }),
+    deleteReply: build.mutation({
+      query: ({ league, uuid, id, parentId, action }) => ({
+        url: `api/comment/${league}/${uuid}`,
+        method: "DELETE",
+        body: JSON.stringify({
+          id,
+          action,
+          parentId,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }),
+      invalidatesTags: [{ type: "Comment" }],
+    }),
   }),
 });
 
@@ -124,6 +138,7 @@ export const {
   useEditCommentMutation,
   useReplyToCommentMutation,
   useEditReplyMutation,
+  useDeleteReplyMutation,
 } = CommentAPI;
 
 // Define the initial state using that type

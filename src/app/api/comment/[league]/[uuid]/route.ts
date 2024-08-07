@@ -43,14 +43,37 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { league: string; uuid: string } }
 ) {
-  const { id } = await req.json();
+  const { id, action, parentId } = await req.json();
   const db = await getDB();
 
-  db.collection(`${params.league.toUpperCase()}_Comments`).findOneAndDelete({
-    uuid: params.uuid,
-    id: id,
-  });
-
+  try {
+    switch (action) {
+      case "delete_comment":
+        await db
+          .collection(`${params.league.toUpperCase()}_Comments`)
+          .findOneAndDelete({
+            uuid: params.uuid,
+            id: id,
+          });
+        break;
+      case "delete_reply":
+        await db
+          .collection(`${params.league.toUpperCase()}_Comments`)
+          .findOneAndUpdate(
+            {
+              uuid: params.uuid,
+              id: parentId,
+              "replies.id": id,
+            },
+            { $pull: { replies: { id: id } } }
+          );
+        break;
+      default:
+        break;
+    }
+  } catch (error) {
+    console.error(error);
+  }
   return NextResponse.json({ id });
 }
 
@@ -82,11 +105,13 @@ export async function PATCH(
         break;
       case "edit":
         editComment(db, params, id, text);
+        break;
       case "reply":
         replyToComment(db, params, id, reply);
+        break;
       case "edit_reply":
-        console.log(id, parentId, text);
         editReply(db, params, id, parentId, text);
+        break;
       default:
         break;
     }

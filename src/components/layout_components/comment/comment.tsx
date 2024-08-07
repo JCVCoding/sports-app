@@ -80,7 +80,6 @@ const Comment = ({
   };
   const completeReplyEdit = () => {
     dispatch({ type: "DONE" });
-    console.log(commentText);
     editReply({
       league,
       uuid,
@@ -141,6 +140,7 @@ const Comment = ({
             id={id}
             parentId={parentId}
             editDispatch={dispatch}
+            isReply={isReply}
           />
         </div>
       </div>

@@ -1,4 +1,7 @@
-import { useDeleteCommentMutation } from "./commentSlice";
+import {
+  useDeleteCommentMutation,
+  useDeleteReplyMutation,
+} from "./commentSlice";
 import { useAppSelector } from "@/lib/hooks";
 import {
   EllipsisVerticalIcon,
@@ -18,12 +21,15 @@ const CommentActionMenu = ({
   id,
   editDispatch,
   parentId,
+  isReply,
 }: {
   id: string;
   editDispatch: DispatchWithoutAction;
   parentId?: string;
+  isReply: boolean;
 }) => {
   const [deleteComment] = useDeleteCommentMutation();
+  const [deleteReply] = useDeleteReplyMutation();
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
 
   return (
@@ -43,7 +49,17 @@ const CommentActionMenu = ({
         </MenuItem>
         <MenuItem
           className="flex gap-2"
-          onClick={() => deleteComment({ league, uuid, id, parentId })}
+          onClick={() =>
+            !isReply
+              ? deleteComment({ league, uuid, id, action: "delete_comment" })
+              : deleteReply({
+                  league,
+                  uuid,
+                  id,
+                  parentId,
+                  action: "delete_reply",
+                })
+          }
         >
           <TrashIcon className="h-4 w-4" />
           Delete

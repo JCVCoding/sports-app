@@ -20,7 +20,6 @@ export const editReply = async (
   parentId: string,
   text: string
 ) => {
-  console.log(id, parentId, text);
   await db
     .collection(`${params.league.toUpperCase()}_Comments`)
     .findOneAndUpdate(
