@@ -3,6 +3,7 @@ import CommentReplies from "./commentReplies";
 import { useAppSelector } from "@/lib/hooks";
 import { useGetCommentsQuery } from "./commentSlice";
 import LoadingSpinner from "@/components/loading/loading";
+import { CommentDataType } from "./commentTypes";
 const CommentThread = () => {
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
 
@@ -33,9 +34,7 @@ const CommentThread = () => {
                 likedUsers={comment.likedUsers}
                 isReply={false}
               />
-              {comment.reply.length > 0 && (
-                <CommentReplies replies={comment.reply} />
-              )}
+              {comment.replies && <CommentReplies replies={comment.replies} />}
             </div>
           );
         })

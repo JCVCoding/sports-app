@@ -5,7 +5,7 @@ import { Avatar, Button, Input } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import CommentActionMenu from "./commentActionMenu";
 import { useReducer, useState } from "react";
-import { useEditCommentMutation } from "./commentSlice";
+import { useEditCommentMutation, useEditReplyMutation } from "./commentSlice";
 
 export interface commentProps {
   author: string;
@@ -21,6 +21,7 @@ export interface commentProps {
   dislikedUsers: string[] | null | undefined;
   likedUsers: string[] | null | undefined;
   isReply: boolean;
+  parentId?: string;
 }
 
 export const EditingReducer = (
@@ -51,11 +52,13 @@ const Comment = ({
   dislikedUsers,
   likedUsers,
   isReply,
+  parentId,
 }: commentProps) => {
   const [commentText, setCommentText] = useState(text);
   const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
   const { data } = useSession();
   const [editComment] = useEditCommentMutation();
+  const [editReply] = useEditReplyMutation();
 
   let isLiked = false;
   let isDisliked = false;
@@ -65,9 +68,27 @@ const Comment = ({
   if (dislikedUsers?.includes(data?.user?.email!)) {
     isDisliked = true;
   }
-  const completeEdit = async () => {
+  const completeEdit = () => {
     dispatch({ type: "DONE" });
-    editComment({ league, uuid, id, updatedText: commentText, action: "edit" });
+    editComment({
+      league,
+      uuid,
+      id,
+      updatedText: commentText,
+      action: "edit",
+    });
+  };
+  const completeReplyEdit = () => {
+    dispatch({ type: "DONE" });
+    console.log(commentText);
+    editReply({
+      league,
+      uuid,
+      id,
+      parentId,
+      text: commentText,
+      action: "edit_reply",
+    });
   };
   return (
     <>
@@ -94,7 +115,7 @@ const Comment = ({
                 size="sm"
                 variant="outlined"
                 className="!absolute right-1 top-1"
-                onClick={completeEdit}
+                onClick={!isReply ? completeEdit : completeReplyEdit}
               >
                 Done
               </Button>
@@ -112,10 +133,15 @@ const Comment = ({
             isLiked={isLiked}
             isDisliked={isDisliked}
             isReply={isReply}
+            parentId={parentId}
           />
         </div>
         <div className="px-2 flex-2 flex justify-end items-center">
-          <CommentActionMenu id={id} editDispatch={dispatch} />
+          <CommentActionMenu
+            id={id}
+            parentId={parentId}
+            editDispatch={dispatch}
+          />
         </div>
       </div>
     </>

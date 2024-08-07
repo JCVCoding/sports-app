@@ -23,6 +23,7 @@ interface CommentActionsProps {
   isLiked: boolean;
   isDisliked: boolean;
   isReply: boolean;
+  parentId?: string;
 }
 
 const CommentActions = ({
@@ -155,6 +156,7 @@ const CommentActions = ({
         <CommentReplyDialog
           closeDialog={closeCommentReply}
           ref={inputReference}
+          id={id}
         />
       ) : null}
     </div>

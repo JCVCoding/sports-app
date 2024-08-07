@@ -45,24 +45,27 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
             authorEmail,
             dislikedUsers,
             likedUsers,
+            parentId,
           } = reply;
           return (
-            <Comment
-              key={id}
-              author={author}
-              avatar=""
-              text={text}
-              timestamp={publishedAt}
-              likeCount={likeCount}
-              dislikeCount={dislikeCount}
-              id={id}
-              league={league}
-              uuid={uuid}
-              authorEmail={authorEmail}
-              dislikedUsers={dislikedUsers}
-              likedUsers={likedUsers}
-              isReply={true}
-            />
+            <div key={id}>
+              <Comment
+                author={author}
+                avatar=""
+                text={text}
+                timestamp={publishedAt}
+                likeCount={likeCount}
+                dislikeCount={dislikeCount}
+                id={id}
+                league={league}
+                uuid={uuid}
+                authorEmail={authorEmail}
+                parentId={parentId}
+                dislikedUsers={dislikedUsers}
+                likedUsers={likedUsers}
+                isReply={true}
+              />
+            </div>
           );
         })}
       </Collapse>

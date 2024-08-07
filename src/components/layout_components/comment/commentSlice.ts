@@ -16,7 +16,7 @@ export const CommentAPI = createApi({
   tagTypes: ["Comment"],
   reducerPath: "commentApi",
   endpoints: (build) => ({
-    getComments: build.query<CommentDataType[], string>({
+    getComments: build.query<CommentDataType[], string & CommentDataType[]>({
       query: (uuid) => ({
         url: `https://wealthy-pug-54.hasura.app/api/rest/comment_thread/?uuid=${uuid}`,
         headers: {
@@ -34,7 +34,6 @@ export const CommentAPI = createApi({
           inputValue,
           author,
           authorEmail,
-          parentId: null,
         }),
         headers: { "Content-Type": "application/json" },
       }),
@@ -62,6 +61,7 @@ export const CommentAPI = createApi({
         }),
         headers: { "Content-Type": "application/json" },
       }),
+      invalidatesTags: [{ type: "Comment" }],
     }),
     likeDislikeComment: build.mutation({
       query: ({
@@ -84,6 +84,34 @@ export const CommentAPI = createApi({
         }),
         headers: { "Content-Type": "application/json" },
       }),
+      invalidatesTags: [{ type: "Comment" }],
+    }),
+    replyToComment: build.mutation({
+      query: ({ league, uuid, id, action, reply }) => ({
+        url: `api/comment/${league}/${uuid}`,
+        method: "PATCH",
+        body: JSON.stringify({
+          id,
+          action,
+          reply,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }),
+      invalidatesTags: [{ type: "Comment" }],
+    }),
+    editReply: build.mutation({
+      query: ({ league, uuid, id, parentId, action, text }) => ({
+        url: `api/comment/${league}/${uuid}`,
+        method: "PATCH",
+        body: JSON.stringify({
+          id,
+          action,
+          parentId,
+          text,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }),
+      invalidatesTags: [{ type: "Comment" }],
     }),
   }),
 });
@@ -94,6 +122,8 @@ export const {
   useDeleteCommentMutation,
   useLikeDislikeCommentMutation,
   useEditCommentMutation,
+  useReplyToCommentMutation,
+  useEditReplyMutation,
 } = CommentAPI;
 
 // Define the initial state using that type

@@ -17,9 +17,11 @@ import { DispatchWithoutAction } from "react";
 const CommentActionMenu = ({
   id,
   editDispatch,
+  parentId,
 }: {
   id: string;
   editDispatch: DispatchWithoutAction;
+  parentId?: string;
 }) => {
   const [deleteComment] = useDeleteCommentMutation();
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
@@ -41,7 +43,7 @@ const CommentActionMenu = ({
         </MenuItem>
         <MenuItem
           className="flex gap-2"
-          onClick={() => deleteComment({ league, uuid, id })}
+          onClick={() => deleteComment({ league, uuid, id, parentId })}
         >
           <TrashIcon className="h-4 w-4" />
           Delete

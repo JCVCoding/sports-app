@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-
+import {
+  like,
+  dislike,
+  editComment,
+  pullDislikedUser,
+  pullLikedUser,
+} from "@/lib/commentPatchMethods";
+import { replyToComment, editReply } from "@/lib/replyPatchMethods";
 async function getDB() {
   const client = await clientPromise;
   const db = client.db("CommentData");
@@ -27,6 +34,7 @@ export async function POST(
     likedUsers: [],
     author: data.author,
     authorEmail: data.authorEmail,
+    replies: [],
   });
   return NextResponse.json({ data });
 }
@@ -50,95 +58,35 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { league: string; uuid: string } }
 ) {
-  const { id, action, authorEmail, text, likeCount, dislikeCount } =
-    await req.json();
+  const {
+    id,
+    action,
+    authorEmail,
+    text,
+    likeCount,
+    dislikeCount,
+    reply,
+    parentId,
+  } = await req.json();
   const db = await getDB();
-  console.log("hello");
-
-  const like = () => {
-    db.collection(`${params.league.toUpperCase()}_Comments`).findOneAndUpdate(
-      {
-        uuid: params.uuid,
-        id: id,
-      },
-      {
-        $set: {
-          likeCount,
-          dislikeCount,
-        },
-        $addToSet: { likedUsers: authorEmail },
-      }
-    );
-  };
-  const dislike = async () => {
-    await db
-      .collection(`${params.league.toUpperCase()}_Comments`)
-      .findOneAndUpdate(
-        {
-          uuid: params.uuid,
-          id: id,
-        },
-        {
-          $set: {
-            likeCount,
-            dislikeCount,
-          },
-          $addToSet: { dislikedUsers: authorEmail },
-        }
-      );
-  };
-  const pullLikedUser = async () => {
-    await db
-      .collection(`${params.league.toUpperCase()}_Comments`)
-      .findOneAndUpdate(
-        {
-          uuid: params.uuid,
-          id: id,
-        },
-        {
-          $pull: { likedUsers: authorEmail },
-        }
-      );
-  };
-  const pullDislikedUser = async () => {
-    await db
-      .collection(`${params.league.toUpperCase()}_Comments`)
-      .findOneAndUpdate(
-        {
-          uuid: params.uuid,
-          id: id,
-        },
-        {
-          $pull: { dislikedUsers: authorEmail },
-        }
-      );
-  };
-  const editComment = async () => {
-    await db
-      .collection(`${params.league.toUpperCase()}_Comments`)
-      .findOneAndUpdate(
-        {
-          uuid: params.uuid,
-          id: id,
-        },
-        {
-          $set: { text: text },
-        }
-      );
-  };
 
   try {
     switch (action) {
       case "like":
-        like();
-        pullDislikedUser();
+        like(db, params, id, likeCount, dislikeCount, authorEmail);
+        pullDislikedUser(db, params, id, authorEmail);
         break;
       case "dislike":
-        dislike();
-        pullLikedUser();
+        dislike(db, params, id, likeCount, dislikeCount, authorEmail);
+        pullLikedUser(db, params, id, authorEmail);
         break;
       case "edit":
-        editComment();
+        editComment(db, params, id, text);
+      case "reply":
+        replyToComment(db, params, id, reply);
+      case "edit_reply":
+        console.log(id, parentId, text);
+        editReply(db, params, id, parentId, text);
       default:
         break;
     }
