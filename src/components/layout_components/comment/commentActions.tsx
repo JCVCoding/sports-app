@@ -12,7 +12,10 @@ import { Button } from "@material-tailwind/react";
 import CommentReplyDialog from "./CommentReplyDialog";
 import { useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useLikeDislikeCommentMutation } from "./commentSlice";
+import {
+  useLikeDislikeCommentMutation,
+  useLikeDislikeReplyMutation,
+} from "./commentSlice";
 interface CommentActionsProps {
   id: string;
   likeCount: number;
@@ -36,6 +39,7 @@ const CommentActions = ({
   isLiked,
   isDisliked,
   isReply,
+  parentId,
 }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
@@ -48,6 +52,7 @@ const CommentActions = ({
   const currentDislikeCountRef = useRef(dislikeCount);
 
   const [likeDislikeComment] = useLikeDislikeCommentMutation();
+  const [likeDislikeReply] = useLikeDislikeReplyMutation();
 
   const { data } = useSession();
 
@@ -63,7 +68,7 @@ const CommentActions = ({
     inputReference.current?.focus();
   };
 
-  const likeComment = async () => {
+  const likeComment = () => {
     if (data?.user && !isLikedValue) {
       setCurrentLikeCount(currentLikeCount + 1);
       currentLikeCountRef.current += 1;
@@ -75,18 +80,29 @@ const CommentActions = ({
       setIsLikedValue(true);
       setIsDislikedValue(false);
 
-      likeDislikeComment({
-        league,
-        uuid,
-        id,
-        action: "like",
-        authorEmail,
-        dislikeCount: currentDislikeCountRef.current,
-        likeCount: currentLikeCountRef.current,
-      });
+      !isReply
+        ? likeDislikeComment({
+            league,
+            uuid,
+            id,
+            action: "like",
+            authorEmail,
+            dislikeCount: currentDislikeCountRef.current,
+            likeCount: currentLikeCountRef.current,
+          })
+        : likeDislikeReply({
+            league,
+            uuid,
+            id,
+            parentId,
+            action: "like_reply",
+            authorEmail,
+            dislikeCount: currentDislikeCountRef.current,
+            likeCount: currentLikeCountRef.current,
+          });
     }
   };
-  const dislikeComment = async () => {
+  const dislikeComment = () => {
     if (data?.user && !isDislikedValue) {
       currentLikeCount > 0 && setCurrentLikeCount(currentLikeCount - 1);
       currentLikeCount > 0 ? (currentLikeCountRef.current -= 1) : null;
@@ -97,15 +113,26 @@ const CommentActions = ({
       setIsDislikedValue(true);
       setIsLikedValue(false);
 
-      likeDislikeComment({
-        league,
-        uuid,
-        id,
-        action: "dislike",
-        authorEmail,
-        dislikeCount: currentDislikeCountRef.current,
-        likeCount: currentLikeCountRef.current,
-      });
+      !isReply
+        ? likeDislikeComment({
+            league,
+            uuid,
+            id,
+            action: "dislike",
+            authorEmail,
+            dislikeCount: currentDislikeCountRef.current,
+            likeCount: currentLikeCountRef.current,
+          })
+        : likeDislikeReply({
+            league,
+            uuid,
+            id,
+            parentId,
+            action: "dislike_reply",
+            authorEmail,
+            dislikeCount: currentDislikeCountRef.current,
+            likeCount: currentLikeCountRef.current,
+          });
     }
   };
 

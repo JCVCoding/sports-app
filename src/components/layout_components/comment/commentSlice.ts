@@ -127,6 +127,31 @@ export const CommentAPI = createApi({
       }),
       invalidatesTags: [{ type: "Comment" }],
     }),
+    likeDislikeReply: build.mutation({
+      query: ({
+        league,
+        uuid,
+        id,
+        action,
+        authorEmail,
+        dislikeCount,
+        likeCount,
+        parentId,
+      }) => ({
+        url: `api/comment/${league}/${uuid}`,
+        method: "PATCH",
+        body: JSON.stringify({
+          id,
+          action,
+          authorEmail,
+          dislikeCount,
+          likeCount,
+          parentId,
+        }),
+        headers: { "Content-Type": "application/json" },
+      }),
+      invalidatesTags: [{ type: "Comment" }],
+    }),
   }),
 });
 
@@ -139,6 +164,7 @@ export const {
   useReplyToCommentMutation,
   useEditReplyMutation,
   useDeleteReplyMutation,
+  useLikeDislikeReplyMutation,
 } = CommentAPI;
 
 // Define the initial state using that type

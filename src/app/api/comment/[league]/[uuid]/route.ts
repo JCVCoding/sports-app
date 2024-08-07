@@ -7,7 +7,14 @@ import {
   pullDislikedUser,
   pullLikedUser,
 } from "@/lib/commentPatchMethods";
-import { replyToComment, editReply } from "@/lib/replyPatchMethods";
+import {
+  replyToComment,
+  editReply,
+  dislikeReply,
+  likeReply,
+  pullDislikedUserReply,
+  pullLikedUserReply,
+} from "@/lib/replyPatchMethods";
 async function getDB() {
   const client = await clientPromise;
   const db = client.db("CommentData");
@@ -111,6 +118,30 @@ export async function PATCH(
         break;
       case "edit_reply":
         editReply(db, params, id, parentId, text);
+        break;
+      case "like_reply":
+        likeReply(
+          db,
+          params,
+          id,
+          likeCount,
+          dislikeCount,
+          authorEmail,
+          parentId
+        );
+        pullDislikedUserReply(db, params, id, authorEmail, parentId);
+        break;
+      case "dislike_reply":
+        dislikeReply(
+          db,
+          params,
+          id,
+          likeCount,
+          dislikeCount,
+          authorEmail,
+          parentId
+        );
+        pullLikedUserReply(db, params, id, authorEmail, parentId);
         break;
       default:
         break;
