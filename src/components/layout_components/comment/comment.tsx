@@ -22,6 +22,7 @@ export interface commentProps {
   likedUsers: string[] | null | undefined;
   isReply: boolean;
   parentId?: string;
+  isEdited: boolean;
 }
 
 export const EditingReducer = (
@@ -53,8 +54,10 @@ const Comment = ({
   likedUsers,
   isReply,
   parentId,
+  isEdited,
 }: commentProps) => {
   const [commentText, setCommentText] = useState(text);
+  const [commentTimestamp, setCommentTimestamp] = useState(timestamp);
   const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
   const { data } = useSession();
   const [editComment] = useEditCommentMutation();
@@ -69,17 +72,23 @@ const Comment = ({
     isDisliked = true;
   }
   const completeEdit = () => {
-    dispatch({ type: "DONE" });
+    const newTimestamp =
+      new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString();
+    setCommentTimestamp(newTimestamp);
     editComment({
       league,
       uuid,
       id,
       updatedText: commentText,
       action: "edit",
+      newTimestamp,
     });
+    dispatch({ type: "DONE" });
   };
   const completeReplyEdit = () => {
-    dispatch({ type: "DONE" });
+    const newTimestamp =
+      new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString();
+    setCommentTimestamp(newTimestamp);
     editReply({
       league,
       uuid,
@@ -87,12 +96,14 @@ const Comment = ({
       parentId,
       text: commentText,
       action: "edit_reply",
+      newTimestamp,
     });
+    dispatch({ type: "DONE" });
   };
   return (
     <>
       <div className="flex flex-wrap">
-        <Avatar src="" size="xs" />
+        <Avatar src={avatar} size="xs" />
         <div className="px-2 flex-1">
           <div>
             {data?.user?.email === authorEmail ? (
@@ -100,7 +111,10 @@ const Comment = ({
             ) : (
               author
             )}
-            <span className="ml-1 text-xs text-gray-400">{timestamp}</span>
+            <span className="ml-1 text-xs text-gray-400">
+              {commentTimestamp}
+              {isEdited ? "(edited)" : null}
+            </span>
           </div>
           {state.isEditing ? (
             <div className="relative flex w-full">
@@ -136,12 +150,14 @@ const Comment = ({
           />
         </div>
         <div className="px-2 flex-2 flex justify-end items-center">
-          <CommentActionMenu
-            id={id}
-            parentId={parentId}
-            editDispatch={dispatch}
-            isReply={isReply}
-          />
+          {data?.user?.email === authorEmail && (
+            <CommentActionMenu
+              id={id}
+              parentId={parentId}
+              editDispatch={dispatch}
+              isReply={isReply}
+            />
+          )}
         </div>
       </div>
     </>

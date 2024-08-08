@@ -27,13 +27,14 @@ export const CommentAPI = createApi({
       providesTags: [{ type: "Comment" }],
     }),
     addComment: build.mutation<CommentState, CommentDataType & CommentState>({
-      query: ({ league, uuid, inputValue, author, authorEmail }) => ({
+      query: ({ league, uuid, inputValue, author, authorEmail, avatar }) => ({
         url: `api/comment/${league}/${uuid}`,
         method: "POST",
         body: JSON.stringify({
           inputValue,
           author,
           authorEmail,
+          avatar,
         }),
         headers: { "Content-Type": "application/json" },
       }),
@@ -52,13 +53,14 @@ export const CommentAPI = createApi({
       invalidatesTags: [{ type: "Comment" }],
     }),
     editComment: build.mutation({
-      query: ({ league, uuid, id, updatedText }) => ({
+      query: ({ league, uuid, id, updatedText, newTimestamp }) => ({
         url: `/api/comment/${league}/${uuid}`,
         method: "PATCH",
         body: JSON.stringify({
           id,
           text: updatedText,
           action: "edit",
+          newTimestamp,
         }),
         headers: { "Content-Type": "application/json" },
       }),
@@ -101,7 +103,7 @@ export const CommentAPI = createApi({
       invalidatesTags: [{ type: "Comment" }],
     }),
     editReply: build.mutation({
-      query: ({ league, uuid, id, parentId, action, text }) => ({
+      query: ({ league, uuid, id, parentId, action, text, newTimestamp }) => ({
         url: `api/comment/${league}/${uuid}`,
         method: "PATCH",
         body: JSON.stringify({
@@ -109,6 +111,7 @@ export const CommentAPI = createApi({
           action,
           parentId,
           text,
+          newTimestamp,
         }),
         headers: { "Content-Type": "application/json" },
       }),

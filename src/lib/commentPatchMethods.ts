@@ -86,7 +86,8 @@ export const editComment = async (
   db: Db,
   params: { league: string; uuid: string },
   id: string,
-  text: string
+  text: string,
+  newTimestamp: string
 ) => {
   await db
     .collection(`${params.league.toUpperCase()}_Comments`)
@@ -96,7 +97,7 @@ export const editComment = async (
         id: id,
       },
       {
-        $set: { text: text },
+        $set: { text: text, updatedAt: newTimestamp },
       }
     );
 };

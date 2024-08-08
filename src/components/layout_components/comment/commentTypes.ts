@@ -12,6 +12,7 @@ export type CommentDataType = {
   dislikedUsers?: string[];
   likedUsers?: string[];
   uuid?: string;
+  avatar?: string | null;
 };
 
 export type CommentThreadType = {

@@ -42,6 +42,7 @@ export async function POST(
     author: data.author,
     authorEmail: data.authorEmail,
     replies: [],
+    avatar: data.avatar,
   });
   return NextResponse.json({ data });
 }
@@ -97,6 +98,7 @@ export async function PATCH(
     dislikeCount,
     reply,
     parentId,
+    newTimestamp,
   } = await req.json();
   const db = await getDB();
 
@@ -111,13 +113,13 @@ export async function PATCH(
         pullLikedUser(db, params, id, authorEmail);
         break;
       case "edit":
-        editComment(db, params, id, text);
+        editComment(db, params, id, text, newTimestamp);
         break;
       case "reply":
         replyToComment(db, params, id, reply);
         break;
       case "edit_reply":
-        editReply(db, params, id, parentId, text);
+        editReply(db, params, id, parentId, text, newTimestamp);
         break;
       case "like_reply":
         likeReply(

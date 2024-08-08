@@ -165,7 +165,7 @@ const CommentActions = ({
           )}
         </Button>
         <span className="mr-2">{currentDislikeCount}</span>
-        {!isReply && (
+        {!isReply && data?.user && (
           <Button
             className="rounded-full font-bold normal-case"
             onClick={() => {

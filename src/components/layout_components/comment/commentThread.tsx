@@ -3,12 +3,10 @@ import CommentReplies from "./commentReplies";
 import { useAppSelector } from "@/lib/hooks";
 import { useGetCommentsQuery } from "./commentSlice";
 import LoadingSpinner from "@/components/loading/loading";
-import { CommentDataType } from "./commentTypes";
 const CommentThread = () => {
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
 
   const { data, isLoading } = useGetCommentsQuery(uuid);
-  if (data) console.log(Object.values(data)[0]);
   return (
     <div>
       {isLoading ? (
@@ -19,7 +17,7 @@ const CommentThread = () => {
             <div key={comment.id}>
               <Comment
                 author={comment.author!}
-                avatar=""
+                avatar={comment.avatar}
                 text={comment.text}
                 timestamp={
                   !comment.updatedAt ? comment.publishedAt : comment.updatedAt
@@ -33,6 +31,7 @@ const CommentThread = () => {
                 dislikedUsers={comment.dislikedUsers}
                 likedUsers={comment.likedUsers}
                 isReply={false}
+                isEdited={comment.updatedAt !== null}
               />
               {comment.replies && <CommentReplies replies={comment.replies} />}
             </div>

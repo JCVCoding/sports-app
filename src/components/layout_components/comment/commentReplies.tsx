@@ -41,19 +41,21 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
             likeCount,
             text,
             publishedAt,
+            updatedAt,
             id,
             authorEmail,
             dislikedUsers,
             likedUsers,
             parentId,
+            avatar,
           } = reply;
           return (
             <div key={id}>
               <Comment
                 author={author}
-                avatar=""
+                avatar={avatar}
                 text={text}
-                timestamp={publishedAt}
+                timestamp={updatedAt ? updatedAt : publishedAt}
                 likeCount={likeCount}
                 dislikeCount={dislikeCount}
                 id={id}
@@ -64,6 +66,7 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
                 dislikedUsers={dislikedUsers}
                 likedUsers={likedUsers}
                 isReply={true}
+                isEdited={updatedAt !== null}
               />
             </div>
           );

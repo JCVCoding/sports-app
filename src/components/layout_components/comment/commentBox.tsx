@@ -27,13 +27,14 @@ const CommentBox = () => {
   const onSubmit = async () => {
     const author = data?.user?.name;
     const authorEmail = data?.user?.email;
-    addComment({ league, uuid, inputValue, author, authorEmail });
+    const avatar = data?.user?.image;
+    addComment({ league, uuid, inputValue, author, authorEmail, avatar });
     setInputValue("");
   };
 
   return (
     <div className="flex flex-row">
-      <Avatar src="/next.svg" className="mr-4" />
+      <Avatar src={data?.user?.image} className="mr-4" />
       <div className="flex-1">
         <Input
           crossOrigin={undefined}

@@ -36,6 +36,7 @@ const CommentReplyDialog = (
         likedUsers: [],
         author: data?.user?.name,
         authorEmail: data?.user?.email,
+        avatar: data?.user?.image,
       },
     });
     setInputValue("");
