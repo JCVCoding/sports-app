@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.2.4",
     "eslint": "8.41.0",
     "eslint-config-next": "^14.2.4",
+    "luxon": "^3.5.0",
     "mongodb": "^5.6.0",
     "next": "^14.2.4",
     "next-auth": "^4.22.1",
@@ -29,6 +30,7 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "sass": "^1.62.1",

@@ -57,7 +57,6 @@ const Comment = ({
   isEdited,
 }: commentProps) => {
   const [commentText, setCommentText] = useState(text);
-  const [commentTimestamp, setCommentTimestamp] = useState(timestamp);
   const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
   const { data } = useSession();
   const [editComment] = useEditCommentMutation();
@@ -72,9 +71,7 @@ const Comment = ({
     isDisliked = true;
   }
   const completeEdit = () => {
-    const newTimestamp =
-      new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString();
-    setCommentTimestamp(newTimestamp);
+    const newTimestamp = new Date().toISOString();
     editComment({
       league,
       uuid,
@@ -86,9 +83,7 @@ const Comment = ({
     dispatch({ type: "DONE" });
   };
   const completeReplyEdit = () => {
-    const newTimestamp =
-      new Date().toLocaleTimeString() + " " + new Date().toLocaleDateString();
-    setCommentTimestamp(newTimestamp);
+    const newTimestamp = new Date().toISOString();
     editReply({
       league,
       uuid,
@@ -112,7 +107,7 @@ const Comment = ({
               author
             )}
             <span className="ml-1 text-xs text-gray-400">
-              {commentTimestamp}
+              {timestamp}
               {isEdited ? "(edited)" : null}
             </span>
           </div>

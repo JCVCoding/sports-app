@@ -27,10 +27,7 @@ const CommentReplyDialog = (
         text: inputValue,
         likeCount: 0,
         dislikeCount: 0,
-        publishedAt:
-          new Date().toLocaleTimeString() +
-          " " +
-          new Date().toLocaleDateString(),
+        publishedAt: new Date().toISOString(),
         updatedAt: null,
         dislikedUsers: [],
         likedUsers: [],

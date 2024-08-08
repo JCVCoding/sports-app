@@ -2,6 +2,9 @@ import Comment from "./comment";
 import CommentReplies from "./commentReplies";
 import { useAppSelector } from "@/lib/hooks";
 import { CommentDataType } from "./commentTypes";
+
+import { getTimestamp } from "@/lib/timestamp";
+
 const CommentThread = ({ comments }: { comments: CommentDataType[] }) => {
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
   return comments.map((comment) => (
@@ -10,7 +13,7 @@ const CommentThread = ({ comments }: { comments: CommentDataType[] }) => {
         author={comment.author!}
         avatar={comment.avatar}
         text={comment.text}
-        timestamp={!comment.updatedAt ? comment.publishedAt : comment.updatedAt}
+        timestamp={getTimestamp(comment.publishedAt)}
         likeCount={comment.likeCount}
         dislikeCount={comment.dislikeCount}
         id={comment.id}
@@ -20,7 +23,7 @@ const CommentThread = ({ comments }: { comments: CommentDataType[] }) => {
         dislikedUsers={comment.dislikedUsers}
         likedUsers={comment.likedUsers}
         isReply={false}
-        isEdited={comment.updatedAt !== null}
+        isEdited={typeof comment.updatedAt === "string"}
       />
       {comment.replies && <CommentReplies replies={comment.replies} />}
     </div>

@@ -6,6 +6,7 @@ import Comment from "./comment";
 import { useState } from "react";
 import { CommentDataType } from "./commentTypes";
 import { useAppSelector } from "@/lib/hooks";
+import { getTimestamp } from "@/lib/timestamp";
 
 const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
   const [open, setOpen] = useState(false);
@@ -55,7 +56,7 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
                 author={author}
                 avatar={avatar}
                 text={text}
-                timestamp={updatedAt ? updatedAt : publishedAt}
+                timestamp={getTimestamp(publishedAt!)}
                 likeCount={likeCount}
                 dislikeCount={dislikeCount}
                 id={id}
@@ -66,7 +67,7 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
                 dislikedUsers={dislikedUsers}
                 likedUsers={likedUsers}
                 isReply={true}
-                isEdited={updatedAt !== null}
+                isEdited={typeof updatedAt === "string"}
               />
             </div>
           );
