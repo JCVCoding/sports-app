@@ -8,7 +8,7 @@ export type CommentDataType = {
   updatedAt?: string | null;
   parentId?: string | null;
   authorEmail?: string | null | undefined;
-  replies?: CommentDataType[];
+  replies?: CommentDataType[] | null;
   dislikedUsers?: string[];
   likedUsers?: string[];
   uuid?: string;

@@ -16,7 +16,7 @@ export const CommentAPI = createApi({
   tagTypes: ["Comment"],
   reducerPath: "commentApi",
   endpoints: (build) => ({
-    getComments: build.query<CommentDataType[], string & CommentDataType[]>({
+    getComments: build.query({
       query: (uuid) => ({
         url: `https://wealthy-pug-54.hasura.app/api/rest/comment_thread/?uuid=${uuid}`,
         headers: {
