@@ -1,13 +1,21 @@
 "use client";
 
 import { Avatar, Button, Input } from "@material-tailwind/react";
-import { forwardRef, Ref, useState } from "react";
+import { Dispatch, forwardRef, Ref, SetStateAction, useState } from "react";
 import { useReplyToCommentMutation } from "./commentSlice";
 import { useAppSelector } from "@/lib/hooks";
 import { useSession } from "next-auth/react";
 
 const CommentReplyDialog = (
-  { closeDialog, id }: { closeDialog: () => void; id: string },
+  {
+    closeDialog,
+    id,
+    setOpen,
+  }: {
+    closeDialog: () => void;
+    id: string;
+    setOpen: Dispatch<SetStateAction<boolean>>;
+  },
   ref: Ref<HTMLInputElement>
 ) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -38,6 +46,7 @@ const CommentReplyDialog = (
     });
     setInputValue("");
     closeDialog();
+    setOpen(true);
   };
   return (
     <div className="flex flex-wrap">

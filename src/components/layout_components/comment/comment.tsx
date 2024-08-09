@@ -4,8 +4,9 @@ import CommentActions from "./commentActions";
 import { Avatar, Button, Input } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import CommentActionMenu from "./commentActionMenu";
-import { useReducer, useState } from "react";
+import { useReducer, useState, SetStateAction } from "react";
 import { useEditCommentMutation, useEditReplyMutation } from "./commentSlice";
+import { Dispatch } from "react";
 
 export interface commentProps {
   author: string;
@@ -23,6 +24,7 @@ export interface commentProps {
   isReply: boolean;
   parentId?: string;
   isEdited: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const EditingReducer = (
@@ -55,6 +57,7 @@ const Comment = ({
   isReply,
   parentId,
   isEdited,
+  setOpen,
 }: commentProps) => {
   const [commentText, setCommentText] = useState(text);
   const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
@@ -142,6 +145,7 @@ const Comment = ({
             isDisliked={isDisliked}
             isReply={isReply}
             parentId={parentId}
+            setOpen={setOpen}
           />
         </div>
         <div className="px-2 flex-2 flex justify-end items-center">

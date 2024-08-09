@@ -30,6 +30,7 @@ const CommentBox = () => {
     const avatar = data?.user?.image;
     addComment({ league, uuid, inputValue, author, authorEmail, avatar });
     setInputValue("");
+    close();
   };
 
   return (

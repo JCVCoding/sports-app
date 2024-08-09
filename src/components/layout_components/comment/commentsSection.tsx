@@ -52,7 +52,9 @@ const CommentsSection = ({
       <>
         {getRepliesCount(commentsArray, commentsArray.length) + " Comments"}
         {data?.user && <CommentHeader />}
-        <CommentThread comments={commentsArray} />
+        {commentsArray.map((comment) => (
+          <CommentThread comment={comment} key={comment.id} />
+        ))}
       </>
     );
   }

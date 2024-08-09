@@ -3,13 +3,21 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { Button, Collapse } from "@material-tailwind/react";
 import Comment from "./comment";
-import { useState } from "react";
+import { SetStateAction } from "react";
 import { CommentDataType } from "./commentTypes";
 import { useAppSelector } from "@/lib/hooks";
 import { getTimestamp } from "@/lib/timestamp";
+import { Dispatch } from "react";
 
-const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
-  const [open, setOpen] = useState(false);
+const CommentReplies = ({
+  replies,
+  open,
+  setOpen,
+}: {
+  replies: CommentDataType[];
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const league = useAppSelector((state) => state.commentReducer.league);
   const uuid = useAppSelector((state) => state.commentReducer.uuid);
 
@@ -17,23 +25,27 @@ const CommentReplies = ({ replies }: { replies: CommentDataType[] }) => {
 
   return (
     <div className="ml-6 sm:ml-8">
-      <Button
-        className="rounded-full flex gap-x-3 normal-case text-sm"
-        color="blue"
-        ripple={false}
-        size="sm"
-        variant="text"
-        onClick={toggleOpen}
-      >
-        {open ? (
-          <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
-        ) : (
-          <ChevronUpIcon className="h-4 w-4" aria-hidden="true" />
-        )}
-        <span>
-          {replies.length} {replies.length > 1 ? "replies" : "reply"}
-        </span>
-      </Button>
+      {replies.length >= 1 && (
+        <Button
+          className="rounded-full flex gap-x-3 normal-case text-sm"
+          color="blue"
+          ripple={false}
+          size="sm"
+          variant="text"
+          onClick={toggleOpen}
+        >
+          {open ? (
+            <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
+          ) : (
+            <ChevronUpIcon className="h-4 w-4" aria-hidden="true" />
+          )}
+          <span>
+            {replies.length.toString() +
+              " " +
+              (replies.length > 1 ? "replies" : "reply")}
+          </span>
+        </Button>
+      )}
       <Collapse open={open}>
         {replies.map((reply) => {
           const {

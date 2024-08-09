@@ -4,11 +4,13 @@ import { useAppSelector } from "@/lib/hooks";
 import { CommentDataType } from "./commentTypes";
 
 import { getTimestamp } from "@/lib/timestamp";
+import { useState } from "react";
 
-const CommentThread = ({ comments }: { comments: CommentDataType[] }) => {
+const CommentThread = ({ comment }: { comment: CommentDataType }) => {
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
-  return comments.map((comment) => (
-    <div key={comment.id}>
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="my-1">
       <Comment
         author={comment.author!}
         avatar={comment.avatar}
@@ -24,10 +26,17 @@ const CommentThread = ({ comments }: { comments: CommentDataType[] }) => {
         likedUsers={comment.likedUsers}
         isReply={false}
         isEdited={typeof comment.updatedAt === "string"}
+        setOpen={setOpen}
       />
-      {comment.replies && <CommentReplies replies={comment.replies} />}
+      {comment.replies && (
+        <CommentReplies
+          replies={comment.replies}
+          open={open}
+          setOpen={setOpen}
+        />
+      )}
     </div>
-  ));
+  );
 };
 
 export default CommentThread;

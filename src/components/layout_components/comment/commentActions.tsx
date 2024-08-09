@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
 import CommentReplyDialog from "./CommentReplyDialog";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   useLikeDislikeCommentMutation,
@@ -27,6 +27,7 @@ interface CommentActionsProps {
   isDisliked: boolean;
   isReply: boolean;
   parentId?: string;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 const CommentActions = ({
@@ -40,6 +41,7 @@ const CommentActions = ({
   isDisliked,
   isReply,
   parentId,
+  setOpen: openReplies,
 }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
@@ -184,6 +186,7 @@ const CommentActions = ({
           closeDialog={closeCommentReply}
           ref={inputReference}
           id={id}
+          setOpen={openReplies}
         />
       ) : null}
     </div>
