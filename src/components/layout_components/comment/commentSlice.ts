@@ -17,8 +17,8 @@ export const CommentAPI = createApi({
   reducerPath: "commentApi",
   endpoints: (build) => ({
     getComments: build.query({
-      query: (uuid) => ({
-        url: `https://wealthy-pug-54.hasura.app/api/rest/comment_thread/?uuid=${uuid}`,
+      query: ({ uuid, league }: { uuid: string; league: string }) => ({
+        url: `https://wealthy-pug-54.hasura.app/api/rest/${league}_comment_thread/?uuid=${uuid}`,
         headers: {
           "Content-Type": "application/json",
           "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_HASURA_ADMIN_SECRET}`,

@@ -22,7 +22,7 @@ const CommentsSection = ({
     data: comments = {},
     isLoading,
     isSuccess,
-  } = useGetCommentsQuery(uuid);
+  } = useGetCommentsQuery({ uuid, league });
   dispatch(setUUID(uuid));
   dispatch(setLeague(league));
   let commentsArray: CommentDataType[] = [];
