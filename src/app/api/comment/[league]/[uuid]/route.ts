@@ -21,6 +21,22 @@ async function getDB() {
   return db;
 }
 
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { league: string; uuid: string } }
+) {
+  const comments = await fetch(
+    `https://${process.env.HASURA_PROJECT_ENDPOINT}${params.league}_comment_thread/?uuid=${params.uuid}`,
+    {
+      headers: {
+        "x-hasura-admin-secret": `${process.env.HASURA_ADMIN_SECRET}`,
+      },
+    }
+  ).then((data) => data.json());
+
+  return NextResponse.json(comments);
+}
+
 export async function POST(
   req: NextRequest,
   { params }: { params: { league: string; uuid: string } }

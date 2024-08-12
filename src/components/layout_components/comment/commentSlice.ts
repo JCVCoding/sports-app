@@ -18,11 +18,9 @@ export const CommentAPI = createApi({
   endpoints: (build) => ({
     getComments: build.query({
       query: ({ uuid, league }: { uuid: string; league: string }) => ({
-        url: `https://wealthy-pug-54.hasura.app/api/rest/${league}_comment_thread/?uuid=${uuid}`,
-        headers: {
-          "Content-Type": "application/json",
-          "x-hasura-admin-secret": `${process.env.NEXT_PUBLIC_HASURA_ADMIN_SECRET}`,
-        },
+        url: `api/comment/${league}/${uuid}`,
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       }),
       providesTags: [{ type: "Comment" }],
     }),
