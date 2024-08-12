@@ -35,7 +35,13 @@ const CommentBox = () => {
 
   return (
     <div className="flex flex-row">
-      <Avatar src={data?.user?.image} className="mr-4" />
+      <Avatar
+        src={data?.user?.image as string}
+        className="mr-4"
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      />
       <div className="flex-1">
         <Input
           crossOrigin={undefined}
@@ -44,6 +50,8 @@ const CommentBox = () => {
           onClick={openOnFocus}
           onChange={(e) => setInputValue(e.target.value)}
           value={inputValue}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         />
         {open ? (
           <div className="flex items-center justify-end gap-x-2 pt-2">
@@ -52,6 +60,9 @@ const CommentBox = () => {
               size="sm"
               variant="text"
               onClick={close}
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
             >
               Cancel
             </Button>
@@ -64,6 +75,9 @@ const CommentBox = () => {
               type="submit"
               variant="filled"
               onClick={onSubmit}
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
             >
               Comment
             </Button>

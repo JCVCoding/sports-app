@@ -17,16 +17,16 @@ import {
   useLikeDislikeReplyMutation,
 } from "./commentSlice";
 interface CommentActionsProps {
-  id: string;
+  id: string | null | undefined;
   likeCount: number;
   dislikeCount: number;
-  league: string;
-  uuid: string;
+  league: string | null | undefined;
+  uuid: string | null | undefined;
   authorEmail: string | null | undefined;
   isLiked: boolean;
   isDisliked: boolean;
   isReply: boolean;
-  parentId?: string;
+  parentId?: string | null | undefined;
   setOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -141,6 +141,7 @@ const CommentActions = ({
   return (
     <div>
       <div className="flex items-center gap-2">
+        {/* @ts-ignore */}
         <Button
           className="rounded-full px-2"
           size="sm"
@@ -154,6 +155,7 @@ const CommentActions = ({
           )}
         </Button>
         <span className="mr-2">{currentLikeCount}</span>
+        {/* @ts-ignore */}
         <Button
           className="rounded-full px-2"
           size="sm"
@@ -168,6 +170,7 @@ const CommentActions = ({
         </Button>
         <span className="mr-2">{currentDislikeCount}</span>
         {!isReply && data?.user && (
+          /* @ts-ignore */
           <Button
             className="rounded-full font-bold normal-case"
             onClick={() => {
@@ -186,6 +189,7 @@ const CommentActions = ({
           closeDialog={closeCommentReply}
           ref={inputReference}
           id={id}
+          /* @ts-ignore */
           setOpen={openReplies}
         />
       ) : null}

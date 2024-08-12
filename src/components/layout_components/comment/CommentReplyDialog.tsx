@@ -13,7 +13,7 @@ const CommentReplyDialog = (
     setOpen,
   }: {
     closeDialog: () => void;
-    id: string;
+    id: string | null | undefined;
     setOpen: Dispatch<SetStateAction<boolean>>;
   },
   ref: Ref<HTMLInputElement>
@@ -50,7 +50,14 @@ const CommentReplyDialog = (
   };
   return (
     <div className="flex flex-wrap">
-      <Avatar src="/next.svg" size="xs" className="relative top-4" />
+      <Avatar
+        src="/next.svg"
+        size="xs"
+        className="relative top-4"
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      />
       <div className="flex-1 pl-4">
         <Input
           crossOrigin={undefined}
@@ -58,6 +65,8 @@ const CommentReplyDialog = (
           placeholder="Add a reply..."
           inputRef={ref}
           onChange={(e) => setInputValue(e.target.value)}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         />
         <div className="flex items-center justify-end gap-x-2 pt-2">
           <Button
@@ -65,6 +74,9 @@ const CommentReplyDialog = (
             onClick={() => closeDialog()}
             size="sm"
             variant="text"
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
           >
             Cancel
           </Button>
@@ -77,6 +89,9 @@ const CommentReplyDialog = (
             type="submit"
             variant="filled"
             onClick={replyHandler}
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
           >
             Reply
           </Button>

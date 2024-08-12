@@ -9,20 +9,20 @@ import { useEditCommentMutation, useEditReplyMutation } from "./commentSlice";
 import { Dispatch } from "react";
 
 export interface commentProps {
-  author: string;
-  avatar: string;
-  text: string;
-  timestamp: string;
-  likeCount: number;
-  dislikeCount: number;
-  id: string;
+  author: string | null | undefined;
+  avatar: string | null | undefined;
+  text: string | null | undefined;
+  timestamp: string | null | undefined;
+  likeCount: number | null;
+  dislikeCount: number | null | undefined;
+  id: string | null | undefined;
   league: string | null | undefined;
   uuid: string | null | undefined;
   authorEmail: string | null | undefined;
   dislikedUsers: string[] | null | undefined;
   likedUsers: string[] | null | undefined;
   isReply: boolean;
-  parentId?: string;
+  parentId?: string | null | undefined;
   isEdited: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -60,6 +60,7 @@ const Comment = ({
   setOpen,
 }: commentProps) => {
   const [commentText, setCommentText] = useState(text);
+  // @ts-ignore
   const [state, dispatch] = useReducer(EditingReducer, { isEditing: false });
   const { data } = useSession();
   const [editComment] = useEditCommentMutation();
@@ -83,6 +84,7 @@ const Comment = ({
       action: "edit",
       newTimestamp,
     });
+    // @ts-ignore
     dispatch({ type: "DONE" });
   };
   const completeReplyEdit = () => {
@@ -96,11 +98,13 @@ const Comment = ({
       action: "edit_reply",
       newTimestamp,
     });
+    // @ts-ignore
     dispatch({ type: "DONE" });
   };
   return (
     <>
       <div className="flex flex-wrap">
+        {/* @ts-ignore */}
         <Avatar src={avatar} size="xs" />
         <div className="px-2 flex-1">
           <div>
@@ -116,12 +120,14 @@ const Comment = ({
           </div>
           {state.isEditing ? (
             <div className="relative flex w-full">
+              {/* @ts-ignore */}
               <Input
                 crossOrigin={undefined}
                 variant="static"
                 onChange={(e) => setCommentText(e.target.value)}
-                value={commentText}
+                value={commentText as string}
               />
+              {/* @ts-ignore */}
               <Button
                 size="sm"
                 variant="outlined"
@@ -135,8 +141,8 @@ const Comment = ({
             <div className="my-1">{commentText}</div>
           )}
           <CommentActions
-            likeCount={likeCount}
-            dislikeCount={dislikeCount}
+            likeCount={likeCount ? likeCount : 0}
+            dislikeCount={dislikeCount ? dislikeCount : 0}
             id={id}
             league={league}
             uuid={uuid}

@@ -49,7 +49,13 @@ export default function HeaderNav() {
           <>
             {data?.user ? (
               <>
-                <Avatar src={data.user.image} size="md" />
+                <Avatar
+                  src={data.user.image ? data.user.image : undefined}
+                  size="md"
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                />
                 <Link
                   href="/"
                   className="md:text-xl text-base font-medium"

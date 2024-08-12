@@ -15,8 +15,8 @@ const CommentThread = ({ comment }: { comment: CommentDataType }) => {
         author={comment.author!}
         avatar={comment.avatar}
         text={comment.text}
-        timestamp={getTimestamp(comment.publishedAt)}
-        likeCount={comment.likeCount}
+        timestamp={getTimestamp(comment.publishedAt ? comment.publishedAt : "")}
+        likeCount={comment.likeCount ? comment.likeCount : null}
         dislikeCount={comment.dislikeCount}
         id={comment.id}
         league={league}

@@ -7,6 +7,7 @@ type CommentState = {
   comments?: CommentDataType[];
   league?: string;
   uuid?: string;
+  inputValue?: string;
 };
 
 export const CommentAPI = createApi({

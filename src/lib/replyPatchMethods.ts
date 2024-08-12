@@ -8,7 +8,7 @@ export const replyToComment = async (
 ) => {
   await db
     .collection(`${params.league.toUpperCase()}_Comments`)
-    .findOneAndUpdate(
+    .updateOne(
       { uuid: params.uuid, id: id },
       { $addToSet: { replies: reply } }
     );
@@ -21,18 +21,16 @@ export const editReply = async (
   text: string,
   newTimestamp: string
 ) => {
-  await db
-    .collection(`${params.league.toUpperCase()}_Comments`)
-    .findOneAndUpdate(
-      {
-        uuid: params.uuid,
-        id: parentId,
-        "replies.id": id,
-      },
-      {
-        $set: { "replies.$.text": text, "replies.$.updatedAt": newTimestamp },
-      }
-    );
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: parentId,
+      "replies.id": id,
+    },
+    {
+      $set: { "replies.$.text": text, "replies.$.updatedAt": newTimestamp },
+    }
+  );
 };
 
 export const likeReply = async (
@@ -44,22 +42,20 @@ export const likeReply = async (
   authorEmail: string,
   parentId: string
 ) => {
-  await db
-    .collection(`${params.league.toUpperCase()}_Comments`)
-    .findOneAndUpdate(
-      {
-        uuid: params.uuid,
-        id: parentId,
-        "replies.id": id,
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: parentId,
+      "replies.id": id,
+    },
+    {
+      $set: {
+        "replies.$.likeCount": likeCount,
+        "replies.$.dislikeCount": dislikeCount,
       },
-      {
-        $set: {
-          "replies.$.likeCount": likeCount,
-          "replies.$.dislikeCount": dislikeCount,
-        },
-        $addToSet: { "replies.$.likedUsers": authorEmail },
-      }
-    );
+      $addToSet: { "replies.$.likedUsers": authorEmail },
+    }
+  );
 };
 export const dislikeReply = async (
   db: Db,
@@ -70,22 +66,20 @@ export const dislikeReply = async (
   authorEmail: string,
   parentId: string
 ) => {
-  await db
-    .collection(`${params.league.toUpperCase()}_Comments`)
-    .findOneAndUpdate(
-      {
-        uuid: params.uuid,
-        id: parentId,
-        "replies.id": id,
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: parentId,
+      "replies.id": id,
+    },
+    {
+      $set: {
+        "replies.$.likeCount": likeCount,
+        "replies.$.dislikeCount": dislikeCount,
       },
-      {
-        $set: {
-          "replies.$.likeCount": likeCount,
-          "replies.$.dislikeCount": dislikeCount,
-        },
-        $addToSet: { "replies.$.dislikedUsers": authorEmail },
-      }
-    );
+      $addToSet: { "replies.$.dislikedUsers": authorEmail },
+    }
+  );
 };
 export const pullLikedUserReply = async (
   db: Db,
@@ -94,18 +88,16 @@ export const pullLikedUserReply = async (
   authorEmail: string,
   parentId: string
 ) => {
-  await db
-    .collection(`${params.league.toUpperCase()}_Comments`)
-    .findOneAndUpdate(
-      {
-        uuid: params.uuid,
-        id: parentId,
-        "replies.id": id,
-      },
-      {
-        $pull: { "replies.$.likedUsers": authorEmail },
-      }
-    );
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: parentId,
+      "replies.id": id,
+    },
+    {
+      $pull: { "replies.$.likedUsers": authorEmail },
+    }
+  );
 };
 export const pullDislikedUserReply = async (
   db: Db,
@@ -114,16 +106,14 @@ export const pullDislikedUserReply = async (
   authorEmail: string,
   parentId: string
 ) => {
-  await db
-    .collection(`${params.league.toUpperCase()}_Comments`)
-    .findOneAndUpdate(
-      {
-        uuid: params.uuid,
-        id: parentId,
-        "replies.id": id,
-      },
-      {
-        $pull: { "replies.$.dislikedUsers": authorEmail },
-      }
-    );
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: parentId,
+      "replies.id": id,
+    },
+    {
+      $pull: { "replies.$.dislikedUsers": authorEmail },
+    }
+  );
 };

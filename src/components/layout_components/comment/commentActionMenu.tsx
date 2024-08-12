@@ -23,9 +23,9 @@ const CommentActionMenu = ({
   parentId,
   isReply,
 }: {
-  id: string;
+  id: string | null | undefined;
   editDispatch: DispatchWithoutAction;
-  parentId?: string;
+  parentId?: string | null | undefined;
   isReply: boolean;
 }) => {
   const [deleteComment] = useDeleteCommentMutation();
@@ -35,18 +35,23 @@ const CommentActionMenu = ({
   return (
     <Menu placement="bottom-start">
       <MenuHandler>
+        {/* @ts-ignore */}
         <Button variant="text" className="p-0">
           <EllipsisVerticalIcon className="h-6 w-6" />
         </Button>
       </MenuHandler>
+      {/* @ts-ignore */}
       <MenuList>
+        {/* @ts-ignore */}
         <MenuItem
           className="flex gap-2"
+          /* @ts-ignore */
           onClick={() => editDispatch({ type: "EDITING" })}
         >
           <PencilIcon className="h-4 w-4" />
           Edit
         </MenuItem>
+        {/* @ts-ignore */}
         <MenuItem
           className="flex gap-2"
           onClick={() =>

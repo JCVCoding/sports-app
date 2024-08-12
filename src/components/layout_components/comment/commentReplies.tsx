@@ -33,6 +33,9 @@ const CommentReplies = ({
           size="sm"
           variant="text"
           onClick={toggleOpen}
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         >
           {open ? (
             <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
@@ -69,7 +72,7 @@ const CommentReplies = ({
                 avatar={avatar}
                 text={text}
                 timestamp={getTimestamp(publishedAt!)}
-                likeCount={likeCount}
+                likeCount={likeCount ? likeCount : 0}
                 dislikeCount={dislikeCount}
                 id={id}
                 league={league}
@@ -80,6 +83,9 @@ const CommentReplies = ({
                 likedUsers={likedUsers}
                 isReply={true}
                 isEdited={typeof updatedAt === "string"}
+                setOpen={function (value: SetStateAction<boolean>): void {
+                  throw new Error("Function not implemented.");
+                }}
               />
             </div>
           );

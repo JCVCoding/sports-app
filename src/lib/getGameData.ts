@@ -3,6 +3,7 @@ import { teamData } from "./getTeamData";
 import { dbName } from "./getTeamData";
 
 export interface gameData {
+  _id: any;
   Date: string;
   Start: string;
   Visitor: string;

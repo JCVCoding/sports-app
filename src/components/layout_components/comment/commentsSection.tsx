@@ -34,7 +34,7 @@ const CommentsSection = ({
     let numOfCommentReplies = 0;
     if (comments) {
       comments.forEach((comment) => {
-        numOfCommentReplies += comment.replies.length;
+        numOfCommentReplies += comment.replies!.length;
       });
     }
     return numOfCommentReplies + arrayLength;

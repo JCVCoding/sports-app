@@ -74,7 +74,7 @@ export async function DELETE(
       case "delete_comment":
         await db
           .collection(`${params.league.toUpperCase()}_Comments`)
-          .findOneAndDelete({
+          .deleteOne({
             uuid: params.uuid,
             id: id,
           });
@@ -82,7 +82,7 @@ export async function DELETE(
       case "delete_reply":
         await db
           .collection(`${params.league.toUpperCase()}_Comments`)
-          .findOneAndUpdate(
+          .updateOne(
             {
               uuid: params.uuid,
               id: parentId,
