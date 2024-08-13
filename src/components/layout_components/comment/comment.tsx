@@ -105,7 +105,7 @@ const Comment = ({
     <>
       <div className="flex flex-wrap">
         {/* @ts-ignore */}
-        <Avatar src={avatar} size="xs" />
+        <Avatar src={avatar} className="lg" />
         <div className="px-2 flex-1">
           <div>
             {data?.user?.email === authorEmail ? (

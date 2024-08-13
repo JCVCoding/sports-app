@@ -12,12 +12,21 @@ export default async function ArticlePage({
   const [data] = await getArticleById(params.uuid, leagueArticles);
   return (
     <>
-      <h3 className="text-4xl font-medium mb-3">{data.title}</h3>
-      <div className="text-gray-400 pb-3">{data.source}</div>
-      <div className="relative mb-3" style={{ height: "800px" }}>
-        <Image src={data.image_url} alt="" fill />
+      <h3 className="lg:text-4xl md:text-2xl text-xl font-medium mb-3 px-2 md:px-0">
+        {data.title}
+      </h3>
+      <div className="text-gray-400 pb-3 px-2 md:px-0">{data.source}</div>
+      <div className="relative mb-3">
+        <Image
+          src={data.image_url}
+          alt=""
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
+        />
       </div>
-      <div className="mb-6">{data.description}</div>
+      <div className="mb-6 px-2 md:px-0 md:text-xl">{data.description}</div>
     </>
   );
 }

@@ -49,13 +49,20 @@ const CommentsSection = ({
   if (isSuccess) {
     commentsArray = getComments();
     return (
-      <>
-        {getRepliesCount(commentsArray, commentsArray.length) + " Comments"}
+      <div className="px-2 md:px-0">
+        <div>
+          <span className="text-lg lg:text-xl font-bold">Comments</span>
+          <span className="text-sm md:text-lg text-gray-600 ml-2">
+            {getRepliesCount(commentsArray, commentsArray.length)}
+          </span>
+        </div>
         {data?.user && <CommentHeader />}
-        {commentsArray.map((comment) => (
-          <CommentThread comment={comment} key={comment.id} />
-        ))}
-      </>
+        <div className="mt-4 px-2 pb-4">
+          {commentsArray.map((comment) => (
+            <CommentThread comment={comment} key={comment.id} />
+          ))}
+        </div>
+      </div>
     );
   }
 };

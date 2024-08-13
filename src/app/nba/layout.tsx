@@ -12,7 +12,7 @@ export default async function NBALayout({
   return (
     <>
       <ScoreBoard gameData={gameData} />
-      <div className="container mx-auto mt-5 px-16 flex flex-col">
+      <div className="container md:mx-auto mt-5 md:px-10 flex flex-col">
         {children}
       </div>
     </>
