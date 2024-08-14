@@ -42,7 +42,7 @@ const CommentReplies = ({
           ) : (
             <ChevronUpIcon className="h-4 w-4" aria-hidden="true" />
           )}
-          <span>
+          <span className="text-xs">
             {replies.length.toString() +
               " " +
               (replies.length > 1 ? "replies" : "reply")}

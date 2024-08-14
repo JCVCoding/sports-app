@@ -140,7 +140,7 @@ const CommentActions = ({
 
   return (
     <div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         {/* @ts-ignore */}
         <Button
           className="rounded-full px-2"
@@ -149,12 +149,12 @@ const CommentActions = ({
           onClick={likeComment}
         >
           {isLikedValue ? (
-            <SolidThumbUp className="h-6 w-6" />
+            <SolidThumbUp className="h-4 w-4" />
           ) : (
-            <HandThumbUpIcon className="h-6 w-6" />
+            <HandThumbUpIcon className="h-4 w-4" />
           )}
         </Button>
-        <span className="mr-2">{currentLikeCount}</span>
+        <span className="mr-2 text-sm">{currentLikeCount}</span>
         {/* @ts-ignore */}
         <Button
           className="rounded-full px-2"
@@ -163,12 +163,12 @@ const CommentActions = ({
           onClick={dislikeComment}
         >
           {isDislikedValue ? (
-            <SolidThumbDown className="h-6 w-6" />
+            <SolidThumbDown className="h-4 w-4" />
           ) : (
-            <HandThumbDownIcon className="h-6 w-6" />
+            <HandThumbDownIcon className="h-4 w-4" />
           )}
         </Button>
-        <span className="mr-2">{currentDislikeCount}</span>
+        <span className="mr-2 text-sm">{currentDislikeCount}</span>
         {!isReply && data?.user && (
           /* @ts-ignore */
           <Button

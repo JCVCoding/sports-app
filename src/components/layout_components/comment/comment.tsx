@@ -138,7 +138,7 @@ const Comment = ({
               </Button>
             </div>
           ) : (
-            <div className="my-1">{commentText}</div>
+            <div className="my-1 text-sm md:text-base">{commentText}</div>
           )}
           <CommentActions
             likeCount={likeCount ? likeCount : 0}

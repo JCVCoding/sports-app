@@ -5,32 +5,62 @@ import ScoreCard from "./scorecard";
 
 import { gameData } from "@/lib/getGameData";
 
+const getWindowDimensions = () => {
+  const width = window.innerWidth;
+  return width;
+};
+
 const ScoreBoard = ({ gameData }: any) => {
   const [index, setIndex] = useState(0);
   const scoreboardList = useRef<null | HTMLUListElement>(null);
   let [numOfScoreboardItems, setNum] = useState<number>(0);
-  let [slideValue, setSlideValue] = useState<number | undefined>(0);
+  let [slideValue, setSlideValue] = useState<number>(0);
   let [data, setData] = useState<gameData[]>(gameData);
-  let scoreCardWidth = scoreboardList.current?.children[0].clientWidth;
+  let [scoreCardWidth, setScoreCardWidth] = useState(0);
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
   useEffect(() => {
     if (scoreboardList.current) {
+      setScoreCardWidth(scoreboardList.current?.children[0].clientWidth);
       setNum(scoreboardList.current?.childNodes.length);
     }
     setData(gameData);
-  }, [gameData]);
+
+    const handleResize = () => {
+      setWindowDimensions(getWindowDimensions());
+      updateScoreCardWidth();
+      setSlideValue(0);
+      setIndex(0);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [gameData, windowDimensions]);
 
   const slideLeft = (): void => {
-    setSlideValue(slideValue! + scoreCardWidth! * 2);
+    windowDimensions > 767
+      ? setSlideValue(slideValue + scoreCardWidth! * 2)
+      : setSlideValue(slideValue + scoreCardWidth! * 1);
     setIndex(index - 1);
   };
   const slideRight = (): void => {
-    setSlideValue(slideValue! - scoreCardWidth! * 2);
+    windowDimensions > 767
+      ? setSlideValue(slideValue - scoreCardWidth! * 2)
+      : setSlideValue(slideValue - scoreCardWidth! * 1);
     setIndex(index + 1);
+  };
+
+  const updateScoreCardWidth = () => {
+    if (scoreboardList.current)
+      setScoreCardWidth(scoreboardList.current?.children[0].clientWidth);
   };
 
   return (
     <div className="scoreboard">
+      {slideValue + " " + scoreCardWidth}
       <button
         className="arrowContainer left"
         onClick={slideLeft}
@@ -79,7 +109,13 @@ const ScoreBoard = ({ gameData }: any) => {
         className="arrowContainer right"
         onClick={slideRight}
         disabled={
-          Math.ceil(numOfScoreboardItems / 2) - 1 === index ? true : false
+          windowDimensions > 767
+            ? Math.ceil(numOfScoreboardItems / 2) - 1 === index
+              ? true
+              : false
+            : Math.ceil(numOfScoreboardItems / 1) - 1 === index
+            ? true
+            : false
         }
       >
         <svg

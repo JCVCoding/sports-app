@@ -37,7 +37,7 @@ export default async function ArticlePages({
         <h2 className="text-5xl font-bold text-center mb-4">{league}</h2>
       </div>
       <ol>
-        <li className="my-8 mx-auto">
+        <li className="my-8 mx-auto flex flex-col items-center">
           {apiData?.map(
             ({ uuid, description, image_url, source, title }: ArticleData) => (
               <ContentCard
