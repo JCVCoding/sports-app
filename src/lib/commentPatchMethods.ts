@@ -5,8 +5,7 @@ export const like = async (
   params: { league: string; uuid: string },
   id: string,
   likeCount: string,
-  dislikeCount: string,
-  authorEmail: string
+  dislikeCount: string
 ) => {
   db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
     {
@@ -18,7 +17,6 @@ export const like = async (
         likeCount,
         dislikeCount,
       },
-      $addToSet: { likedUsers: authorEmail },
     }
   );
 };
@@ -27,8 +25,7 @@ export const dislike = async (
   params: { league: string; uuid: string },
   id: string,
   likeCount: string,
-  dislikeCount: string,
-  authorEmail: string
+  dislikeCount: string
 ) => {
   await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
     {
@@ -40,7 +37,6 @@ export const dislike = async (
         likeCount,
         dislikeCount,
       },
-      $addToSet: { dislikedUsers: authorEmail },
     }
   );
 };
@@ -48,7 +44,7 @@ export const pullLikedUser = async (
   db: Db,
   params: { league: string; uuid: string },
   id: string,
-  authorEmail: string
+  email: string
 ) => {
   await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
     {
@@ -56,7 +52,7 @@ export const pullLikedUser = async (
       id: id,
     },
     {
-      $pull: { likedUsers: authorEmail },
+      $pull: { likedUsers: email },
     }
   );
 };
@@ -64,7 +60,7 @@ export const pullDislikedUser = async (
   db: Db,
   params: { league: string; uuid: string },
   id: string,
-  authorEmail: string
+  email: string
 ) => {
   await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
     {
@@ -72,7 +68,39 @@ export const pullDislikedUser = async (
       id: id,
     },
     {
-      $pull: { dislikedUsers: authorEmail },
+      $pull: { dislikedUsers: email },
+    }
+  );
+};
+export const pushLikedUser = async (
+  db: Db,
+  params: { league: string; uuid: string },
+  id: string,
+  email: string
+) => {
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: id,
+    },
+    {
+      $push: { likedUsers: email },
+    }
+  );
+};
+export const pushDislikedUser = async (
+  db: Db,
+  params: { league: string; uuid: string },
+  id: string,
+  email: string
+) => {
+  await db.collection(`${params.league.toUpperCase()}_Comments`).updateOne(
+    {
+      uuid: params.uuid,
+      id: id,
+    },
+    {
+      $push: { dislikedUsers: email },
     }
   );
 };

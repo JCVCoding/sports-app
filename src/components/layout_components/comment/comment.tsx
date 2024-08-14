@@ -68,10 +68,12 @@ const Comment = ({
 
   let isLiked = false;
   let isDisliked = false;
-  if (likedUsers?.includes(data?.user?.email!)) {
+  let email = data?.user?.email ? data.user.email : "";
+
+  if (likedUsers?.includes(email)) {
     isLiked = true;
   }
-  if (dislikedUsers?.includes(data?.user?.email!)) {
+  if (dislikedUsers?.includes(email)) {
     isDisliked = true;
   }
   const completeEdit = () => {

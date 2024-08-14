@@ -6,6 +6,8 @@ import {
   editComment,
   pullDislikedUser,
   pullLikedUser,
+  pushLikedUser,
+  pushDislikedUser,
 } from "@/lib/commentPatchMethods";
 import {
   replyToComment,
@@ -14,6 +16,8 @@ import {
   likeReply,
   pullDislikedUserReply,
   pullLikedUserReply,
+  pushLikedUserReply,
+  pushDislikedUserReply,
 } from "@/lib/replyPatchMethods";
 async function getDB() {
   const client = await clientPromise;
@@ -107,58 +111,62 @@ export async function PATCH(
   const {
     id,
     action,
-    authorEmail,
     text,
     likeCount,
     dislikeCount,
     reply,
     parentId,
     newTimestamp,
+    email,
   } = await req.json();
   const db = await getDB();
 
   try {
     switch (action) {
       case "like":
-        like(db, params, id, likeCount, dislikeCount, authorEmail);
-        pullDislikedUser(db, params, id, authorEmail);
+        await like(db, params, id, likeCount, dislikeCount);
+        await pushLikedUser(db, params, id, email);
+        await pullDislikedUser(db, params, id, email);
+        break;
+      case "like_neutral":
+        await like(db, params, id, likeCount, dislikeCount);
+        await pullLikedUser(db, params, id, email);
         break;
       case "dislike":
-        dislike(db, params, id, likeCount, dislikeCount, authorEmail);
-        pullLikedUser(db, params, id, authorEmail);
+        await dislike(db, params, id, likeCount, dislikeCount);
+        await pushDislikedUser(db, params, id, email);
+        await pullLikedUser(db, params, id, email);
+        break;
+      case "dislike_neutral":
+        await dislike(db, params, id, likeCount, dislikeCount);
+        await pullDislikedUser(db, params, id, email);
         break;
       case "edit":
-        editComment(db, params, id, text, newTimestamp);
+        await editComment(db, params, id, text, newTimestamp);
         break;
       case "reply":
-        replyToComment(db, params, id, reply);
+        await replyToComment(db, params, id, reply);
         break;
       case "edit_reply":
-        editReply(db, params, id, parentId, text, newTimestamp);
+        await editReply(db, params, id, parentId, text, newTimestamp);
         break;
       case "like_reply":
-        likeReply(
-          db,
-          params,
-          id,
-          likeCount,
-          dislikeCount,
-          authorEmail,
-          parentId
-        );
-        pullDislikedUserReply(db, params, id, authorEmail, parentId);
+        await likeReply(db, params, id, likeCount, dislikeCount, parentId);
+        await pushLikedUserReply(db, params, id, email, parentId);
+        await pullDislikedUserReply(db, params, id, email, parentId);
+        break;
+      case "like_reply_neutral":
+        await likeReply(db, params, id, likeCount, dislikeCount, parentId);
+        await pullLikedUserReply(db, params, id, email, parentId);
         break;
       case "dislike_reply":
-        dislikeReply(
-          db,
-          params,
-          id,
-          likeCount,
-          dislikeCount,
-          authorEmail,
-          parentId
-        );
-        pullLikedUserReply(db, params, id, authorEmail, parentId);
+        await dislikeReply(db, params, id, likeCount, dislikeCount, parentId);
+        await pushDislikedUserReply(db, params, id, email, parentId);
+        await pullLikedUserReply(db, params, id, email, parentId);
+        break;
+      case "dislike_reply_neutral":
+        await dislikeReply(db, params, id, likeCount, dislikeCount, parentId);
+        await pullDislikedUserReply(db, params, id, email, parentId);
         break;
       default:
         break;

@@ -71,7 +71,7 @@ export const CommentAPI = createApi({
         uuid,
         id,
         action,
-        authorEmail,
+        email,
         dislikeCount,
         likeCount,
       }) => ({
@@ -80,7 +80,7 @@ export const CommentAPI = createApi({
         body: JSON.stringify({
           id,
           action,
-          authorEmail,
+          email,
           dislikeCount,
           likeCount,
         }),
@@ -135,7 +135,7 @@ export const CommentAPI = createApi({
         uuid,
         id,
         action,
-        authorEmail,
+        email,
         dislikeCount,
         likeCount,
         parentId,
@@ -145,7 +145,7 @@ export const CommentAPI = createApi({
         body: JSON.stringify({
           id,
           action,
-          authorEmail,
+          email,
           dislikeCount,
           likeCount,
           parentId,

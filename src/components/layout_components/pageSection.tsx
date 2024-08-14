@@ -16,11 +16,11 @@ const PageSection = (props: PageSectionType) => {
           {props.header}
         </h2>
       </Link>
-      <div className="flex flex-col items-center gap-y-5">
+      <div className="py-5">
         {props.stories?.map((item, index) => (
           <>
             {index === 0 ? (
-              <div className="grid md:grid-cols-2 items-center">
+              <div className="grid md:grid-cols-2 items-center mb-8">
                 <div className="relative">
                   <Link
                     href={`/${props.header}/article/${encodeURIComponent(
@@ -33,7 +33,7 @@ const PageSection = (props: PageSectionType) => {
                       width={0}
                       height={0}
                       sizes="100vw"
-                      style={{ height: "auto", width: "100%" }}
+                      className="w-full h-auto"
                     ></Image>
                   </Link>
                 </div>
@@ -43,7 +43,7 @@ const PageSection = (props: PageSectionType) => {
                       item.uuid
                     )}`}
                   >
-                    <h3>{item.title}</h3>
+                    <h3 className="md:text-lg lg:text-xl">{item.title}</h3>
                   </Link>
                   <Link
                     href={`/${props.header}/article/${encodeURIComponent(
@@ -66,7 +66,7 @@ const PageSection = (props: PageSectionType) => {
                       width={0}
                       height={0}
                       sizes="100vw"
-                      style={{ height: "auto", width: "100%" }}
+                      className="w-full h-auto"
                     ></Image>
                   </Link>
                 </div>
@@ -76,7 +76,7 @@ const PageSection = (props: PageSectionType) => {
                       item.uuid
                     )}`}
                   >
-                    <h3>{item.title}</h3>
+                    <h3 className="md:text-lg lg:text-xl">{item.title}</h3>
                   </Link>
                   <Link
                     href={`/${props.header}/article/${encodeURIComponent(

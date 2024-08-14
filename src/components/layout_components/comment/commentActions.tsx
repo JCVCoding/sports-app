@@ -36,7 +36,6 @@ const CommentActions = ({
   id,
   league,
   uuid,
-  authorEmail,
   isLiked,
   isDisliked,
   isReply,
@@ -44,19 +43,18 @@ const CommentActions = ({
   setOpen: openReplies,
 }: CommentActionsProps) => {
   const [open, setOpen] = useState(false);
-  const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
-  const [currentDislikeCount, setCurrentDislikeCount] = useState(dislikeCount);
-  const [isLikedValue, setIsLikedValue] = useState(isLiked);
-  const [isDislikedValue, setIsDislikedValue] = useState(isDisliked);
+  let currentLikeCount = likeCount;
+  let currentDislikeCount = dislikeCount;
+  let [isLikedValue, setIsLikedValue] = useState(isLiked);
+  let [isDislikedValue, setIsDislikedValue] = useState(isDisliked);
   let inputReference = useRef<HTMLInputElement>(null);
-
-  const currentLikeCountRef = useRef(likeCount);
-  const currentDislikeCountRef = useRef(dislikeCount);
 
   const [likeDislikeComment] = useLikeDislikeCommentMutation();
   const [likeDislikeReply] = useLikeDislikeReplyMutation();
 
   const { data } = useSession();
+
+  let email = data?.user?.email ? data.user.email : null;
 
   const openCommentReply = () => {
     setOpen(true);
@@ -70,71 +68,67 @@ const CommentActions = ({
     inputReference.current?.focus();
   };
 
+  const mutateComment = (action: string) => {
+    likeDislikeComment({
+      league,
+      uuid,
+      id,
+      action: action,
+      email,
+      dislikeCount: currentDislikeCount,
+      likeCount: currentLikeCount,
+    });
+  };
+
+  const mutateReply = (action: string) => {
+    likeDislikeReply({
+      league,
+      uuid,
+      id,
+      parentId,
+      action: action,
+      email,
+      dislikeCount: currentDislikeCount,
+      likeCount: currentLikeCount,
+    });
+  };
+
   const likeComment = () => {
-    if (data?.user && !isLikedValue) {
-      setCurrentLikeCount(currentLikeCount + 1);
-      currentLikeCountRef.current += 1;
-
-      currentDislikeCount > 0 &&
-        setCurrentDislikeCount(currentDislikeCount - 1);
-      currentDislikeCount > 0 ? (currentDislikeCountRef.current -= 1) : null;
-
+    if (data?.user && isDislikedValue) {
+      currentLikeCount += 1;
+      currentDislikeCount > 0 && (currentDislikeCount -= 1);
       setIsLikedValue(true);
       setIsDislikedValue(false);
-
+      !isReply ? mutateComment("like") : mutateReply("like_reply");
+    } else if (data?.user && isLikedValue) {
+      currentLikeCount -= 1;
+      setIsLikedValue(false);
       !isReply
-        ? likeDislikeComment({
-            league,
-            uuid,
-            id,
-            action: "like",
-            authorEmail,
-            dislikeCount: currentDislikeCountRef.current,
-            likeCount: currentLikeCountRef.current,
-          })
-        : likeDislikeReply({
-            league,
-            uuid,
-            id,
-            parentId,
-            action: "like_reply",
-            authorEmail,
-            dislikeCount: currentDislikeCountRef.current,
-            likeCount: currentLikeCountRef.current,
-          });
+        ? mutateComment("like_neutral")
+        : mutateReply("like_reply_neutral");
+    } else {
+      currentLikeCount += 1;
+      setIsLikedValue(true);
+      !isReply ? mutateComment("like") : mutateReply("like_reply");
     }
   };
   const dislikeComment = () => {
-    if (data?.user && !isDislikedValue) {
-      currentLikeCount > 0 && setCurrentLikeCount(currentLikeCount - 1);
-      currentLikeCount > 0 ? (currentLikeCountRef.current -= 1) : null;
-
-      setCurrentDislikeCount(currentDislikeCount + 1);
-      currentDislikeCountRef.current += 1;
-
+    if (data?.user && isLikedValue) {
+      currentDislikeCount += 1;
+      currentLikeCount > 0 && (currentLikeCount -= 1);
       setIsDislikedValue(true);
       setIsLikedValue(false);
-
+      !isReply ? mutateComment("dislike") : mutateReply("dislike_reply");
+    } else if (data?.user && isDislikedValue) {
+      currentDislikeCount -= 1;
+      setIsDislikedValue(false);
       !isReply
-        ? likeDislikeComment({
-            league,
-            uuid,
-            id,
-            action: "dislike",
-            authorEmail,
-            dislikeCount: currentDislikeCountRef.current,
-            likeCount: currentLikeCountRef.current,
-          })
-        : likeDislikeReply({
-            league,
-            uuid,
-            id,
-            parentId,
-            action: "dislike_reply",
-            authorEmail,
-            dislikeCount: currentDislikeCountRef.current,
-            likeCount: currentLikeCountRef.current,
-          });
+        ? mutateComment("dislike_neutral")
+        : mutateReply("dislike_reply_neutral");
+    } else {
+      currentDislikeCount += 1;
+      setIsDislikedValue(true);
+      !isReply ? mutateComment("dislike") : mutateReply("dislike_reply");
     }
   };
 
