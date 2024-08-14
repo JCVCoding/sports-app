@@ -17,9 +17,14 @@ const ScoreBoard = ({ gameData }: any) => {
   let [slideValue, setSlideValue] = useState<number>(0);
   let [data, setData] = useState<gameData[]>(gameData);
   let [scoreCardWidth, setScoreCardWidth] = useState(0);
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
+  const [windowDimensions, setWindowDimensions] = useState(0);
+
+  const handleResize = () => {
+    setWindowDimensions(getWindowDimensions());
+    updateScoreCardWidth();
+    setSlideValue(0);
+    setIndex(0);
+  };
 
   useEffect(() => {
     if (scoreboardList.current) {
@@ -27,13 +32,7 @@ const ScoreBoard = ({ gameData }: any) => {
       setNum(scoreboardList.current?.childNodes.length);
     }
     setData(gameData);
-
-    const handleResize = () => {
-      setWindowDimensions(getWindowDimensions());
-      updateScoreCardWidth();
-      setSlideValue(0);
-      setIndex(0);
-    };
+    setWindowDimensions(getWindowDimensions());
 
     window.addEventListener("resize", handleResize);
 
@@ -60,7 +59,6 @@ const ScoreBoard = ({ gameData }: any) => {
 
   return (
     <div className="scoreboard">
-      {slideValue + " " + scoreCardWidth}
       <button
         className="arrowContainer left"
         onClick={slideLeft}
