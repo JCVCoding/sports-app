@@ -106,7 +106,7 @@ const CommentActions = ({
       !isReply
         ? mutateComment("like_neutral")
         : mutateReply("like_reply_neutral");
-    } else {
+    } else if (data?.user) {
       currentLikeCount += 1;
       setIsLikedValue(true);
       !isReply ? mutateComment("like") : mutateReply("like_reply");
@@ -125,7 +125,7 @@ const CommentActions = ({
       !isReply
         ? mutateComment("dislike_neutral")
         : mutateReply("dislike_reply_neutral");
-    } else {
+    } else if (data?.user) {
       currentDislikeCount += 1;
       setIsDislikedValue(true);
       !isReply ? mutateComment("dislike") : mutateReply("dislike_reply");
