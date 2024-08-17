@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 export interface StoryCardProps {
   header: string;
   title: string;
@@ -8,24 +8,21 @@ export interface StoryCardProps {
   uuid: string;
 }
 
-const StoryCard = ({ author, header, text, title, uuid }: StoryCardProps) => {
+const StoryCard = ({ header, title, uuid }: StoryCardProps) => {
   return (
-    <div className='border border-gray-300'>
-      <div className='bg-teal-400 pl-2'>{header}</div>
-      <div className='p-2'>
+    <>
+      <div className="text-green-800 text-lg md:text-2xl pl-2">{header}</div>
+      <div className="p-2 font-extrabold">
         <Link
           href={`/${header.toLowerCase()}/article/${encodeURIComponent(uuid)}`}
         >
-          <div className='text-3xl mb-2'>{title}</div>
+          <div className="text-xl md:text-3xl">{title}</div>
         </Link>
         <Link
           href={`/${header.toLowerCase()}/article/${encodeURIComponent(uuid)}`}
-        >
-          <div>{text}</div>
-        </Link>
-        <div>by {author}</div>
+        ></Link>
       </div>
-    </div>
+    </>
   );
 };
 
