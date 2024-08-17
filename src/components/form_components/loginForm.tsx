@@ -8,10 +8,12 @@ import {
   Input,
   Button,
 } from "@material-tailwind/react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { Google } from "@/components/form_components/googleSignIn";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface LoginFormInputs {
   email: string;
@@ -26,6 +28,8 @@ export const LoginForm = () => {
     formState: { errors },
     setError,
   } = useForm<LoginFormInputs>();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const submitForm = async (data: LoginFormInputs) => {
     const { email, password } = data;
@@ -102,12 +106,21 @@ export const LoginForm = () => {
                   label="Password"
                   size="lg"
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   aria-invalid={errors.password ? "true" : "false"}
                   error={errors.password ? true : false}
                   {...register("password", {
                     required: "Password is required",
                   })}
+                  icon={
+                    showPassword ? (
+                      <EyeSlashIcon
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    ) : (
+                      <EyeIcon onClick={() => setShowPassword(!showPassword)} />
+                    )
+                  }
                 />
                 {errors.password && (
                   <Typography className="text-red-500 mt-1 ml-1">
