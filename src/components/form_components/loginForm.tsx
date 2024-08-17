@@ -61,19 +61,38 @@ export const LoginForm = () => {
   };
 
   return (
-    <Card className="w-full md:w-96">
+    <Card
+      placeholder={null}
+      onPointerEnterCapture={null}
+      onPointerLeaveCapture={null}
+      className="w-full md:w-96"
+    >
       <CardHeader
+        placeholder={null}
+        onPointerEnterCapture={null}
+        onPointerLeaveCapture={null}
         variant="gradient"
         color="white"
         shadow={false}
         floated={false}
         className="grid h-12 place-items-center"
       >
-        <Typography variant="h2" color="black" className="text-xl md:text-3xl">
+        <Typography
+          placeholder={null}
+          onPointerEnterCapture={null}
+          onPointerLeaveCapture={null}
+          variant="h2"
+          color="black"
+          className="text-xl md:text-3xl"
+        >
           Sign In To Sports App
         </Typography>
       </CardHeader>
-      <CardBody className="">
+      <CardBody
+        placeholder={null}
+        onPointerEnterCapture={null}
+        onPointerLeaveCapture={null}
+      >
         <div className="flex flex-col gap-4">
           <div className="self-center">
             <Google />
@@ -94,9 +113,17 @@ export const LoginForm = () => {
                   aria-invalid={errors.email ? "true" : "false"}
                   error={errors.email ? true : false}
                   {...register("email", { required: "Email is required" })}
+                  crossOrigin={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
                 />
                 {errors.email && (
-                  <Typography className="text-red-500 mt-1 ml-1">
+                  <Typography
+                    placeholder={null}
+                    onPointerEnterCapture={null}
+                    onPointerLeaveCapture={null}
+                    className="text-red-500 mt-1 ml-1"
+                  >
                     {errors.email?.message}
                   </Typography>
                 )}
@@ -121,22 +148,48 @@ export const LoginForm = () => {
                       <EyeIcon onClick={() => setShowPassword(!showPassword)} />
                     )
                   }
+                  crossOrigin={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
                 />
                 {errors.password && (
-                  <Typography className="text-red-500 mt-1 ml-1">
+                  <Typography
+                    placeholder={null}
+                    onPointerEnterCapture={null}
+                    onPointerLeaveCapture={null}
+                    className="text-red-500 mt-1 ml-1"
+                  >
                     {errors.password?.message}
                   </Typography>
                 )}
               </div>
-              <Button variant="gradient" type="submit" fullWidth>
+              <Button
+                placeholder={null}
+                onPointerEnterCapture={null}
+                onPointerLeaveCapture={null}
+                variant="gradient"
+                type="submit"
+                fullWidth
+              >
                 Sign In
               </Button>
             </div>
           </form>
         </div>
       </CardBody>
-      <CardFooter className="pt-0">
-        <Typography variant="small" className="mt-6 flex justify-center">
+      <CardFooter
+        className="pt-0"
+        placeholder={null}
+        onPointerEnterCapture={null}
+        onPointerLeaveCapture={null}
+      >
+        <Typography
+          variant="small"
+          className="mt-6 flex justify-center"
+          placeholder={null}
+          onPointerEnterCapture={null}
+          onPointerLeaveCapture={null}
+        >
           Don&apos;t have an account?
           <Typography
             as="a"
@@ -144,6 +197,9 @@ export const LoginForm = () => {
             variant="small"
             color="blue-gray"
             className="ml-1 font-bold"
+            placeholder={null}
+            onPointerEnterCapture={null}
+            onPointerLeaveCapture={null}
           >
             Sign up
           </Typography>

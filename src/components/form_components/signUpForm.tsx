@@ -70,21 +70,44 @@ export const SignUpForm = () => {
   };
 
   return (
-    <Card className="w-full md:w-3/4 mb-4">
+    <Card
+      className="w-full md:w-3/4 mb-4"
+      placeholder={null}
+      onPointerEnterCapture={null}
+      onPointerLeaveCapture={null}
+    >
       <CardHeader
         variant="gradient"
         shadow={false}
         floated={false}
         className="grid h-12 place-items-center"
+        placeholder={null}
+        onPointerEnterCapture={null}
+        onPointerLeaveCapture={null}
       >
-        <Typography variant="h2" color="black" className="">
+        <Typography
+          variant="h2"
+          color="black"
+          placeholder={null}
+          onPointerEnterCapture={null}
+          onPointerLeaveCapture={null}
+        >
           Sign Up
         </Typography>
       </CardHeader>
-      <CardBody>
+      <CardBody
+        placeholder={null}
+        onPointerEnterCapture={null}
+        onPointerLeaveCapture={null}
+      >
         <form onSubmit={handleSubmit(submitForm)}>
           {errors.root?.serverError.type === "401" && (
-            <Typography className="text-red-500">
+            <Typography
+              className="text-red-500"
+              placeholder={null}
+              onPointerEnterCapture={null}
+              onPointerLeaveCapture={null}
+            >
               {errors.root?.serverError.message}
             </Typography>
           )}
@@ -101,9 +124,17 @@ export const SignUpForm = () => {
                   {...register("firstName", {
                     required: "First Name is required",
                   })}
+                  crossOrigin={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
                 />
                 {errors.firstName && (
-                  <Typography className="text-red-500 ml-1">
+                  <Typography
+                    className="text-red-500 ml-1"
+                    placeholder={null}
+                    onPointerEnterCapture={null}
+                    onPointerLeaveCapture={null}
+                  >
                     {errors.firstName?.message}
                   </Typography>
                 )}
@@ -119,9 +150,17 @@ export const SignUpForm = () => {
                   {...register("lastName", {
                     required: "Last Name is required",
                   })}
+                  crossOrigin={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
                 />
                 {errors.lastName && (
-                  <Typography className="text-red-500 ml-1">
+                  <Typography
+                    className="text-red-500 ml-1"
+                    placeholder={null}
+                    onPointerEnterCapture={null}
+                    onPointerLeaveCapture={null}
+                  >
                     {errors.lastName?.message}
                   </Typography>
                 )}
@@ -143,9 +182,17 @@ export const SignUpForm = () => {
                     message: "Invalid Email Format",
                   },
                 })}
+                crossOrigin={null}
+                onPointerEnterCapture={null}
+                onPointerLeaveCapture={null}
               />
               {errors.email && (
-                <Typography className="text-red-500 ml-1">
+                <Typography
+                  className="text-red-500 ml-1"
+                  placeholder={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
+                >
                   {errors.email?.message}
                 </Typography>
               )}
@@ -171,9 +218,17 @@ export const SignUpForm = () => {
                       <EyeIcon onClick={() => setShowPassword(!showPassword)} />
                     )
                   }
+                  crossOrigin={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
                 />
                 {errors.password && (
-                  <Typography className="text-red-500 ml-1">
+                  <Typography
+                    className="text-red-500 ml-1"
+                    placeholder={null}
+                    onPointerEnterCapture={null}
+                    onPointerLeaveCapture={null}
+                  >
                     {errors.password?.message}
                   </Typography>
                 )}
@@ -204,9 +259,17 @@ export const SignUpForm = () => {
                       />
                     )
                   }
+                  crossOrigin={null}
+                  onPointerEnterCapture={null}
+                  onPointerLeaveCapture={null}
                 />
                 {errors.confirmPassword && (
-                  <Typography className="text-red-500 ml-1">
+                  <Typography
+                    className="text-red-500 ml-1"
+                    placeholder={null}
+                    onPointerEnterCapture={null}
+                    onPointerLeaveCapture={null}
+                  >
                     {errors.confirmPassword?.message}
                   </Typography>
                 )}
@@ -217,6 +280,9 @@ export const SignUpForm = () => {
                 type="submit"
                 variant="gradient"
                 className="w-full md:w-1/2 mt-6"
+                placeholder={null}
+                onPointerEnterCapture={null}
+                onPointerLeaveCapture={null}
               >
                 Sign Up
               </Button>
@@ -224,8 +290,19 @@ export const SignUpForm = () => {
           </div>
         </form>
       </CardBody>
-      <CardFooter className="pt-0">
-        <Typography variant="small" className="mt-4 flex justify-center">
+      <CardFooter
+        className="pt-0"
+        placeholder={null}
+        onPointerEnterCapture={null}
+        onPointerLeaveCapture={null}
+      >
+        <Typography
+          variant="small"
+          className="mt-4 flex justify-center"
+          placeholder={null}
+          onPointerEnterCapture={null}
+          onPointerLeaveCapture={null}
+        >
           Already have an account?
           <Typography
             as="a"
@@ -233,6 +310,9 @@ export const SignUpForm = () => {
             variant="small"
             color="blue-gray"
             className="ml-1 font-bold"
+            placeholder={null}
+            onPointerEnterCapture={null}
+            onPointerLeaveCapture={null}
           >
             Sign in
           </Typography>
