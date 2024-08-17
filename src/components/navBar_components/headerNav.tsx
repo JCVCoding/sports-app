@@ -65,13 +65,21 @@ export default function HeaderNav() {
                 </Link>
               </>
             ) : (
-              <Link
-                href="/"
-                className="md:text-xl text-base font-medium"
-                onClick={() => signIn()}
-              >
-                Sign In
-              </Link>
+              <>
+                <Link
+                  href="/"
+                  className="md:text-xl text-base font-medium"
+                  onClick={() => signIn()}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="md:text-xl text-base font-medium"
+                >
+                  Sign Up
+                </Link>
+              </>
             )}
           </>
         ) : (
