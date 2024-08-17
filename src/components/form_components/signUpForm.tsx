@@ -10,6 +10,8 @@ import {
 } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 interface LoginFormInputs {
   firstName: string;
@@ -20,23 +22,48 @@ interface LoginFormInputs {
 }
 
 export const SignUpForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitted },
+    formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<LoginFormInputs>();
 
-  const submitForm = async (data: any) => {
+  const submitForm = async (data: LoginFormInputs) => {
     await fetch("/api/auth/register", {
       method: "post",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
-      .then(({ message }) => {
-        console.log(message);
-        if (message === "Success") {
+      .then(async (res) => ({
+        body: await res.json(),
+        status: res.status,
+      }))
+      .then(({ body, status }) => {
+        const { error, message } = body;
+        if (error) {
+          setError("root.serverError", {
+            message,
+            type: status.toString(),
+          });
+          switch (error) {
+            case "user":
+              setError("email", { type: "validate" });
+              break;
+            case "password":
+              setError("password", { type: "validate" });
+              setError("confirmPassword", { type: "validate" });
+              break;
+            default:
+              break;
+          }
+        }
+        if (!error && message === "Success") {
+          clearErrors();
           router.push("/sign-in");
         }
       });
@@ -56,6 +83,11 @@ export const SignUpForm = () => {
       </CardHeader>
       <CardBody>
         <form onSubmit={handleSubmit(submitForm)}>
+          {errors.root?.serverError.type === "401" && (
+            <Typography className="text-red-500">
+              {errors.root?.serverError.message}
+            </Typography>
+          )}
           <div className="flex flex-col gap-4 mt-6">
             <div className="flex flex-col md:flex-row gap-x-6 gap-y-4">
               <div className="flex flex-col w-full gap-y-1">
@@ -122,7 +154,7 @@ export const SignUpForm = () => {
               <div className="flex flex-col w-full gap-y-1">
                 <Input
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   label="Password"
                   size="lg"
                   error={errors.password ? true : false}
@@ -130,6 +162,15 @@ export const SignUpForm = () => {
                   {...register("password", {
                     required: "Password is required",
                   })}
+                  icon={
+                    showPassword ? (
+                      <EyeSlashIcon
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    ) : (
+                      <EyeIcon onClick={() => setShowPassword(!showPassword)} />
+                    )
+                  }
                 />
                 {errors.password && (
                   <Typography className="text-red-500 ml-1">
@@ -140,7 +181,7 @@ export const SignUpForm = () => {
               <div className="flex flex-col w-full gap-y-1">
                 <Input
                   id="confirmPassword"
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   label="Confirm Password"
                   size="lg"
                   error={errors.confirmPassword ? true : false}
@@ -148,6 +189,21 @@ export const SignUpForm = () => {
                   {...register("confirmPassword", {
                     required: "Confirm Password is required",
                   })}
+                  icon={
+                    showConfirmPassword ? (
+                      <EyeSlashIcon
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      />
+                    ) : (
+                      <EyeIcon
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      />
+                    )
+                  }
                 />
                 {errors.confirmPassword && (
                   <Typography className="text-red-500 ml-1">
@@ -161,7 +217,6 @@ export const SignUpForm = () => {
                 type="submit"
                 variant="gradient"
                 className="w-full md:w-1/2 mt-6"
-                onClick={() => console.log(errors, isSubmitted)}
               >
                 Sign Up
               </Button>

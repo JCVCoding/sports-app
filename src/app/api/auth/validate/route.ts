@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
     if (isPasswordValid) {
       return NextResponse.json(user);
     }
-    return NextResponse.json({ error: "password" }, { status: 400 });
+    return NextResponse.json({ error: "password" }, { status: 401 });
   } else {
-    return NextResponse.json({ error: "user" }, { status: 500 });
+    return NextResponse.json({ error: "user" }, { status: 401 });
   }
 }
