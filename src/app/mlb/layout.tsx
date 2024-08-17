@@ -1,6 +1,10 @@
 import ScoreBoard from "@/components/scoreboard/scoreboard";
 import { getGameData } from "@/lib/getGameData";
 
+export const metadata = {
+  title: "Sports App | MLB",
+};
+
 export default async function MLBLayout({
   children,
 }: {

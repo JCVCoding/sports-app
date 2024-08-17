@@ -42,8 +42,8 @@ export default async function Home() {
   return (
     <div className="container mx-auto mt-5 sm:px-16 px-8 flex flex-col">
       <section>
-        <h2 className="text-5xl font-bold text-center mb-4">Top News</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 auto-rows-auto gap-3">
+        <h2 className="text-5xl font-bold text-center mb-4">Top Headlines</h2>
+        <div className="grid grid-cols-1 auto-rows-auto gap-1">
           {topStories.map((props) => (
             <StoryCard key={props.id} {...props}></StoryCard>
           ))}

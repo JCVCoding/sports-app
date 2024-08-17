@@ -1,6 +1,10 @@
 import ScoreBoard from "@/components/scoreboard/scoreboard";
 import { getGameData } from "@/lib/getGameData";
 
+export const metadata = {
+  title: "Sports App | NFL",
+};
+
 export default async function NFLLayout({
   children,
 }: {
