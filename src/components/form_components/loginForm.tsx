@@ -60,14 +60,12 @@ export const LoginForm = () => {
     <Card className="w-full md:w-96">
       <CardHeader
         variant="gradient"
-        color="gray"
-        className="mb-4 grid h-28 place-items-center"
+        color="white"
+        shadow={false}
+        floated={false}
+        className="grid h-12 place-items-center"
       >
-        <Typography
-          variant="h2"
-          color="white"
-          className="text-base md:text-2xl"
-        >
+        <Typography variant="h2" color="black" className="text-xl md:text-3xl">
           Sign In To Sports App
         </Typography>
       </CardHeader>

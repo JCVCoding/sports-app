@@ -1,12 +1,16 @@
 "use client";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Button,
+} from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import {
-  inputClasses,
-  errorClasses,
-  validClasses,
-  buttonClasses,
-} from "./inputClasses";
+
 interface LoginFormInputs {
   firstName: string;
   lastName: string;
@@ -39,110 +43,146 @@ export const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      <div className="grid gap-5 md:grid-cols-2 mt-6">
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="firstName" className="font-semibold capitalize">
-              First Name
-            </label>
-          </div>
-          <input
-            id="firstName"
-            type="text"
-            className={`${inputClasses} ${
-              errors.firstName ? errorClasses : validClasses
-            }`}
-            aria-invalid={errors.firstName ? "true" : "false"}
-            {...register("firstName", { required: "First Name is required" })}
-          />
-          <p className="text-red-500">{errors.firstName?.message}</p>
-        </div>
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="lastName" className="font-semibold capitalize">
-              Last Name
-            </label>
-          </div>
-          <input
-            id="lastName"
-            type="text"
-            className={`${inputClasses} ${
-              errors.lastName ? errorClasses : validClasses
-            }`}
-            aria-invalid={errors.lastName ? "true" : "false"}
-            {...register("lastName", { required: "Last Name is required" })}
-          />
-          <p className="text-red-500">{errors.lastName?.message}</p>
-        </div>
-
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="email" className="font-semibold capitalize">
-              email
-            </label>
-          </div>
-          <input
-            id="email"
-            type="email"
-            aria-invalid={errors.email ? "true" : "false"}
-            className={`${inputClasses} ${
-              errors.email ? errorClasses : validClasses
-            }`}
-            {...register("email", {
-              required: { value: true, message: "Email is required" },
-              pattern: { value: /^\S+@\S+$/i, message: "Invalid Email Format" },
-            })}
-          />
-          <p className="text-red-500">{errors.email?.message}</p>
-        </div>
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="password" className="font-semibold capitalize">
-              Password
-            </label>
-          </div>
-          <input
-            id="password"
-            type="password"
-            aria-invalid={errors.password ? "true" : "false"}
-            className={`${inputClasses} ${
-              errors.password ? errorClasses : validClasses
-            }`}
-            {...register("password", { required: "Password is required" })}
-          />
-          <p className="text-red-500">{errors.password?.message}</p>
-        </div>
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label
-              htmlFor="confirmPassword"
-              className="font-semibold capitalize"
-            >
-              Confirm Password
-            </label>
-          </div>
-          <input
-            id="confirmPassword"
-            type="password"
-            aria-invalid={errors.confirmPassword ? "true" : "false"}
-            className={`${inputClasses} ${
-              errors.confirmPassword ? errorClasses : validClasses
-            }`}
-            {...register("confirmPassword", {
-              required: "Confirm Password is required",
-            })}
-          />
-          <p className="text-red-500">{errors.confirmPassword?.message}</p>
-        </div>
-      </div>
-      <button
-        type="submit"
-        className={buttonClasses}
-        onClick={() => console.log(errors, isSubmitted)}
+    <Card className="w-full md:w-3/4 mb-4">
+      <CardHeader
+        variant="gradient"
+        shadow={false}
+        floated={false}
+        className="grid h-12 place-items-center"
       >
-        Submit
-      </button>
-    </form>
+        <Typography variant="h2" color="black" className="">
+          Sign Up
+        </Typography>
+      </CardHeader>
+      <CardBody>
+        <form onSubmit={handleSubmit(submitForm)}>
+          <div className="flex flex-col gap-4 mt-6">
+            <div className="flex flex-col md:flex-row gap-x-6 gap-y-4">
+              <div className="flex flex-col w-full gap-y-1">
+                <Input
+                  id="firstName"
+                  label="First Name"
+                  type="text"
+                  size="lg"
+                  error={errors.firstName ? true : false}
+                  aria-invalid={errors.firstName ? "true" : "false"}
+                  {...register("firstName", {
+                    required: "First Name is required",
+                  })}
+                />
+                {errors.firstName && (
+                  <Typography className="text-red-500 ml-1">
+                    {errors.firstName?.message}
+                  </Typography>
+                )}
+              </div>
+              <div className="flex flex-col w-full gap-y-1">
+                <Input
+                  id="lastName"
+                  label="Last Name"
+                  type="text"
+                  size="lg"
+                  error={errors.lastName ? true : false}
+                  aria-invalid={errors.lastName ? "true" : "false"}
+                  {...register("lastName", {
+                    required: "Last Name is required",
+                  })}
+                />
+                {errors.lastName && (
+                  <Typography className="text-red-500 ml-1">
+                    {errors.lastName?.message}
+                  </Typography>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col w-full gap-y-1">
+              <Input
+                id="email"
+                type="email"
+                label="Email"
+                size="lg"
+                error={errors.email ? true : false}
+                aria-invalid={errors.email ? "true" : "false"}
+                {...register("email", {
+                  required: { value: true, message: "Email is required" },
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid Email Format",
+                  },
+                })}
+              />
+              {errors.email && (
+                <Typography className="text-red-500 ml-1">
+                  {errors.email?.message}
+                </Typography>
+              )}
+            </div>
+            <div className="flex flex-col md:flex-row gap-x-6 gap-y-4">
+              <div className="flex flex-col w-full gap-y-1">
+                <Input
+                  id="password"
+                  type="password"
+                  label="Password"
+                  size="lg"
+                  error={errors.password ? true : false}
+                  aria-invalid={errors.password ? "true" : "false"}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
+                />
+                {errors.password && (
+                  <Typography className="text-red-500 ml-1">
+                    {errors.password?.message}
+                  </Typography>
+                )}
+              </div>
+              <div className="flex flex-col w-full gap-y-1">
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  label="Confirm Password"
+                  size="lg"
+                  error={errors.confirmPassword ? true : false}
+                  aria-invalid={errors.confirmPassword ? "true" : "false"}
+                  {...register("confirmPassword", {
+                    required: "Confirm Password is required",
+                  })}
+                />
+                {errors.confirmPassword && (
+                  <Typography className="text-red-500 ml-1">
+                    {errors.confirmPassword?.message}
+                  </Typography>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <Button
+                type="submit"
+                variant="gradient"
+                className="w-full md:w-1/2 mt-6"
+                onClick={() => console.log(errors, isSubmitted)}
+              >
+                Sign Up
+              </Button>
+            </div>
+          </div>
+        </form>
+      </CardBody>
+      <CardFooter className="pt-0">
+        <Typography variant="small" className="mt-4 flex justify-center">
+          Already have an account?
+          <Typography
+            as="a"
+            href="/sign-in"
+            variant="small"
+            color="blue-gray"
+            className="ml-1 font-bold"
+          >
+            Sign in
+          </Typography>
+        </Typography>
+      </CardFooter>
+    </Card>
   );
 };

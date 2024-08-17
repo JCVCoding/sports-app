@@ -9,9 +9,8 @@ export default async function SignUp() {
     redirect("/");
   }
   return (
-    <>
-      <h2 className="text-5xl">Sign Up</h2>
+    <div className="container mx-auto mt-16 sm:px-8 px-4 flex flex-col items-center">
       <SignUpForm />
-    </>
+    </div>
   );
 }
