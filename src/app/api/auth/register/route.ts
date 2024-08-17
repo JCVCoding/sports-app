@@ -26,10 +26,17 @@ export async function POST(req: NextRequest) {
       );
     }
     const hashedPassword = await hash(password, 10);
+
+    const backgroundColors = ["d67f62", "e5c185", "fbf2c4", "74a892", "40a4a4"];
+    const generateRandomIndex = Math.floor(Math.random() * 5);
+
+    const generatedAvatar = `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=${backgroundColors[generateRandomIndex]}&color=000000&rounded=true`;
+
     const user = {
       name: firstName + " " + lastName,
       email,
       password: hashedPassword,
+      image: generatedAvatar,
     };
 
     await db.collection("users").insertOne(user);
