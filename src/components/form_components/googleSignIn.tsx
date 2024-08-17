@@ -4,7 +4,7 @@ export const Google = () => {
   return (
     <button
       aria-label="Sign in with Google"
-      className="flex items-center bg-white border border-button-border-light rounded-full p-0.5 pr-4"
+      className="flex items-center bg-white border border-gray-500 rounded-full p-0.5 pr-4"
       onClick={() => signIn("google")}
     >
       <div className="flex items-center justify-center bg-white w-9 h-9 rounded-full">

@@ -1,11 +1,15 @@
 "use client";
-import { useForm } from "react-hook-form";
 import {
-  inputClasses,
-  errorClasses,
-  validClasses,
-  buttonClasses,
-} from "./inputClasses";
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+  Input,
+  Button,
+} from "@material-tailwind/react";
+import { Google } from "@/components/form_components/googleSignIn";
+import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -53,46 +57,87 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      <div className="grid gap-5 md:grid-cols-2 mt-6">
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="email" className="font-semibold capitalize">
-              Email
-            </label>
+    <Card className="w-full md:w-96">
+      <CardHeader
+        variant="gradient"
+        color="gray"
+        className="mb-4 grid h-28 place-items-center"
+      >
+        <Typography
+          variant="h2"
+          color="white"
+          className="text-base md:text-2xl"
+        >
+          Sign In To Sports App
+        </Typography>
+      </CardHeader>
+      <CardBody className="">
+        <div className="flex flex-col gap-4">
+          <div className="self-center">
+            <Google />
           </div>
-          <input
-            id="email"
-            type="email"
-            aria-invalid={errors.email ? "true" : "false"}
-            className={`${inputClasses} ${
-              errors.email ? errorClasses : validClasses
-            }`}
-            {...register("email", { required: "Email is required" })}
-          />
-          <p className="text-red-500">{errors.email?.message}</p>
-        </div>
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex justify-between">
-            <label htmlFor="password" className="font-semibold capitalize">
-              Password
-            </label>
+          <div className="relative flex items-center">
+            <div className="flex-grow border-t border-gray-400"></div>
+            <span className="flex-shrink mx-4 text-gray-400">Or</span>
+            <div className="flex-grow border-t border-gray-400"></div>
           </div>
-          <input
-            id="password"
-            type="password"
-            aria-invalid={errors.password ? "true" : "false"}
-            className={`${inputClasses} ${
-              errors.password ? errorClasses : validClasses
-            }`}
-            {...register("password", { required: "Password is required" })}
-          />
-          <p className="text-red-500">{errors.password?.message}</p>
+          <form onSubmit={handleSubmit(submitForm)}>
+            <div className="flex flex-col gap-4">
+              <div>
+                <Input
+                  label="Email"
+                  size="lg"
+                  id="email"
+                  type="email"
+                  aria-invalid={errors.email ? "true" : "false"}
+                  error={errors.email ? true : false}
+                  {...register("email", { required: "Email is required" })}
+                />
+                {errors.email && (
+                  <Typography className="text-red-500 mt-1 ml-1">
+                    {errors.email?.message}
+                  </Typography>
+                )}
+              </div>
+              <div>
+                <Input
+                  label="Password"
+                  size="lg"
+                  id="password"
+                  type="password"
+                  aria-invalid={errors.password ? "true" : "false"}
+                  error={errors.password ? true : false}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
+                />
+                {errors.password && (
+                  <Typography className="text-red-500 mt-1 ml-1">
+                    {errors.password?.message}
+                  </Typography>
+                )}
+              </div>
+              <Button variant="gradient" type="submit" fullWidth>
+                Sign In
+              </Button>
+            </div>
+          </form>
         </div>
-      </div>
-      <button type="submit" className={buttonClasses}>
-        Submit
-      </button>
-    </form>
+      </CardBody>
+      <CardFooter className="pt-0">
+        <Typography variant="small" className="mt-6 flex justify-center">
+          Don&apos;t have an account?
+          <Typography
+            as="a"
+            href="/sign-up"
+            variant="small"
+            color="blue-gray"
+            className="ml-1 font-bold"
+          >
+            Sign up
+          </Typography>
+        </Typography>
+      </CardFooter>
+    </Card>
   );
 };

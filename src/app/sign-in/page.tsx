@@ -1,5 +1,5 @@
 import { LoginForm } from "@/components/form_components/loginForm";
-import { Google } from "@/components/form_components/googleSignIn";
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
@@ -12,10 +12,9 @@ const SignIn = async () => {
   }
 
   return (
-    <>
-      <Google />
+    <div className="container mx-auto mt-16 sm:px-8 px-4 flex flex-col items-center">
       <LoginForm />
-    </>
+    </div>
   );
 };
 
