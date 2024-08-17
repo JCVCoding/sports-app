@@ -29,7 +29,11 @@ export default async function ArticlePages({
     <section>
       <div className="flex flex-col items-center gap-y-3 mt-4">
         <Image
-          src={`https://cdn.bleacherreport.net/images/team_logos/328x328/${league.toLowerCase()}.png`}
+          src={
+            league.toLowerCase() !== "nfl"
+              ? `https://cdn.bleacherreport.net/images/team_logos/328x328/${league.toLowerCase()}.png`
+              : "/images/NFL-Logo-PNG-Photo.png"
+          }
           alt={`${league} logo`}
           width={80}
           height={80}
