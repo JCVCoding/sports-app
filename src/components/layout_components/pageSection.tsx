@@ -29,7 +29,7 @@ const PageSection = (props: PageSectionType) => {
                   >
                     <Image
                       src={item.image_url}
-                      alt=""
+                      alt={item.image_alt}
                       width={0}
                       height={0}
                       sizes="100vw"

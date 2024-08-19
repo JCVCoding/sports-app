@@ -43,7 +43,14 @@ export default async function ArticlePages({
       <ol>
         <li className="my-8 mx-auto flex flex-col items-center">
           {apiData?.map(
-            ({ uuid, description, image_url, source, title }: ArticleData) => (
+            ({
+              uuid,
+              description,
+              image_url,
+              source,
+              title,
+              image_alt,
+            }: ArticleData) => (
               <ContentCard
                 key={uuid}
                 description={description}
@@ -52,6 +59,7 @@ export default async function ArticlePages({
                 title={title}
                 league={league}
                 article_id={uuid}
+                image_alt={image_alt}
               />
             )
           )}

@@ -21,7 +21,7 @@ export default async function ArticlePage({
       <div className="relative mb-3">
         <Image
           src={data.image_url}
-          alt=""
+          alt={data.image_alt}
           width={0}
           height={0}
           sizes="100vw"

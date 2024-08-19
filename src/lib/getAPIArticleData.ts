@@ -17,6 +17,7 @@ export type ArticleData = {
   image_url: string | StaticImageData;
   source: string;
   title: string;
+  image_alt: string;
 };
 
 export const createTodaysDate = (): string => {

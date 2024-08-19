@@ -8,6 +8,7 @@ type CardType = {
   source: string;
   article_id: string;
   league: string;
+  image_alt: string;
 };
 
 const ContentCard = ({
@@ -17,6 +18,7 @@ const ContentCard = ({
   source,
   article_id,
   league,
+  image_alt,
 }: CardType) => {
   return (
     <div className="mb-8">
@@ -38,7 +40,7 @@ const ContentCard = ({
             article_id
           )}`}
         >
-          <Image src={image_url} alt="" width={900} height={900} />
+          <Image src={image_url} alt={image_alt} width={900} height={900} />
         </Link>
       </div>
       <div className="md:text-sm text-xs text-gray-400 pt-3">via {source}</div>
