@@ -40,31 +40,40 @@ export default async function Home() {
   let leagueStories = await getTopStories();
 
   return (
-    <div className="container mx-auto mt-5 sm:px-16 px-8 flex flex-col">
-      <section>
-        <h2 className="text-5xl font-bold text-center mb-4">Top Headlines</h2>
-        <div className="grid grid-cols-1 auto-rows-auto gap-1">
-          {topStories.map((props) => (
-            <StoryCard key={props.id} {...props}></StoryCard>
-          ))}
-        </div>
-      </section>
-      <PageSection
-        header="nba"
-        stories={leagueStories?.nbaStories}
-      ></PageSection>
-      <PageSection
-        header="nfl"
-        stories={leagueStories?.nflStories}
-      ></PageSection>
-      <PageSection
-        header="mlb"
-        stories={leagueStories?.mlbStories}
-      ></PageSection>
-      <PageSection
-        header="nhl"
-        stories={leagueStories?.nhlStories}
-      ></PageSection>
-    </div>
+    <>
+      <div className="bg-black p-8 flex flex-col items-center mb-4">
+        <h1 className="text-4xl tracking-wide md:text-6xl text-white font-bold">
+          Sports App
+        </h1>
+      </div>
+      <div className="container mx-auto mt-5 sm:px-16 px-8 flex flex-col">
+        <section>
+          <h2 className="text-3xl md:text-5xl font-bold text-center mb-4">
+            Top Headlines
+          </h2>
+          <div className="grid grid-cols-1 auto-rows-auto gap-1">
+            {topStories.map((props) => (
+              <StoryCard key={props.id} {...props}></StoryCard>
+            ))}
+          </div>
+        </section>
+        <PageSection
+          header="nba"
+          stories={leagueStories?.nbaStories}
+        ></PageSection>
+        <PageSection
+          header="nfl"
+          stories={leagueStories?.nflStories}
+        ></PageSection>
+        <PageSection
+          header="mlb"
+          stories={leagueStories?.mlbStories}
+        ></PageSection>
+        <PageSection
+          header="nhl"
+          stories={leagueStories?.nhlStories}
+        ></PageSection>
+      </div>
+    </>
   );
 }
