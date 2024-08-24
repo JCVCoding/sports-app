@@ -50,6 +50,7 @@ export default function HeaderNav() {
             {data?.user ? (
               <>
                 <Avatar
+                  alt=""
                   src={data.user.image ? data.user.image : undefined}
                   size="md"
                   placeholder={undefined}

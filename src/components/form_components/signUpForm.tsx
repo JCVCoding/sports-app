@@ -86,6 +86,7 @@ export const SignUpForm = () => {
         onPointerLeaveCapture={null}
       >
         <Typography
+          as={"h1"}
           variant="h2"
           color="black"
           placeholder={null}
@@ -127,6 +128,8 @@ export const SignUpForm = () => {
                   crossOrigin={null}
                   onPointerEnterCapture={null}
                   onPointerLeaveCapture={null}
+                  aria-labelledby="firstName_label"
+                  labelProps={{ htmlFor: "firstName", id: "firstName_label" }}
                 />
                 {errors.firstName && (
                   <Typography
@@ -153,6 +156,8 @@ export const SignUpForm = () => {
                   crossOrigin={null}
                   onPointerEnterCapture={null}
                   onPointerLeaveCapture={null}
+                  aria-labelledby="lastName_label"
+                  labelProps={{ htmlFor: "lastName", id: "lastName_label" }}
                 />
                 {errors.lastName && (
                   <Typography
@@ -185,6 +190,8 @@ export const SignUpForm = () => {
                 crossOrigin={null}
                 onPointerEnterCapture={null}
                 onPointerLeaveCapture={null}
+                aria-labelledby="email_label"
+                labelProps={{ htmlFor: "email", id: "email_label" }}
               />
               {errors.email && (
                 <Typography
@@ -221,6 +228,8 @@ export const SignUpForm = () => {
                   crossOrigin={null}
                   onPointerEnterCapture={null}
                   onPointerLeaveCapture={null}
+                  aria-labelledby="password_label"
+                  labelProps={{ htmlFor: "password", id: "password_label" }}
                 />
                 {errors.password && (
                   <Typography
@@ -262,6 +271,11 @@ export const SignUpForm = () => {
                   crossOrigin={null}
                   onPointerEnterCapture={null}
                   onPointerLeaveCapture={null}
+                  aria-labelledby="confirmPassword_label"
+                  labelProps={{
+                    htmlFor: "confirmPassword",
+                    id: "confirmPassword_label",
+                  }}
                 />
                 {errors.confirmPassword && (
                   <Typography

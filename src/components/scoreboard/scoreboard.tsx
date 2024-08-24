@@ -63,6 +63,7 @@ const ScoreBoard = ({ gameData }: any) => {
         className="arrowContainer left"
         onClick={slideLeft}
         disabled={index === 0 ? true : false}
+        aria-label="left button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -115,6 +116,7 @@ const ScoreBoard = ({ gameData }: any) => {
             ? true
             : false
         }
+        aria-label="right button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

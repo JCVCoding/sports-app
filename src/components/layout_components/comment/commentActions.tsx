@@ -141,6 +141,13 @@ const CommentActions = ({
           size="sm"
           variant="text"
           onClick={likeComment}
+          aria-label={
+            isLikedValue && data?.user
+              ? "remove like from comment"
+              : !data?.user
+              ? "login to like comment"
+              : "like comment"
+          }
         >
           {isLikedValue ? (
             <SolidThumbUp className="h-4 w-4" />
@@ -155,6 +162,13 @@ const CommentActions = ({
           size="sm"
           variant="text"
           onClick={dislikeComment}
+          aria-label={
+            isDislikedValue && data?.user
+              ? "remove dislike from comment"
+              : !data?.user
+              ? "login to dislike comment"
+              : "dislike comment"
+          }
         >
           {isDislikedValue ? (
             <SolidThumbDown className="h-4 w-4" />
@@ -173,6 +187,7 @@ const CommentActions = ({
             }}
             size="sm"
             variant="text"
+            aria-label="open comment reply dialog"
           >
             Reply
           </Button>

@@ -15,7 +15,7 @@ import {
   MenuItem,
   MenuList,
 } from "@material-tailwind/react";
-import { DispatchWithoutAction } from "react";
+import { DispatchWithoutAction, useState } from "react";
 
 const CommentActionMenu = ({
   id,
@@ -30,13 +30,20 @@ const CommentActionMenu = ({
 }) => {
   const [deleteComment] = useDeleteCommentMutation();
   const [deleteReply] = useDeleteReplyMutation();
+  const [openMenu, setOpenMenu] = useState(false);
   const { league, uuid } = useAppSelector((state) => state.commentReducer);
 
   return (
-    <Menu placement="bottom-start">
+    <Menu placement="bottom-start" open={openMenu} handler={setOpenMenu}>
       <MenuHandler>
         {/* @ts-ignore */}
-        <Button variant="text" className="p-0">
+        <Button
+          variant="text"
+          className="p-0"
+          aria-label={
+            openMenu ? "close comment action menu" : "open comment action menu"
+          }
+        >
           <EllipsisVerticalIcon className="h-6 w-6" />
         </Button>
       </MenuHandler>

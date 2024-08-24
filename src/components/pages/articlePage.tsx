@@ -12,10 +12,10 @@ export default async function ArticlePage({
   const [data] = await getArticleById(params.uuid, leagueArticles);
   return (
     <>
-      <h3 className="lg:text-4xl md:text-2xl text-xl font-medium mb-3 px-2 md:px-0">
+      <h1 className="lg:text-4xl md:text-2xl text-xl font-medium mb-3 px-2 md:px-0">
         {data.title}
-      </h3>
-      <div className="text-gray-400 pb-3 px-2 md:px-0">
+      </h1>
+      <div className="text-gray-600 pb-3 px-2 md:px-0">
         Source: {data.source}
       </div>
       <div className="relative mb-3">

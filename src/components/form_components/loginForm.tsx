@@ -78,6 +78,7 @@ export const LoginForm = () => {
         className="grid h-12 place-items-center"
       >
         <Typography
+          as={"h1"}
           placeholder={null}
           onPointerEnterCapture={null}
           onPointerLeaveCapture={null}
@@ -99,7 +100,7 @@ export const LoginForm = () => {
           </div>
           <div className="relative flex items-center">
             <div className="flex-grow border-t border-gray-400"></div>
-            <span className="flex-shrink mx-4 text-gray-400">Or</span>
+            <span className="flex-shrink mx-4 text-gray-700">Or</span>
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <form onSubmit={handleSubmit(submitForm)}>
@@ -116,6 +117,11 @@ export const LoginForm = () => {
                   crossOrigin={null}
                   onPointerEnterCapture={null}
                   onPointerLeaveCapture={null}
+                  aria-labelledby="email_label"
+                  labelProps={{
+                    htmlFor: "email",
+                    id: "email_label",
+                  }}
                 />
                 {errors.email && (
                   <Typography
@@ -139,6 +145,8 @@ export const LoginForm = () => {
                   {...register("password", {
                     required: "Password is required",
                   })}
+                  aria-labelledby="password_label"
+                  labelProps={{ htmlFor: "password", id: "password_label" }}
                   icon={
                     showPassword ? (
                       <EyeSlashIcon

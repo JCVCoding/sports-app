@@ -107,7 +107,7 @@ const Comment = ({
     <>
       <div className="flex flex-wrap">
         {/* @ts-ignore */}
-        <Avatar src={avatar} className="lg" />
+        <Avatar src={avatar} className="lg" alt="" />
         <div className="px-2 flex-1">
           <div>
             {data?.user?.email === authorEmail ? (
@@ -115,7 +115,7 @@ const Comment = ({
             ) : (
               author
             )}
-            <span className="ml-1 text-xs text-gray-400">
+            <span className="ml-1 text-xs text-gray-600">
               {timestamp}
               {isEdited ? "(edited)" : null}
             </span>

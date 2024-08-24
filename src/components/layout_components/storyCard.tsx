@@ -18,9 +18,6 @@ const StoryCard = ({ header, title, uuid }: StoryCardProps) => {
         >
           <div className="text-xl md:text-3xl">{title}</div>
         </Link>
-        <Link
-          href={`/${header.toLowerCase()}/article/${encodeURIComponent(uuid)}`}
-        ></Link>
       </div>
     </>
   );

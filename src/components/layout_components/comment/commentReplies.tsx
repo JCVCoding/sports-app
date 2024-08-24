@@ -27,8 +27,7 @@ const CommentReplies = ({
     <div className="ml-6 sm:ml-8">
       {replies.length >= 1 && (
         <Button
-          className="rounded-full flex gap-x-3 normal-case text-sm"
-          color="blue"
+          className="rounded-full flex gap-x-3 normal-case text-sm text-blue-700"
           ripple={false}
           size="sm"
           variant="text"

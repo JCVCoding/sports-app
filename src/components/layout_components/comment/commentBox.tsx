@@ -36,6 +36,7 @@ const CommentBox = () => {
   return (
     <div className="flex flex-row">
       <Avatar
+        alt=""
         src={data?.user?.image as string}
         className="mr-4"
         placeholder={undefined}
@@ -45,6 +46,7 @@ const CommentBox = () => {
       <div className="flex-1">
         <Input
           crossOrigin={undefined}
+          id="comment_box"
           variant="static"
           placeholder="Add a comment..."
           onClick={openOnFocus}
@@ -52,6 +54,13 @@ const CommentBox = () => {
           value={inputValue}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
+          label="Add a comment"
+          labelProps={{
+            className: "hidden",
+            htmlFor: "comment_box",
+            id: "comment_box_label",
+          }}
+          aria-labelledby="comment_box_label"
         />
         {open ? (
           <div className="flex items-center justify-end gap-x-2 pt-2">

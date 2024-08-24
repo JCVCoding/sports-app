@@ -45,11 +45,6 @@ const PageSection = (props: PageSectionType) => {
                   >
                     <h3 className="md:text-lg lg:text-xl">{item.title}</h3>
                   </Link>
-                  <Link
-                    href={`/${props.header}/article/${encodeURIComponent(
-                      item.uuid
-                    )}`}
-                  ></Link>
                 </div>
               </div>
             ) : (
@@ -62,7 +57,7 @@ const PageSection = (props: PageSectionType) => {
                   >
                     <Image
                       src={item.image_url}
-                      alt=""
+                      alt={item.image_alt}
                       width={0}
                       height={0}
                       sizes="100vw"
@@ -78,11 +73,6 @@ const PageSection = (props: PageSectionType) => {
                   >
                     <h3 className="md:text-lg lg:text-xl">{item.title}</h3>
                   </Link>
-                  <Link
-                    href={`/${props.header}/article/${encodeURIComponent(
-                      item.uuid
-                    )}`}
-                  ></Link>
                 </div>
               </div>
             )}

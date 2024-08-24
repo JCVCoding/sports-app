@@ -51,6 +51,7 @@ const CommentReplyDialog = (
   return (
     <div className="flex flex-wrap">
       <Avatar
+        alt=""
         src="/next.svg"
         size="xs"
         className="relative top-4"
